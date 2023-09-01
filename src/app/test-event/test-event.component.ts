@@ -55,6 +55,8 @@ export class TestEventComponent implements AfterViewInit {
     });
     cube.addEventListener('click', (event) => {
       event.target.scale.set(1.0, 1.0, 1.0);
+      console.log("asd");
+      
     });
     scene.add(cube);
     interactionManager.add(cube);
