@@ -9,7 +9,6 @@ import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MapRenderComponent } from './map-render/map-render.component';
-import { TestEventComponent } from './test-event/test-event.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { TestEventComponent } from './test-event/test-event.component';
     FooterComponent,
     SettingsComponent,
     DashboardComponent,
-    MapRenderComponent,
-    TestEventComponent
+    MapRenderComponent
   ],
   imports: [
     BrowserModule,
