@@ -128,7 +128,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   private loadGLTFModel() {
-    this.loaderGLTF.load('assets/casa2/casa2.glb', (gltf: GLTF) => {
+    this.loaderGLTF.load('assets/field/scene.glb', (gltf: GLTF) => {
       this.model = gltf.scene.children[0];
       var box = new THREE.Box3().setFromObject(this.model);
       box.getCenter(this.model.position); // this re-sets the mesh position
@@ -140,7 +140,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         this.interactionManager.add(child);
 
         child.addEventListener('mouseover', (event) => {
-          //console.log('mouseover', event);
+    
         });
 
         child.addEventListener('mouseout', (event) => {
@@ -148,7 +148,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         });
 
         child.addEventListener('mousedown', (event) => {
-          console.log(this.model);
+          //console.log(this.model);
           event.stopPropagation();
         });
       });

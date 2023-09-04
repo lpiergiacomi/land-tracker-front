@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { AsideComponent } from './aside/aside.component';
 import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { MapRenderComponent } from './map-render/map-render.component';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { MapRenderComponent } from './map-render/map-render.component';
     AsideComponent,
     FooterComponent,
     SettingsComponent,
-    DashboardComponent,
     MapRenderComponent
   ],
   imports: [
