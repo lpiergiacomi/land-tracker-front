@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { InteractionManager } from 'three.interactive';
+import { LoteService } from '../backend/services/lote.service';
 
 
 @Component({
@@ -31,9 +32,12 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     return this.canvasRef.nativeElement;
   }
 
-  constructor() { }
+  constructor(private loteService: LoteService) { 
+
+  }
 
   ngOnInit(): void {
+    this.getLotes();
   }
 
   ngAfterViewInit() {
@@ -162,4 +166,18 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
+
+  private getLotes() {
+    this.loteService.getLotes()
+        .subscribe(
+          response => {
+            console.table(response);
+          },
+          error => {
+            console.error(error);
+          },
+        );
+  }
 }
+
+

@@ -8,6 +8,10 @@ import { AsideComponent } from './aside/aside.component';
 import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MapRenderComponent } from './map-render/map-render.component';
+import { LoteService } from './backend/services/lote.service';
+import { LotesApi } from './backend/api/lotes.api';
+import { HttpService } from './backend/api/http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,9 +24,14 @@ import { MapRenderComponent } from './map-render/map-render.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    HttpService,
+    LoteService,
+    LotesApi
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
