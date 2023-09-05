@@ -10,7 +10,7 @@ export class LoteService {
 
   constructor(private api: LotesApi) { }
 
-  getLotes(): Observable<Lote> {
+  getLotes(): Observable<Lote[]> {
     return this.api.getAllLotes();
   }
 }
