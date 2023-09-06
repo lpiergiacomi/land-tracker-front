@@ -17,9 +17,9 @@ import TWEEN from '@tweenjs/tween.js'
 export class MapRenderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('canvas') private canvasRef: ElementRef;
-  @Input() public fieldOfView: number = 11;
-  @Input('nearClipping') public nearClippingPane: number = 1;
-  @Input('farClipping') public farClippingPane: number = 9999;
+  private fieldOfView: number = 11;
+  private nearClippingPane: number = 1;
+  private farClippingPane: number = 9999;
 
   private camera: THREE.PerspectiveCamera;
   private controls: OrbitControls;
@@ -51,19 +51,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.createLights();
     this.createInteractionManager();
     this.createControls();
-    this.loadGLTFModel();
-
-    // Llama a getLotes y luego ejecuta createBoxClickeable cuando los datos estén disponibles.
-    this.getLotes()
-      .subscribe({
-        next: (response) => {
-          this.lotes = response;
-          this.createBoxClickeable();
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
+    this.loadMeshFloor();
+    this.loadLotes();
 
     let component: MapRenderComponent = this;
     const animate = () => {
@@ -72,12 +61,24 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       this.controls.update();
       TWEEN.update();
       component.renderer.render(component.scene, component.camera);
-
-      // component.animateModel();
     };
 
     animate();
 
+  }
+
+  private loadLotes() {
+    this.getLotes().subscribe({
+      next: (response) => {
+        this.lotes = response;
+        this.lotes.forEach(lote => {
+          this.loadMeshLote(lote);
+        })
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   private createInteractionManager() {
@@ -114,7 +115,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       this.nearClippingPane,
       this.farClippingPane
     );
-    //this.camera.position.set(100, 100, 100);
     this.camera.position.set(-100, 170, 400);
   }
 
@@ -129,45 +129,16 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.shadowMap.enabled = true;
-    //this.renderer.outputEncoding = THREE.sRGBEncoding;
   }
 
-  private createBoxClickeable() {
-    const geometry = new THREE.BoxGeometry(10, 0, 10);
-    const material = new THREE.MeshBasicMaterial();
-    this.lotes.forEach(lote => {
-      this.loadGLTFModelDeLote(lote);
-      /*
-      const loteMesh = new THREE.Mesh(geometry, material);
-      loteMesh.position.set(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z);
-      this.scene.add(loteMesh);
-      this.interactionManager.add(loteMesh);
-
-      loteMesh.addEventListener('click', (event) => {
-        this.tween(lote.posicionLote);
-        console.log(event);
-        //event.target.id = lote.id;
-      });
-      loteMesh.addEventListener('mouseover', (event) => {
-        document.body.style.cursor = 'pointer';
-      });
-      loteMesh.addEventListener('mouseout', (event) => {
-        document.body.style.cursor = 'default';
-      });
-      */
-    })
-  }
-
-  private loadGLTFModelDeLote(lote: Lote) {
+  private loadMeshLote(lote: Lote) {
     this.loaderGLTF.load('assets/map_pin.glb', (gltf: GLTF) => {
-        //var box = new THREE.Box3().setFromObject(this.model);
+        this.model = gltf.scene.children[0];
         this.model.position.x = lote.posicionLote.x;
         this.model.position.y = lote.posicionLote.y;
         this.model.position.z = lote.posicionLote.z;
         this.model.scale.set(5, 5, 5)
 
-        //box.getCenter(this.model.position); // this re-sets the mesh position
-        //this.model.position.multiplyScalar(-1);
         this.scene.add(this.model);
 
         this.model.traverse((child) => {
@@ -183,7 +154,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
           });
 
           child.addEventListener('mousedown', (event) => {
-            //console.log(this.model);
             this.tween(lote.posicionLote);
             event.stopPropagation();
           });
@@ -192,17 +162,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private loadGLTFModel() {
+  private loadMeshFloor() {
     this.loaderGLTF.load('assets/test.glb', (gltf: GLTF) => {
         this.model = gltf.scene.children[0];
-        var box = new THREE.Box3().setFromObject(this.model); //TODO: Evaluar si no es necesario
-        box.getCenter(this.model.position); // this re-sets the mesh position //TODO: Evaluar si no es necesario
-        //this.model.position.multiplyScalar(-1);
         this.scene.add(this.model);
       }
     );
   }
-
 
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
@@ -218,12 +184,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   private tween(posicionLote) {
+    let {x, y, z} = posicionLote;
     new TWEEN.Tween(this.camera.position)
       .to(
         {
-          x: posicionLote.x - 5,
-          y: posicionLote.y + 100,
-          z: posicionLote.z + 100,
+          x: x - 5,
+          y: y + 100,
+          z: z + 100,
         },
         500
       )
@@ -233,9 +200,9 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     new TWEEN.Tween(this.controls.target)
       .to(
         {
-          x: posicionLote.x,
-          y: posicionLote.y,
-          z: posicionLote.z,
+          x: x,
+          y: y,
+          z: z,
         },
         500
       )
