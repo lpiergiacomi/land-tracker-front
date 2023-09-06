@@ -1,29 +1,31 @@
 export class Lote {
-    
-    id: number;
-    nombre: string;
-    superficie: number;
-    estadoLote: string;
-    posicionLote: PosicionLote;
 
-    constructor(id, nombre, superficie, estadoLote, posicionLote) {
-        this.id = id;
-        this.nombre = nombre;
-        this.superficie = superficie;
-        this.estadoLote = estadoLote;
-        this.posicionLote = posicionLote;
-    }
+  id: number;
+  nombre: string;
+  superficie: number;
+  estadoLote: string;
+  posicionLote: PosicionLote;
+  descriptionDomElement?: HTMLElement
+
+
+  constructor(id, nombre, superficie, estadoLote, posicionLote) {
+    this.id = id;
+    this.nombre = nombre;
+    this.superficie = superficie;
+    this.estadoLote = estadoLote;
+    this.posicionLote = posicionLote;
+  }
 }
 
 export class PosicionLote {
 
-    x: number;
-    y: number;
-    z: number;
+  x: number;
+  y: number;
+  z: number;
 
-    constructor(x, y, z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+  constructor(x, y, z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
 }

@@ -2,11 +2,14 @@ import {Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef} from '@a
 import * as THREE from "three";
 import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import {InteractionManager} from 'three.interactive';
 import {LoteService} from '../backend/services/lote.service';
 import {Lote} from '../backend/model/lote';
 import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
+import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
+import {Vector3} from "three";
+import {MapTooltipComponent} from "../map-tooltip/map-tooltip.component";
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 
 
 @Component({
@@ -15,26 +18,26 @@ import TWEEN from '@tweenjs/tween.js'
   styleUrls: ['./map-render.component.css']
 })
 export class MapRenderComponent implements OnInit, AfterViewInit {
+  @ViewChild('rendererContainer', {static: true}) private rendererContainer: ElementRef;
+  @ViewChild(MapTooltipComponent) private mapTooltip: MapTooltipComponent;
 
-  @ViewChild('canvas') private canvasRef: ElementRef;
   private fieldOfView: number = 11;
   private nearClippingPane: number = 1;
   private farClippingPane: number = 9999;
 
+  private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
+  private renderer: THREE.WebGLRenderer;
+  private labelRenderer: CSS2DRenderer;
   private controls: OrbitControls;
   private ambientLight: THREE.AmbientLight;
   private model: any;
   private directionalLight: THREE.DirectionalLight;
   private loaderGLTF = new GLTFLoader();
-  private renderer: THREE.WebGLRenderer;
-  private scene: THREE.Scene;
-  private interactionManager: InteractionManager;
-  private lotes: Lote[] = [];
+  private annotationMarkers: THREE.Sprite[] = [];
 
-  private get canvas(): HTMLCanvasElement {
-    return this.canvasRef.nativeElement;
-  }
+  private lotes: Lote[] = [];
+  public loteSeleccionado: Lote | undefined;
 
   constructor(private loteService: LoteService) {
 
@@ -45,26 +48,26 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.createRenderer();
     this.createScene();
     this.createCamera();
     this.createLights();
-    this.createInteractionManager();
+    this.createRenderer();
+    this.createLabelRenderer();
     this.createControls();
     this.loadMeshFloor();
     this.loadLotes();
+    this.animate();
 
-    let component: MapRenderComponent = this;
-    const animate = () => {
-      requestAnimationFrame(animate);
-      component.interactionManager.update();
-      this.controls.update();
-      TWEEN.update();
-      component.renderer.render(component.scene, component.camera);
-    };
+    this.renderer.domElement.addEventListener('click', this.onClick, false);
 
-    animate();
+  }
 
+  private animate(): void {
+    this.renderer.render(this.scene, this.camera);
+    this.labelRenderer.render(this.scene, this.camera);
+    this.controls.update();
+    TWEEN.update();
+    requestAnimationFrame(() => this.animate());
   }
 
   private loadLotes() {
@@ -79,14 +82,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         console.error(error);
       }
     });
-  }
-
-  private createInteractionManager() {
-    this.interactionManager = new InteractionManager(
-      this.renderer,
-      this.camera,
-      this.renderer.domElement
-    );
   }
 
   private createControls = () => {
@@ -124,54 +119,76 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   private createRenderer() {
-    // Use canvas element in template
-    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+    this.renderer = new THREE.WebGLRenderer({antialias: true});
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.shadowMap.enabled = true;
+    this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
   }
 
   private loadMeshLote(lote: Lote) {
     this.loaderGLTF.load('assets/map_pin.glb', (gltf: GLTF) => {
+
+        const circleTexture = new THREE.TextureLoader().load('assets/img/circle.png')
+
+        const annotationSpriteMaterial = new THREE.SpriteMaterial({
+          map: circleTexture,
+          depthTest: false,
+          depthWrite: false,
+          sizeAttenuation: false,
+        })
+        const annotationSprite = new THREE.Sprite(annotationSpriteMaterial)
+        annotationSprite.scale.set(0.0066, 0.0066, 0.0066)
+        annotationSprite.position.copy(new Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z))
+        annotationSprite.userData['id'] = lote['id'];
+
+        this.scene.add(annotationSprite)
+        this.annotationMarkers.push(annotationSprite);
+
+        const annotationDiv = document.createElement('div');
+        annotationDiv.className = 'annotationLabel';
+        annotationDiv.innerHTML = lote.id.toLocaleString();
+
+        const annotationLabel = new CSS2DObject(annotationDiv);
+        annotationLabel.position.copy(new THREE.Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z));
+        this.scene.add(annotationLabel);
+
+        // Info del lote
+        const annotationDescriptionDiv = document.createElement('div')
+        annotationDescriptionDiv.className = 'annotationDescription';
+        annotationDescriptionDiv.innerHTML = lote.nombre;
+        annotationDescriptionDiv.style.display = 'none';
+        annotationDiv.appendChild(annotationDescriptionDiv);
+        lote.descriptionDomElement = annotationDescriptionDiv;
+
         this.model = gltf.scene.children[0];
-        this.model.position.x = lote.posicionLote.x;
+        this.model.position.x = lote.posicionLote.x + 5;
         this.model.position.y = lote.posicionLote.y;
         this.model.position.z = lote.posicionLote.z;
         this.model.scale.set(5, 5, 5)
 
         this.scene.add(this.model);
 
-        this.model.traverse((child) => {
-
-          this.interactionManager.add(child);
-
-          child.addEventListener('mouseover', (event) => {
-            document.body.style.cursor = 'pointer';
-          });
-
-          child.addEventListener('mouseout', (event) => {
-            document.body.style.cursor = 'default';
-          });
-
-          child.addEventListener('mousedown', (event) => {
-            this.tween(lote.posicionLote);
-            event.stopPropagation();
-          });
-        });
       }
     );
   }
 
   private loadMeshFloor() {
-    this.loaderGLTF.load('assets/test.glb', (gltf: GLTF) => {
-        this.model = gltf.scene.children[0];
-        this.scene.add(this.model);
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath('./js/libs/draco/')
+
+    const loader = new GLTFLoader()
+    loader.setDRACOLoader(dracoLoader)
+    loader.load('assets/test.glb', (gltf: GLTF) => {
+        //this.model = gltf.scene.children[0];
+        //this.scene.add(this.model);
+        this.scene.add(gltf.scene.children[0]);
       }
     );
   }
 
   private getAspectRatio() {
-    return this.canvas.clientWidth / this.canvas.clientHeight;
+    return window.innerWidth / window.innerHeight;
   }
 
   private getLotes(): Observable<Lote[]> {
@@ -208,7 +225,46 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       )
       .easing(TWEEN.Easing.Cubic.Out)
       .start()
+
+    this.lotes.forEach(lote => {
+      if (lote.descriptionDomElement) {
+        (lote.descriptionDomElement as HTMLElement).style.display = 'none'
+      }
+    })
+
+    if (this.loteSeleccionado!.descriptionDomElement) {
+      this.loteSeleccionado!.descriptionDomElement.style.display = 'block'
+    }
+
   }
+
+  private createLabelRenderer(): void {
+    this.labelRenderer = new CSS2DRenderer();
+    this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    this.labelRenderer.domElement.style.position = 'absolute';
+    this.labelRenderer.domElement.style.top = '0px';
+    this.labelRenderer.domElement.style.pointerEvents = 'none';
+    this.rendererContainer.nativeElement.appendChild(this.labelRenderer.domElement);
+  }
+
+  onClick = (event: MouseEvent) => {
+    event.preventDefault();
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    mouse.x = (event.offsetX / this.renderer.domElement.clientWidth) * 2 - 1;
+    mouse.y = -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, this.camera);
+
+    const intersects = raycaster.intersectObjects(this.annotationMarkers);
+    if (intersects.length > 0) {
+      const intersection = intersects[0];
+      const idLoteSeleccionado = intersection.object.userData['id']
+      this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado);
+      this.tween(intersection.object.position);
+    }
+  };
+
 }
 
 
