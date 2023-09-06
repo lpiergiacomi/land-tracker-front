@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef} from '@angular/core';
 import * as THREE from "three";
-import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { InteractionManager } from 'three.interactive';
-import { LoteService } from '../backend/services/lote.service';
-import { Lote } from '../backend/model/lote';
-import { Observable, map } from 'rxjs';
+import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import {InteractionManager} from 'three.interactive';
+import {LoteService} from '../backend/services/lote.service';
+import {Lote} from '../backend/model/lote';
+import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
 
 
@@ -41,7 +41,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit() {
@@ -59,7 +59,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         next: (response) => {
           this.lotes = response;
           this.createBoxClickeable();
-          console.log(this.lotes);
         },
         error: (error) => {
           console.error(error);
@@ -73,8 +72,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       this.controls.update();
       TWEEN.update();
       component.renderer.render(component.scene, component.camera);
-      console.log(this.camera);
-      
+
       // component.animateModel();
     };
 
@@ -95,6 +93,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.controls.dampingFactor = 0.2
     this.controls.enableDamping = true
     this.controls.target.set(8, 3, 4)
+    this.controls.minPolarAngle = 0;
+    this.controls.maxPolarAngle = Math.PI * 0.5;
     this.controls.update();
   };
 
@@ -125,7 +125,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   private createRenderer() {
     // Use canvas element in template
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.shadowMap.enabled = true;
@@ -159,51 +159,49 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   private loadGLTFModelDeLote(lote: Lote) {
-    this.loaderGLTF.load('assets/exclamation_point.glb', (gltf: GLTF) => {
-      this.model = gltf.scene.children[0];
-      //var box = new THREE.Box3().setFromObject(this.model);
-      this.model.position.x = lote.posicionLote.x;
-      this.model.position.y = lote.posicionLote.y;
-      this.model.position.z = lote.posicionLote.z;
+    this.loaderGLTF.load('assets/map_pin.glb', (gltf: GLTF) => {
+        //var box = new THREE.Box3().setFromObject(this.model);
+        this.model.position.x = lote.posicionLote.x;
+        this.model.position.y = lote.posicionLote.y;
+        this.model.position.z = lote.posicionLote.z;
+        this.model.scale.set(5, 5, 5)
 
-      //box.getCenter(this.model.position); // this re-sets the mesh position
-      //this.model.position.multiplyScalar(-1);
-      this.scene.add(this.model);
+        //box.getCenter(this.model.position); // this re-sets the mesh position
+        //this.model.position.multiplyScalar(-1);
+        this.scene.add(this.model);
 
-      this.model.traverse((child) => {
+        this.model.traverse((child) => {
 
-        this.interactionManager.add(child);
+          this.interactionManager.add(child);
 
-        child.addEventListener('mouseover', (event) => {
-          document.body.style.cursor = 'pointer';
+          child.addEventListener('mouseover', (event) => {
+            document.body.style.cursor = 'pointer';
+          });
+
+          child.addEventListener('mouseout', (event) => {
+            document.body.style.cursor = 'default';
+          });
+
+          child.addEventListener('mousedown', (event) => {
+            //console.log(this.model);
+            this.tween(lote.posicionLote);
+            event.stopPropagation();
+          });
         });
-
-        child.addEventListener('mouseout', (event) => {
-          document.body.style.cursor = 'default';
-        });
-
-        child.addEventListener('mousedown', (event) => {
-          //console.log(this.model);
-          this.tween(lote.posicionLote);
-          event.stopPropagation();
-        });
-      });
-    }
+      }
     );
   }
 
   private loadGLTFModel() {
-    this.loaderGLTF.load('assets/field/scene.glb', (gltf: GLTF) => {
-      this.model = gltf.scene.children[0];
-      var box = new THREE.Box3().setFromObject(this.model); //TODO: Evaluar si no es necesario
-      box.getCenter(this.model.position); // this re-sets the mesh position //TODO: Evaluar si no es necesario
-      //this.model.position.multiplyScalar(-1);
-      this.scene.add(this.model);
-    }
+    this.loaderGLTF.load('assets/test.glb', (gltf: GLTF) => {
+        this.model = gltf.scene.children[0];
+        var box = new THREE.Box3().setFromObject(this.model); //TODO: Evaluar si no es necesario
+        box.getCenter(this.model.position); // this re-sets the mesh position //TODO: Evaluar si no es necesario
+        //this.model.position.multiplyScalar(-1);
+        this.scene.add(this.model);
+      }
     );
   }
-
-
 
 
   private getAspectRatio() {
@@ -221,28 +219,28 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   private tween(posicionLote) {
     new TWEEN.Tween(this.camera.position)
-        .to(
-            {
-                x: posicionLote.x-5,
-                y: posicionLote.y+100,
-                z: posicionLote.z+100,
-            },
-            500
-        )
-        .easing(TWEEN.Easing.Cubic.Out)
-        .start()
+      .to(
+        {
+          x: posicionLote.x - 5,
+          y: posicionLote.y + 100,
+          z: posicionLote.z + 100,
+        },
+        500
+      )
+      .easing(TWEEN.Easing.Cubic.Out)
+      .start()
 
     new TWEEN.Tween(this.controls.target)
-        .to(
-            {
-                x: posicionLote.x,
-                y: posicionLote.y,
-                z: posicionLote.z,
-            },
-            500
-        )
-        .easing(TWEEN.Easing.Cubic.Out)
-        .start()
+      .to(
+        {
+          x: posicionLote.x,
+          y: posicionLote.y,
+          z: posicionLote.z,
+        },
+        500
+      )
+      .easing(TWEEN.Easing.Cubic.Out)
+      .start()
   }
 }
 
