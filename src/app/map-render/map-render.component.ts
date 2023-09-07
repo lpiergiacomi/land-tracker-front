@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import * as THREE from "three";
 import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
@@ -8,7 +8,6 @@ import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Vector3} from "three";
-import {MapTooltipComponent} from "../map-tooltip/map-tooltip.component";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 
 
@@ -18,9 +17,8 @@ import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
   styleUrls: ['./map-render.component.css']
 })
 export class MapRenderComponent implements OnInit, AfterViewInit {
-  @ViewChild('rendererContainer', {static: true}) private rendererContainer: ElementRef;
-  @ViewChild(MapTooltipComponent) private mapTooltip: MapTooltipComponent;
-
+  @ViewChild('rendererContainer', {static: true})
+  private rendererContainer: ElementRef;
   private fieldOfView: number = 11;
   private nearClippingPane: number = 1;
   private farClippingPane: number = 9999;
@@ -146,18 +144,15 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         this.annotationMarkers.push(annotationSprite);
 
         const annotationDiv = document.createElement('div');
-        annotationDiv.className = 'annotationLabel';
         annotationDiv.innerHTML = lote.id.toLocaleString();
+        annotationDiv.setAttribute("style","color: #ffffff;font-family: monospace;font-size: 17px;")
 
-        const annotationLabel = new CSS2DObject(annotationDiv);
+      const annotationLabel = new CSS2DObject(annotationDiv);
         annotationLabel.position.copy(new THREE.Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z));
         this.scene.add(annotationLabel);
 
         // Info del lote
-        const annotationDescriptionDiv = document.createElement('div')
-        annotationDescriptionDiv.className = 'annotationDescription';
-        annotationDescriptionDiv.innerHTML = lote.nombre;
-        annotationDescriptionDiv.style.display = 'none';
+        const annotationDescriptionDiv = this.createAnnotationDescription(lote);
         annotationDiv.appendChild(annotationDescriptionDiv);
         lote.descriptionDomElement = annotationDescriptionDiv;
 
@@ -180,8 +175,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     const loader = new GLTFLoader()
     loader.setDRACOLoader(dracoLoader)
     loader.load('assets/test.glb', (gltf: GLTF) => {
-        //this.model = gltf.scene.children[0];
-        //this.scene.add(this.model);
         this.scene.add(gltf.scene.children[0]);
       }
     );
@@ -225,17 +218,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       )
       .easing(TWEEN.Easing.Cubic.Out)
       .start()
-
-    this.lotes.forEach(lote => {
-      if (lote.descriptionDomElement) {
-        (lote.descriptionDomElement as HTMLElement).style.display = 'none'
-      }
-    })
-
-    if (this.loteSeleccionado!.descriptionDomElement) {
-      this.loteSeleccionado!.descriptionDomElement.style.display = 'block'
-    }
-
   }
 
   private createLabelRenderer(): void {
@@ -262,9 +244,28 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       const idLoteSeleccionado = intersection.object.userData['id']
       this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado);
       this.tween(intersection.object.position);
+      this.showTooltip()
     }
   };
 
+  private createAnnotationDescription(lote: Lote) {
+    const annotation = document.createElement('div')
+    annotation.innerHTML =`<b>${lote.nombre}</b><br><b>Superficie: </b>${lote.superficie}<br><a href="/mapa-de-lotes-2" target="_blank">Ver más (${lote.id})</a>`;
+    annotation.setAttribute("style", "pointer-events: auto;color:#ffffff; font-family: monospace; font-size: 14px; position: absolute; left: 25px; padding: 1em; width: 200px; background: rgba(0, 0, 0, 0.66); border-radius: .5em; transition: opacity .5s; display: none;");
+    return annotation;
+  }
+
+  private showTooltip() {
+    this.lotes.forEach(lote => {
+      if (lote.descriptionDomElement) {
+        (lote.descriptionDomElement as HTMLElement).style.display = 'none'
+      }
+    })
+
+    if (this.loteSeleccionado!.descriptionDomElement) {
+      this.loteSeleccionado!.descriptionDomElement.style.display = 'block'
+    }
+  }
 }
 
 

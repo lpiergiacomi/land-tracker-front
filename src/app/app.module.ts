@@ -10,15 +10,13 @@ import { LoteService } from './backend/services/lote.service';
 import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MapTooltipComponent } from './map-tooltip/map-tooltip.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    MapRenderComponent,
-    MapTooltipComponent
+    MapRenderComponent
   ],
   imports: [
     BrowserModule,
