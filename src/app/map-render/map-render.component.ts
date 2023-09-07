@@ -137,7 +137,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         })
         const annotationSprite = new THREE.Sprite(annotationSpriteMaterial)
         annotationSprite.scale.set(0.0066, 0.0066, 0.0066)
-        annotationSprite.position.copy(new Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z))
+        let positionLote = new Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z);
+        annotationSprite.position.copy(positionLote)
         annotationSprite.userData['id'] = lote['id'];
 
         this.scene.add(annotationSprite)
@@ -145,10 +146,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
         const annotationDiv = document.createElement('div');
         annotationDiv.innerHTML = lote.id.toLocaleString();
-        annotationDiv.setAttribute("style","color: #ffffff;font-family: monospace;font-size: 17px;")
+        annotationDiv.setAttribute("style", "color: #ffffff;font-family: monospace;font-size: 17px;")
 
-      const annotationLabel = new CSS2DObject(annotationDiv);
-        annotationLabel.position.copy(new THREE.Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z));
+        const annotationLabel = new CSS2DObject(annotationDiv);
+        annotationLabel.position.copy(positionLote);
         this.scene.add(annotationLabel);
 
         // Info del lote
@@ -199,8 +200,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       .to(
         {
           x: x - 5,
-          y: y + 100,
-          z: z + 100,
+          y: y + 40,
+          z: z + 110,
         },
         500
       )
@@ -250,7 +251,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   private createAnnotationDescription(lote: Lote) {
     const annotation = document.createElement('div')
-    annotation.innerHTML =`<b>${lote.nombre}</b><br><b>Superficie: </b>${lote.superficie}<br><a href="/mapa-de-lotes-2" target="_blank">Ver más (${lote.id})</a>`;
+    annotation.innerHTML = `<b>${lote.nombre}</b><br><b>Superficie: </b>${lote.superficie}<br><a href="/detalle-lote/${lote.id}" target="_blank">Ver más</a>`;
     annotation.setAttribute("style", "pointer-events: auto;color:#ffffff; font-family: monospace; font-size: 14px; position: absolute; left: 25px; padding: 1em; width: 200px; background: rgba(0, 0, 0, 0.66); border-radius: .5em; transition: opacity .5s; display: none;");
     return annotation;
   }

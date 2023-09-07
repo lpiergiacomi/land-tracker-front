@@ -10,13 +10,15 @@ import { LoteService } from './backend/services/lote.service';
 import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { DetalleLoteComponent } from './detalle-lote/detalle-lote.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    MapRenderComponent
+    MapRenderComponent,
+    DetalleLoteComponent
   ],
   imports: [
     BrowserModule,

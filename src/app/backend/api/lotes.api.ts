@@ -10,4 +10,8 @@ export class LotesApi {
     getAllLotes() {
         return this.api.get(`${this.apiController}`);
     }
+
+  getAllById(id: number) {
+    return this.api.get(`${this.apiController}/${id}`);
+  }
 }

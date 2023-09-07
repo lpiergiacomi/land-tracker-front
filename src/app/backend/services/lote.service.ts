@@ -13,4 +13,8 @@ export class LoteService {
   getLotes(): Observable<Lote[]> {
     return this.api.getAllLotes();
   }
+
+  getLoteById(id: number): Observable<Lote> {
+    return this.api.getAllById(id);
+  }
 }
