@@ -126,7 +126,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   private loadMeshLote(lote: Lote) {
     this.loaderGLTF.load('assets/map_pin.glb', (gltf: GLTF) => {
-
         const circleTexture = new THREE.TextureLoader().load('assets/img/circle.png')
 
         const annotationSpriteMaterial = new THREE.SpriteMaterial({
@@ -162,6 +161,12 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         this.model.position.y = lote.posicionLote.y;
         this.model.position.z = lote.posicionLote.z;
         this.model.scale.set(5, 5, 5)
+
+        this.model.traverse((object) => {
+          if (object.isMesh) {
+            this.setColorObject(lote, object);
+          }
+        })
 
         this.scene.add(this.model);
 
@@ -266,6 +271,15 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     if (this.loteSeleccionado!.descriptionDomElement) {
       this.loteSeleccionado!.descriptionDomElement.style.display = 'block'
     }
+  }
+
+  private setColorObject(lote, object) {
+    let color = 0x28a745;
+    if (lote.estadoLote == 'RESERVADO')
+      color = 0xffc107;
+    if (lote.estadoLote == 'VENDIDO')
+      color = 0xdc3545;
+    object.material.color.set(color);
   }
 }
 
