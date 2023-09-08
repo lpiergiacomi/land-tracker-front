@@ -14,20 +14,7 @@ export class Lote {
   precio: number;
   descriptionDomElement?: HTMLElement
 
-
-  constructor(id, nombre, superficie, estadoLote, posicionLote, metrosFrente, metrosFondo, nroCuentaCatastral, nroCuentaMunicipal, tieneLuz, tieneAgua, precio) {
-    this.id = id;
-    this.nombre = nombre;
-    this.superficie = superficie;
-    this.estadoLote = estadoLote;
-    this.posicionLote = posicionLote;
-    this.metrosFrente = metrosFrente;
-    this.metrosFondo = metrosFondo;
-    this.nroCuentaCatastral = nroCuentaCatastral;
-    this.nroCuentaMunicipal = nroCuentaMunicipal;
-    this.tieneLuz = tieneLuz;
-    this.tieneAgua = tieneAgua;
-    this.precio = precio;
+  constructor() {
   }
 }
 
