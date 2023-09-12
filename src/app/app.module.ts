@@ -11,6 +11,8 @@ import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DetalleLoteComponent } from './detalle-lote/detalle-lote.component';
+import { TooltipMapComponent } from './tooltip-map/tooltip-map.component';
+import { LabelNroLoteComponent } from './label-nro-lote/label-nro-lote.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { DetalleLoteComponent } from './detalle-lote/detalle-lote.component';
     HeaderComponent,
     MenuComponent,
     MapRenderComponent,
-    DetalleLoteComponent
+    DetalleLoteComponent,
+    TooltipMapComponent,
+    LabelNroLoteComponent
   ],
   imports: [
     BrowserModule,

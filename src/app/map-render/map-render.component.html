@@ -34,10 +34,16 @@
                             </div>
                         </div>
 
+
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 divRendererContainer">
-                                  <div #rendererContainer></div>
+                                  <div #rendererContainer>
+                                    <div >
+                                      <app-label-nro-lote id="{{lote.id}}" #childElement *ngFor="let lote of lotes; let i = index" [lote]="lote" [loteSeleccionado]="loteSeleccionado"></app-label-nro-lote>
+                                    </div>
+
+                                  </div>
                                 </div>
 
                             </div>

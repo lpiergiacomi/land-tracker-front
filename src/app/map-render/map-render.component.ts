@@ -1,4 +1,11 @@
-import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Renderer2, ViewChildren, QueryList
+} from '@angular/core';
 import * as THREE from "three";
 import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
@@ -19,7 +26,8 @@ import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
 })
 export class MapRenderComponent implements OnInit, AfterViewInit {
   @ViewChild('rendererContainer', {static: true})
-  private rendererContainer: ElementRef;
+  rendererContainer: ElementRef;
+  @ViewChildren('childElement', {read: ElementRef}) childElements: QueryList<ElementRef>;
   private fieldOfView: number = 11;
   private nearClippingPane: number = 1;
   private farClippingPane: number = 9999;
@@ -33,13 +41,14 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private directionalLight: THREE.DirectionalLight;
   private annotationMarkers: THREE.Sprite[] = [];
 
-  private lotes: Lote[] = [];
-  public loteSeleccionado: Lote | undefined;
+  public lotes: Lote[] = [];
+  public loteSeleccionado: Lote = new Lote();
   private width = 800;
   private height = 600;
   private cardContainer;
+  private componentes: any = [];
 
-  constructor(private loteService: LoteService, private elementRef: ElementRef) {
+  constructor(private loteService: LoteService, private elementRef: ElementRef, private renderer2: Renderer2) {
 
   }
 
@@ -148,18 +157,18 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.scene.add(annotationSprite)
     this.annotationMarkers.push(annotationSprite);
 
-    const annotationDiv = document.createElement('div');
-    annotationDiv.innerHTML = lote.id.toLocaleString();
-    annotationDiv.setAttribute("style", "color: #ffffff;font-family: monospace;font-size: 17px;")
-
-    const annotationLabel = new CSS2DObject(annotationDiv);
-    annotationLabel.position.copy(positionLote);
-    this.scene.add(annotationLabel);
-
-    // Info del lote
-    const annotationDescriptionDiv = this.createAnnotationDescription(lote);
-    annotationDiv.appendChild(annotationDescriptionDiv);
-    lote.descriptionDomElement = annotationDescriptionDiv;
+    this.childElements.changes.subscribe({
+      next: (elements) => {
+        //TODO: Mover a otro lado porque se esta llamando 14x14 veces
+        let annotationDiv = elements.find(x => x.nativeElement.id == lote.id).nativeElement.children[0]
+        let annotationLabel = new CSS2DObject(annotationDiv);
+        annotationLabel.position.copy(positionLote);
+        this.scene.add(annotationLabel);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   private loadMeshFloor() {
@@ -244,32 +253,11 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     if (intersects.length > 0) {
       const intersection = intersects[0];
       const idLoteSeleccionado = intersection.object.userData['id']
-      this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado);
+      this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado) ?? new Lote();
       this.tween(intersection.object.position);
-      this.showTooltip();
-    } else {
-      this.hideTooltip();
     }
   };
 
-  private createAnnotationDescription(lote: Lote) {
-    const annotation = document.createElement('div')
-    annotation.innerHTML = `<b>${lote.nombre}</b><br><b>Superficie: </b>${lote.superficie}<br><b>Precio: </b>${lote.precio}<br><b>Estado: </b>${lote.estadoLote}<br><a href="/detalle-lote/${lote.id}" target="_blank">Ver más</a><br>`;
-    annotation.setAttribute("style", "pointer-events: auto;color:#ffffff; font-family: monospace; font-size: 14px; position: absolute; left: 25px; padding: 1em; width: 200px; background: rgba(0, 0, 0, 0.66); border-radius: .5em; transition: opacity .5s; display: none;");
-    return annotation;
-  }
-
-  private showTooltip() {
-    this.lotes.forEach(lote => {
-      if (lote.descriptionDomElement) {
-        (lote.descriptionDomElement as HTMLElement).style.display = 'none'
-      }
-    })
-
-    if (this.loteSeleccionado!.descriptionDomElement) {
-      this.loteSeleccionado!.descriptionDomElement.style.display = 'block'
-    }
-  }
 
   private setColorObject(lote) {
     let color = 0x28a745;
@@ -289,11 +277,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.labelRenderer.setSize(this.width, this.height);
   }
 
-  private hideTooltip() {
-    this.lotes.forEach(lote => {
-      (lote.descriptionDomElement as HTMLElement).style.display = 'none'
-    })
-  }
 }
 
 
