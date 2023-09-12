@@ -7,7 +7,7 @@ import {Lote} from "../backend/model/lote";
   styleUrls: ['./label-nro-lote.component.css']
 })
 export class LabelNroLoteComponent {
-  @Input() lote: Lote = new Lote();
-  @Input() loteSeleccionado: Lote = new Lote();
+  @Input() lote: Lote;
+  @Input() loteSeleccionado: Lote;
 
 }

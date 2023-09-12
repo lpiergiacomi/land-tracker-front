@@ -42,11 +42,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private annotationMarkers: THREE.Sprite[] = [];
 
   public lotes: Lote[] = [];
-  public loteSeleccionado: Lote = new Lote();
+  public loteSeleccionado: Lote;
   private width = 800;
   private height = 600;
   private cardContainer;
-  private componentes: any = [];
 
   constructor(private loteService: LoteService, private elementRef: ElementRef, private renderer2: Renderer2) {
 
@@ -159,7 +158,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
     this.childElements.changes.subscribe({
       next: (elements) => {
-        //TODO: Mover a otro lado porque se esta llamando 14x14 veces
         let annotationDiv = elements.find(x => x.nativeElement.id == lote.id).nativeElement.children[0]
         let annotationLabel = new CSS2DObject(annotationDiv);
         annotationLabel.position.copy(positionLote);

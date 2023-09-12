@@ -12,7 +12,6 @@ export class Lote {
   tieneLuz: boolean;
   tieneAgua: boolean;
   precio: number;
-  descriptionDomElement?: HTMLElement
 
   constructor() {
   }

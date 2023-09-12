@@ -8,11 +8,11 @@ import {Lote} from "../backend/model/lote";
 })
 export class TooltipMapComponent {
 
-  @Input() lote: Lote = new Lote();
-  @Input() loteSeleccionado: Lote = new Lote();
+  @Input() lote: Lote;
+  @Input() loteSeleccionado: Lote;
 
   cerrarTooltip() {
-    this.loteSeleccionado = new Lote();
+    this.loteSeleccionado = null;
   }
 
   public mostrarTooltip(){

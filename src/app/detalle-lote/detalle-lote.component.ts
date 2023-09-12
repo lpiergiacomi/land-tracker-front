@@ -9,7 +9,7 @@ import {LoteService} from "../backend/services/lote.service";
   styleUrls: ['./detalle-lote.component.css']
 })
 export class DetalleLoteComponent implements OnInit{
-  public lote: Lote = new Lote();
+  public lote: Lote;
 
   constructor(private route: ActivatedRoute, private loteService: LoteService) {
 
