@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Lote} from "../backend/model/lote";
 
 @Component({
@@ -10,9 +10,10 @@ export class TooltipMapComponent {
 
   @Input() lote: Lote;
   @Input() loteSeleccionado: Lote;
+  @Output() cerrarTooltipEvent = new EventEmitter<void>();
 
   cerrarTooltip() {
-    this.loteSeleccionado = null;
+    this.cerrarTooltipEvent.emit();
   }
 
   public mostrarTooltip(){

@@ -275,6 +275,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.labelRenderer.setSize(this.width, this.height);
   }
 
+  cerrarTooltipDesdeHijo() {
+    this.loteSeleccionado = null;
+  }
+
 }
 
 

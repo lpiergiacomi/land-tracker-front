@@ -1,3 +1,3 @@
 <div class="labelNroLote">{{lote!.id}}
-  <app-tooltip-map [lote]="lote" [loteSeleccionado]="loteSeleccionado"></app-tooltip-map>
+  <app-tooltip-map [lote]="lote" [loteSeleccionado]="loteSeleccionado" (cerrarTooltipEvent)="cerrarTooltipDesdeHijo()"></app-tooltip-map>
 </div>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Lote} from "../backend/model/lote";
 
 @Component({
@@ -9,5 +9,11 @@ import {Lote} from "../backend/model/lote";
 export class LabelNroLoteComponent {
   @Input() lote: Lote;
   @Input() loteSeleccionado: Lote;
+  @Output() cerrarTooltipEvent = new EventEmitter<void>();
+
+  cerrarTooltipDesdeHijo() {
+    this.loteSeleccionado = null;
+    this.cerrarTooltipEvent.emit();
+  }
 
 }

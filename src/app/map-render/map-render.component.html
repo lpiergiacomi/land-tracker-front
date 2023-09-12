@@ -27,6 +27,7 @@
                         <div class="card-header">
                             <h5 class="card-title">Mapa de lotes</h5>
 
+
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -40,7 +41,7 @@
                                 <div class="col-md-12 divRendererContainer">
                                   <div #rendererContainer>
                                     <div >
-                                      <app-label-nro-lote id="{{lote.id}}" #childElement *ngFor="let lote of lotes; let i = index" [lote]="lote" [loteSeleccionado]="loteSeleccionado"></app-label-nro-lote>
+                                      <app-label-nro-lote id="{{lote.id}}" #childElement *ngFor="let lote of lotes; let i = index" [lote]="lote" [loteSeleccionado]="loteSeleccionado" (cerrarTooltipEvent)="cerrarTooltipDesdeHijo()"></app-label-nro-lote>
                                     </div>
 
                                   </div>
