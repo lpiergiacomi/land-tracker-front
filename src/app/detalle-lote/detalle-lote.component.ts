@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, Input, OnInit} from '@angular/core';
 import {Lote} from "../backend/model/lote";
 import {LoteService} from "../backend/services/lote.service";
 
@@ -8,19 +7,19 @@ import {LoteService} from "../backend/services/lote.service";
   templateUrl: './detalle-lote.component.html',
   styleUrls: ['./detalle-lote.component.css']
 })
-export class DetalleLoteComponent implements OnInit{
-  public lote: Lote;
+export class DetalleLoteComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private loteService: LoteService) {
+  @Input() loteSeleccionado: Lote;
+
+  constructor(private loteService: LoteService) {
 
   }
   ngOnInit(): void {
-    const idLote = this.route.snapshot.params['id'];
-    this.getLoteById(idLote);
+    this.getLoteById(this.loteSeleccionado.id);
   }
 
   private getLoteById(idLote: number) {
     this.loteService.getLoteById(idLote)
-      .subscribe(lote => this.lote = lote);
+      .subscribe(lote => this.loteSeleccionado = lote);
   }
 }

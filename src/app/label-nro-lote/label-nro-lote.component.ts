@@ -9,11 +9,12 @@ import {Lote} from "../backend/model/lote";
 export class LabelNroLoteComponent {
   @Input() lote: Lote;
   @Input() loteSeleccionado: Lote;
-  @Output() cerrarTooltipEvent = new EventEmitter<void>();
+  @Input() loteParaTooltip: Lote;
+  @Output() cerrarTooltipEvent = new EventEmitter<void>(); //TODO: Por ahora no se usa
 
   cerrarTooltipDesdeHijo() {
     this.loteSeleccionado = null;
-    this.cerrarTooltipEvent.emit();
+    this.cerrarTooltipEvent.emit(); //TODO: Por ahora no se usa
   }
 
 }

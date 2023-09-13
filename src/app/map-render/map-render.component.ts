@@ -43,11 +43,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   public lotes: Lote[] = [];
   public loteSeleccionado: Lote;
+  public loteParaTooltip: Lote;
+
   private width = 800;
   private height = 600;
   private cardContainer;
 
-  constructor(private loteService: LoteService, private elementRef: ElementRef, private renderer2: Renderer2) {
+  constructor(private loteService: LoteService, private elementRef: ElementRef) {
 
   }
 
@@ -67,6 +69,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.animate();
 
     this.renderer.domElement.addEventListener('click', this.onClick, false);
+    this.renderer.domElement.addEventListener('mousemove', this.onHover, false);
+
     window.addEventListener('resize', this.onWindowResize, false);
 
   }
@@ -241,21 +245,36 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   onClick = (event: MouseEvent) => {
     event.preventDefault();
+    this.loteSeleccionado = null;
+    const intersects = this.createRaycaster(event);
+    if (intersects.length > 0) {
+      const intersection = intersects[0];
+      const idLoteSeleccionado = intersection.object.userData['id']
+      this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado);
+      this.tween(intersection.object.position);
+    }
+  };
 
+  onHover = (event: MouseEvent) => {
+    event.preventDefault();
+    this.loteParaTooltip = null;
+    const intersects = this.createRaycaster(event);
+
+    if (intersects.length > 0) {
+      const intersection = intersects[0];
+      const idloteParaTooltip = intersection.object.userData['id']
+      this.loteParaTooltip = this.lotes.find(lote => lote.id == idloteParaTooltip);
+    }
+  };
+
+  private createRaycaster(event) {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     mouse.x = (event.offsetX / this.renderer.domElement.clientWidth) * 2 - 1;
     mouse.y = -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, this.camera);
-    const intersects = raycaster.intersectObjects(this.annotationMarkers);
-    if (intersects.length > 0) {
-      const intersection = intersects[0];
-      const idLoteSeleccionado = intersection.object.userData['id']
-      this.loteSeleccionado = this.lotes.find(lote => lote.id == idLoteSeleccionado) ?? new Lote();
-      this.tween(intersection.object.position);
-    }
-  };
-
+    return raycaster.intersectObjects(this.annotationMarkers);
+  }
 
   private setColorObject(lote) {
     let color = 0x28a745;

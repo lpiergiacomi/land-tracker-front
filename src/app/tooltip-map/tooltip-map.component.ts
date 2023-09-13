@@ -10,14 +10,15 @@ export class TooltipMapComponent {
 
   @Input() lote: Lote;
   @Input() loteSeleccionado: Lote;
-  @Output() cerrarTooltipEvent = new EventEmitter<void>();
+  @Input() loteParaTooltip: Lote;
+  @Output() cerrarTooltipEvent = new EventEmitter<void>(); //TODO: Por ahora no se usa
 
   cerrarTooltip() {
-    this.cerrarTooltipEvent.emit();
+    this.cerrarTooltipEvent.emit(); //TODO: Por ahora no se usa
   }
 
   public mostrarTooltip(){
-    return this.loteSeleccionado?.id == this.lote.id;
+    return this.loteParaTooltip?.id == this.lote.id;
   }
 
 

@@ -1,14 +1,9 @@
 <div *ngIf="this.mostrarTooltip()" class="tooltip-map">
-  <b>{{lote.nombre}}</b>
+  <b>{{loteParaTooltip.nombre}}</b>
   <br>
-  <b>Superficie: </b>{{lote.superficie}}
+  <b>Superficie: </b>{{loteParaTooltip.superficie}}
   <br>
-  <b>Precio: </b>{{lote.precio}}
+  <b>Precio: </b>{{loteParaTooltip.precio}}
   <br>
-  <b>Estado: </b>{{lote.estadoLote}}
-  <br>
-  <a href="/detalle-lote/{{lote.id}}" target="_blank">Ver más</a>
-  <br>
-  <button (click)="cerrarTooltip()">Cerrar</button>
-  <br>
+  <b>Estado: </b>{{loteParaTooltip.estadoLote}}
 </div>
