@@ -20,6 +20,8 @@
   <section class="content">
     <div class="container-fluid">
 
+      <app-buscador-lotes (changeLotesEventEmitter)="mostrarLotesFiltrados($event)"></app-buscador-lotes>
+
       <div class="row">
         <!--<div [ngClass]="{'col-md-12':!loteSeleccionado,'col-md-8':loteSeleccionado}">-->
         <div class="col-md-12">

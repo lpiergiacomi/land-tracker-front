@@ -4,7 +4,7 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
-  Renderer2, ViewChildren, QueryList
+  ViewChildren, QueryList
 } from '@angular/core';
 import * as THREE from "three";
 import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -48,9 +48,9 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private width = 800;
   private height = 600;
   private cardContainer;
+  private labelGroup = new THREE.Group();
 
   constructor(private loteService: LoteService, private elementRef: ElementRef) {
-
   }
 
   ngOnInit(): void {
@@ -87,7 +87,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.getLotes().subscribe({
       next: (response) => {
         this.lotes = response;
-        this.lotes.forEach(lote => {
+        this.lotes.forEach((lote) => {
           this.loadMeshLote(lote);
         })
       },
@@ -138,7 +138,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
     this.renderer.shadowMap.enabled = true;
-    this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
+    this.rendererContainer.nativeElement.appendChild(this.renderer.domElement); //canvas
   }
 
   private loadMeshLote(lote: Lote) {
@@ -156,21 +156,22 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     let positionLote = new Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z);
     annotationSprite.position.copy(positionLote)
     annotationSprite.userData['id'] = lote['id'];
-
     this.scene.add(annotationSprite)
+
     this.annotationMarkers.push(annotationSprite);
 
-    this.childElements.changes.subscribe({
-      next: (elements) => {
-        let annotationDiv = elements.find(x => x.nativeElement.id == lote.id).nativeElement.children[0]
-        let annotationLabel = new CSS2DObject(annotationDiv);
-        annotationLabel.position.copy(positionLote);
-        this.scene.add(annotationLabel);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.childElements.changes.subscribe((changes: QueryList<ElementRef>) => {
+      const changedRefs = changes.toArray();
+      let annotationDiv = changedRefs.find(x => x.nativeElement.id == lote.id)?.nativeElement.children[0]
+      let annotationLabel = new CSS2DObject(annotationDiv);
+      annotationLabel.position.copy(positionLote);
+      annotationLabel.userData['id'] = lote['id'];
+      // Agrego el label al grupo
+      this.labelGroup.add(annotationLabel);
+
+    })
+    // Agrego a la escena el grupo con todos los labels
+    this.scene.add(this.labelGroup);
   }
 
   private loadMeshFloor() {
@@ -240,6 +241,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.labelRenderer.domElement.style.position = 'absolute';
     this.labelRenderer.domElement.style.top = '0px';
     this.labelRenderer.domElement.style.pointerEvents = 'none';
+    //this.labelRenderer.domElement.id = 'idLabelRenderer';
     this.rendererContainer.nativeElement.appendChild(this.labelRenderer.domElement)
   }
 
@@ -294,8 +296,23 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.labelRenderer.setSize(this.width, this.height);
   }
 
-  cerrarTooltipDesdeHijo() {
-    this.loteSeleccionado = null;
+  mostrarLotesFiltrados(lotes: Lote[]) {
+    this.lotes = lotes;
+
+    let labelsAEliminar = [];
+    // Aca la idea es recorrer el grupo de los labels, y eliminar tanto de la escena como del DOM todos los que no esten
+    // incluídos en los lotes filtrados que se tienen que mostrar. Esto si se pone un debugger se ve que funciona, pero
+    // vuelve a poner todos los labels el @ViewChildren.
+    this.labelGroup.traverse((label:CSS2DObject) => {
+      const elementoHTML = label.element;
+      if(elementoHTML && elementoHTML.parentNode && !this.lotes.map(l => l.id).includes(parseInt(elementoHTML.innerText))) {
+        elementoHTML.parentNode.removeChild(elementoHTML);
+        labelsAEliminar.push(label);
+      }
+    })
+    labelsAEliminar.forEach(l => {
+      this.scene.remove(l);
+    })
   }
 
 }
