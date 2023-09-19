@@ -13,7 +13,7 @@ import {Cliente, ClienteParams} from "../../backend/model/cliente";
   templateUrl: './dialog-reserva.component.html',
   styleUrls: ['./dialog-reserva.component.css']
 })
-export class DialogReservaComponent implements OnInit{
+export class DialogReservaComponent implements OnInit {
   clientes: Cliente[] = [];
   clienteCtrl = new FormControl();
   isLoading = false;
@@ -25,19 +25,25 @@ export class DialogReservaComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public lote: Lote,
     private crearClienteDialog: MatDialog,
     private clienteService: ClienteService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.clienteCtrl.valueChanges
       .pipe(
         startWith(''),
         debounceTime(300),
-        filter((value) => value.length > 2),
+        filter((value) => {
+          return value?.length > 2;
+        }),
         tap(() => this.isLoading = true),
-        switchMap((value) => this.clienteService.getClientesFiltrados(new ClienteParams(value)).pipe(
-          delay(500),
-          finalize(() => this.isLoading = false)
-        ))      )
+        switchMap((value) => {
+          return this.clienteService.getClientesFiltrados(new ClienteParams(value)).pipe(
+            delay(500),
+            finalize(() => this.isLoading = false)
+          );
+        })
+      )
       .subscribe((data) => {
         this.clientes = data.content || [];
         this.isLoading = false;
@@ -55,9 +61,9 @@ export class DialogReservaComponent implements OnInit{
   abrirDialogCreacionCliente() {
     const dialogRef = this.crearClienteDialog.open(DialogCrearClienteComponent);
 
-    dialogRef.afterClosed().subscribe((nuevoCliente: { id: string, nombre: string }) => {
+    dialogRef.afterClosed().subscribe((nuevoCliente: Cliente) => {
       if (nuevoCliente) {
-        //this.clientes.push(nuevoCliente);
+        this.clientes.push(nuevoCliente);
         this.clienteCtrl.setValue(nuevoCliente);
         this.autoTrigger.closePanel();
 

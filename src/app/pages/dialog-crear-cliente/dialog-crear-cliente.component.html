@@ -1,10 +1,6 @@
 <h1 mat-dialog-title>Crear cliente</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>ID</mat-label>
-    <input matInput [(ngModel)]="nuevoCliente.id">
-  </mat-form-field>
-  <mat-form-field>
     <mat-label>Nombre</mat-label>
     <input matInput [(ngModel)]="nuevoCliente.nombre">
   </mat-form-field>
@@ -12,5 +8,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button cdkFocusInitial [mat-dialog-close]="nuevoCliente">Crear</button>
+  <button mat-button (click)="crearCliente()" cdkFocusInitial [mat-dialog-close]="nuevoCliente">Crear</button>
 </div>
