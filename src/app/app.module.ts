@@ -28,6 +28,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { DialogCrearClienteComponent } from './pages/dialog-crear-cliente/dialog-crear-cliente.component';
 import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {ClientesApi} from "./backend/api/clientes.api";
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     HttpService,

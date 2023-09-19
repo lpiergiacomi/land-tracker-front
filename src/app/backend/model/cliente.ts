@@ -6,3 +6,11 @@ export class Cliente {
   constructor() {
   }
 }
+
+export class ClienteParams {
+  nombre: string;
+
+  constructor(nombre: string) {
+    this.nombre = nombre;
+  }
+}
