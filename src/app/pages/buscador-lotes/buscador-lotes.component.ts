@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl} from "@angular/forms";
-import {LoteService} from "../backend/services/lote.service";
-import {Lote, LoteParams} from "../backend/model/lote";
+import {LoteService} from "../../backend/services/lote.service";
+import {Lote, LoteParams} from "../../backend/model/lote";
 
 @Component({
   selector: 'app-buscador-lotes',

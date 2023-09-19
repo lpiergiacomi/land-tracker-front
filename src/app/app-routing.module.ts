@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from './app.component';
-import {MapRenderComponent} from './map-render/map-render.component';
+import {MapRenderComponent} from './pages/map-render/map-render.component';
 
 const routes: Routes = [
 

@@ -9,8 +9,8 @@ import {
 import * as THREE from "three";
 import {GLTFLoader, GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
-import {LoteService} from '../backend/services/lote.service';
-import {Lote} from '../backend/model/lote';
+import {LoteService} from '../../backend/services/lote.service';
+import {Lote} from '../../backend/model/lote';
 import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";

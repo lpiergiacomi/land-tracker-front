@@ -38,5 +38,7 @@
       <dt class="col-sm-4">Precio</dt>
       <dd class="col-sm-8">{{loteSeleccionado?.precio | currency}}</dd>
     </dl>
+    <button *ngIf="loteSeleccionado.estadoLote == 'DISPONIBLE'" mat-raised-button color="primary" (click)="reservar()">Reservar</button>
+
   </div>
 </div>
