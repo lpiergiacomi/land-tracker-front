@@ -31,6 +31,12 @@ import {ClientesApi} from "./backend/api/clientes.api";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatMenuModule} from "@angular/material/menu";
+import { BodyComponent } from './body/body.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,7 @@ import {MatIconModule} from "@angular/material/icon";
     BuscadorLotesComponent,
     DialogReservaComponent,
     DialogCrearClienteComponent,
+    BodyComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +69,12 @@ import {MatIconModule} from "@angular/material/icon";
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatBadgeModule,
+    MatMenuModule,
   ],
   providers: [
     HttpService,

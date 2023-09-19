@@ -6,10 +6,6 @@ import {MapRenderComponent} from './pages/map-render/map-render.component';
 const routes: Routes = [
 
   {
-    path: "",
-    component: AppComponent
-  },
-  {
     path: "mapa-de-lotes",
     component: MapRenderComponent
   }
