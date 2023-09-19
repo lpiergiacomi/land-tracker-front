@@ -25,47 +25,41 @@
       <div class="row">
         <!--<div [ngClass]="{'col-md-12':!loteSeleccionado,'col-md-8':loteSeleccionado}">-->
         <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="card-title">Mapa de lotes</h5>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
 
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-8 divRendererContainer">
-                  <div #rendererContainer>
-                    <div>
-                      <app-label-nro-lote
-                        id="{{lote.id}}"
-                        #childElement
-                        *ngFor="let lote of lotes; let i = index"
-                        [lote]="lote"
-                        [loteSeleccionado]="loteSeleccionado"
-                        [loteParaTooltip]="loteParaTooltip">
-                      </app-label-nro-lote>
-                    </div>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false"
+                               [expanded]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>map</mat-icon>
+                Mapa de lotes
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
+            <div class="row">
+              <div class="col-md-8 divRendererContainer">
+                <div #rendererContainer>
+                  <div>
+                    <app-label-nro-lote
+                      id="{{lote.id}}"
+                      #childElement
+                      *ngFor="let lote of lotes; let i = index"
+                      [lote]="lote"
+                      [loteSeleccionado]="loteSeleccionado"
+                      [loteParaTooltip]="loteParaTooltip">
+                    </app-label-nro-lote>
                   </div>
-                </div>
-                <div class="col-md-4" *ngIf="loteSeleccionado">
-                  <app-detalle-lote [loteSeleccionado]="loteSeleccionado"></app-detalle-lote>
+
                 </div>
               </div>
+              <div class="col-md-4" *ngIf="loteSeleccionado">
+                <app-detalle-lote [loteSeleccionado]="loteSeleccionado"></app-detalle-lote>
+              </div>
             </div>
+          </mat-expansion-panel>
 
-          </div>
 
         </div>
-        <!--
-        <div class="col-md-4" *ngIf="loteSeleccionado">
-          <app-detalle-lote [loteSeleccionado]="loteSeleccionado"></app-detalle-lote>
-        </div>
-        -->
       </div>
     </div>
   </section>

@@ -49,6 +49,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private height = 600;
   private cardContainer;
   private labelGroup = new THREE.Group();
+  panelOpenState = true;
 
   constructor(private loteService: LoteService, private elementRef: ElementRef) {
   }
