@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Lote} from "../../backend/model/lote";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DialogCrearClienteComponent} from "../dialog-crear-cliente/dialog-crear-cliente.component";
 import {MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {ClienteService} from "../../backend/services/cliente.service";

@@ -29,7 +29,6 @@ import { DialogCrearClienteComponent } from './pages/dialog-crear-cliente/dialog
 import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
@@ -61,7 +60,6 @@ import {ToastrModule} from "ngx-toastr";
     MatInputModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
   ],
