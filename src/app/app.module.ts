@@ -37,6 +37,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatMenuModule} from "@angular/material/menu";
 import { BodyComponent } from './body/body.component';
+import { SublevelMenuComponent } from './pages/menu/sublevel-menu.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { BodyComponent } from './body/body.component';
     DialogReservaComponent,
     DialogCrearClienteComponent,
     BodyComponent,
+    SublevelMenuComponent,
   ],
   imports: [
     BrowserModule,
