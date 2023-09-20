@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ClienteService} from "../../backend/services/cliente.service";
 import {Cliente} from "../../backend/model/cliente";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-dialog-crear-cliente',
@@ -18,7 +18,7 @@ export class DialogCrearClienteComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DialogCrearClienteComponent>,
                 private clienteService: ClienteService,
-                private snackBar: MatSnackBar) {
+                private toastr: ToastrService) {
     }
 
     ngOnInit() {
@@ -51,9 +51,9 @@ export class DialogCrearClienteComponent implements OnInit {
                     console.error(error);
                 },
                 complete: () => {
-                    this.snackBar.open(`El cliente ${this.nuevoCliente.nombre} fue creado con éxito`);
+                    this.toastr.success(`El cliente ${this.nuevoCliente.nombre} fue creado con éxito`);
                     this.dialogRef.close(this.nuevoCliente);
-                    this.isLoading = true;
+                    this.isLoading = false;
                 },
             });
     }
