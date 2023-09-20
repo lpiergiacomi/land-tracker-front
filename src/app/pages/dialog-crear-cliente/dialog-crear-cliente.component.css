@@ -1,0 +1,10 @@
+.loading-spinner {
+    position: absolute;
+    top: calc(50% - 16px);
+    right: 10px;
+    z-index: 1;
+}
+
+mat-form-field {
+    padding-top: 8px;
+}

@@ -26,12 +26,11 @@ export class DetalleLoteComponent implements OnInit {
   }
 
   reservar() {
-    const dialogRef = this.dialogReserva.open(DialogReservaComponent, {
+    const dialogReserva = this.dialogReserva.open(DialogReservaComponent, {
       data: this.loteSeleccionado,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogReserva.afterClosed().subscribe(result => {
       console.log(result);
       //this.animal = result;
     });

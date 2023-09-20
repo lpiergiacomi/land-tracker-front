@@ -9,98 +9,103 @@ import {debounceTime, delay, filter, finalize, startWith, switchMap, tap} from "
 import {Cliente, ClienteParams} from "../../backend/model/cliente";
 
 @Component({
-  selector: 'app-dialog-reserva',
-  templateUrl: './dialog-reserva.component.html',
-  styleUrls: ['./dialog-reserva.component.css']
+    selector: 'app-dialog-reserva',
+    templateUrl: './dialog-reserva.component.html',
+    styleUrls: ['./dialog-reserva.component.css']
 })
 export class DialogReservaComponent implements OnInit {
-  clientes: Cliente[] = [];
-  isLoading = false;
-  nuevaReservaForm!: FormGroup;
+    clientes: Cliente[] = [];
+    isLoading = false;
+    nuevaReservaForm!: FormGroup;
 
-  @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger;
+    @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger;
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogReservaComponent>,
-    @Inject(MAT_DIALOG_DATA) public lote: Lote,
-    private crearClienteDialog: MatDialog,
-    private clienteService: ClienteService
-  ) {
-  }
+    constructor(
+        public dialogRef: MatDialogRef<DialogReservaComponent>,
+        @Inject(MAT_DIALOG_DATA) public lote: Lote,
+        private crearClienteDialog: MatDialog,
+        private clienteService: ClienteService
+    ) {
+    }
 
-  ngOnInit() {
-    this.nuevaReservaForm = new FormGroup({
-      nombreCliente: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        this.clienteValidator.bind(this)
-      ])
-    })
-
-    this.nombreCliente.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(300),
-        filter((value) => {
-          return value?.length > 2;
-        }),
-        tap(() => this.isLoading = true),
-        switchMap((value) => {
-          return this.clienteService.getClientesFiltrados(new ClienteParams(value)).pipe(
-            delay(500),
-            finalize(() => this.isLoading = false)
-          );
+    ngOnInit() {
+        this.nuevaReservaForm = new FormGroup({
+            cliente: new FormControl('', [
+                Validators.required,
+                Validators.minLength(3),
+                this.clienteValidator.bind(this)
+            ])
         })
-      )
-      .subscribe((data) => {
-        this.clientes = data.content || [];
-        this.isLoading = false;
-      });
-  }
-
-  get nombreCliente() { return this.nuevaReservaForm.get('nombreCliente'); }
-
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  displayFn(cliente: any): string {
-    return cliente?.nombre;
-  }
-
-  abrirDialogCreacionCliente() {
-    const dialogCrearCliente = this.crearClienteDialog.open(DialogCrearClienteComponent);
-
-    dialogCrearCliente.afterClosed().subscribe((nuevoCliente: Cliente) => {
-      if (nuevoCliente) {
-        this.clientes.push(nuevoCliente);
-        this.nombreCliente.setValue(nuevoCliente);
-        this.autoTrigger.closePanel();
-
-      }
-    });
-  }
-
-  getErrorMessage() {
-    if (this.nombreCliente.hasError('required')) {
-      return 'Debe ingresar un cliente';
+        this.getClientes();
     }
-    if (this.nombreCliente.hasError('invalidCliente')) {
-      return 'Debe seleccionar un cliente válido';
-    }
-    return this.nombreCliente.hasError('minlength') ? 'Escriba al menos 3 letras' : '';
-  }
 
-  clienteValidator(control: FormControl) {
-    const cliente = control.value;
-    if (!cliente || !cliente.id || cliente.id <= 0) {
-      return { invalidCliente: true };
+    get cliente() {
+        return this.nuevaReservaForm.get('cliente');
     }
-    return null;
-  }
 
-  reservar() {
-    console.log(this.nombreCliente.value);
-  }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+    displayFn(cliente: any): string {
+        return cliente?.nombre;
+    }
+
+    getClientes() {
+        this.cliente.valueChanges
+            .pipe(
+                startWith(''),
+                debounceTime(300),
+                filter((value) => {
+                    return value?.length > 2;
+                }),
+                tap(() => this.isLoading = true),
+                switchMap((value) => {
+                    return this.clienteService.getClientesFiltrados(new ClienteParams(value)).pipe(
+                        delay(500),
+                        finalize(() => this.isLoading = false)
+                    );
+                })
+            )
+            .subscribe((data) => {
+                this.clientes = data.content || [];
+                this.isLoading = false;
+            });
+    }
+
+    abrirDialogCreacionCliente() {
+        const dialogCrearCliente = this.crearClienteDialog.open(DialogCrearClienteComponent);
+
+        dialogCrearCliente.afterClosed().subscribe((nuevoCliente: Cliente) => {
+            if (nuevoCliente) {
+                this.clientes.push(nuevoCliente);
+                this.cliente.setValue(nuevoCliente);
+                this.autoTrigger.closePanel();
+
+            }
+        });
+    }
+
+    getErrorMessage() {
+        if (this.cliente.hasError('required')) {
+            return 'Debe ingresar un cliente';
+        }
+        if (this.cliente.hasError('invalidCliente')) {
+            return 'Debe seleccionar un cliente válido';
+        }
+        return this.cliente.hasError('minlength') ? 'Escriba al menos 3 letras' : '';
+    }
+
+    clienteValidator(control: FormControl) {
+        const cliente = control.value;
+        if (!cliente || !cliente.id || cliente.id <= 0) {
+            return {invalidCliente: true};
+        }
+        return null;
+    }
+
+    reservar() {
+        console.log(this.cliente.value);
+    }
 }

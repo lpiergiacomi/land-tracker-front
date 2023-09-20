@@ -1,6 +1,6 @@
 .loading-spinner {
   position: absolute;
-  top: calc(50% - 16px); /* Ajusta según el tamaño del spinner */
-  right: 10px; /* Ajusta la posición horizontal según tu diseño */
-  z-index: 1; /* Asegúrate de que esté detrás del campo de entrada */
+  top: calc(50% - 16px);
+  right: 10px;
+  z-index: 1;
 }

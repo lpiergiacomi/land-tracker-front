@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Reserva {{lote.nombre}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="nuevaReservaForm">
-    <mat-form-field>
+    <mat-form-field >
       <mat-label>Precio</mat-label>
       <input matInput disabled [value]="lote.precio.toString()">
     </mat-form-field>
@@ -10,9 +10,9 @@
       <input matInput
              aria-label="Cliente"
              [matAutocomplete]="auto"
-             formControlName="nombreCliente"
+             formControlName="cliente"
              required>
-      <mat-error *ngIf="nombreCliente.errors">{{getErrorMessage()}}</mat-error>
+      <mat-error *ngIf="cliente.errors">{{getErrorMessage()}}</mat-error>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option (click)="abrirDialogCreacionCliente()">
           Nuevo cliente
@@ -22,7 +22,7 @@
           <small>ID: {{cliente.id}}</small>
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="nombreCliente?.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
+      <mat-hint *ngIf="cliente?.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
       <div *ngIf="isLoading" class="loading-spinner">
         <mat-spinner diameter="32"></mat-spinner>
       </div>
@@ -32,5 +32,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="reservar()" [mat-dialog-close]="lote" cdkFocusInitial>Reservar</button>
+  <button mat-button [disabled]="nuevaReservaForm.invalid" (click)="reservar()" [mat-dialog-close]="lote" cdkFocusInitial>Reservar</button>
 </div>
