@@ -1,31 +1,36 @@
 <h1 mat-dialog-title>Reserva {{lote.nombre}}</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Precio</mat-label>
-    <input matInput disabled [(ngModel)]="lote.precio">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Cliente</mat-label>
-    <input matInput
-           aria-label="Cliente"
-           [matAutocomplete]="auto"
-           [formControl]="clienteCtrl">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option (click)="abrirDialogCreacionCliente()">
-        Nuevo cliente
-      </mat-option>
-      <mat-option *ngFor="let cliente of clientes" [value]="cliente">
-        <span>{{cliente.nombre}}</span> |
-        <small>ID: {{cliente.id}}</small>
-      </mat-option>
-    </mat-autocomplete>
-    <mat-hint *ngIf="clienteCtrl.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
-    <div *ngIf="isLoading" class="loading-spinner">
-      <mat-spinner diameter="32"></mat-spinner>
-    </div>
-  </mat-form-field>
+  <form [formGroup]="nuevaReservaForm">
+    <mat-form-field>
+      <mat-label>Precio</mat-label>
+      <input matInput disabled [value]="lote.precio.toString()">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Cliente</mat-label>
+      <input matInput
+             aria-label="Cliente"
+             [matAutocomplete]="auto"
+             formControlName="nombreCliente"
+             required>
+      <mat-error *ngIf="nombreCliente.errors">{{getErrorMessage()}}</mat-error>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option (click)="abrirDialogCreacionCliente()">
+          Nuevo cliente
+        </mat-option>
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente">
+          <span>{{cliente.nombre}}</span> |
+          <small>ID: {{cliente.id}}</small>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-hint *ngIf="nombreCliente?.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+    </mat-form-field>
+  </form>
+
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="lote" cdkFocusInitial>Reservar</button>
+  <button mat-button (click)="reservar()" [mat-dialog-close]="lote" cdkFocusInitial>Reservar</button>
 </div>

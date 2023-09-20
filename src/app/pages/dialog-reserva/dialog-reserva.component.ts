@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Lote} from "../../backend/model/lote";
-import {FormControl} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DialogCrearClienteComponent} from "../dialog-crear-cliente/dialog-crear-cliente.component";
 import {MatAutocompleteTrigger} from "@angular/material/autocomplete";
 import {ClienteService} from "../../backend/services/cliente.service";
@@ -15,8 +15,8 @@ import {Cliente, ClienteParams} from "../../backend/model/cliente";
 })
 export class DialogReservaComponent implements OnInit {
   clientes: Cliente[] = [];
-  clienteCtrl = new FormControl();
   isLoading = false;
+  nuevaReservaForm!: FormGroup;
 
   @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger;
 
@@ -29,7 +29,15 @@ export class DialogReservaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clienteCtrl.valueChanges
+    this.nuevaReservaForm = new FormGroup({
+      nombreCliente: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        this.clienteValidator.bind(this)
+      ])
+    })
+
+    this.nombreCliente.valueChanges
       .pipe(
         startWith(''),
         debounceTime(300),
@@ -50,6 +58,9 @@ export class DialogReservaComponent implements OnInit {
       });
   }
 
+  get nombreCliente() { return this.nuevaReservaForm.get('nombreCliente'); }
+
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -59,15 +70,37 @@ export class DialogReservaComponent implements OnInit {
   }
 
   abrirDialogCreacionCliente() {
-    const dialogRef = this.crearClienteDialog.open(DialogCrearClienteComponent);
+    const dialogCrearCliente = this.crearClienteDialog.open(DialogCrearClienteComponent);
 
-    dialogRef.afterClosed().subscribe((nuevoCliente: Cliente) => {
+    dialogCrearCliente.afterClosed().subscribe((nuevoCliente: Cliente) => {
       if (nuevoCliente) {
         this.clientes.push(nuevoCliente);
-        this.clienteCtrl.setValue(nuevoCliente);
+        this.nombreCliente.setValue(nuevoCliente);
         this.autoTrigger.closePanel();
 
       }
     });
+  }
+
+  getErrorMessage() {
+    if (this.nombreCliente.hasError('required')) {
+      return 'Debe ingresar un cliente';
+    }
+    if (this.nombreCliente.hasError('invalidCliente')) {
+      return 'Debe seleccionar un cliente válido';
+    }
+    return this.nombreCliente.hasError('minlength') ? 'Escriba al menos 3 letras' : '';
+  }
+
+  clienteValidator(control: FormControl) {
+    const cliente = control.value;
+    if (!cliente || !cliente.id || cliente.id <= 0) {
+      return { invalidCliente: true };
+    }
+    return null;
+  }
+
+  reservar() {
+    console.log(this.nombreCliente.value);
   }
 }

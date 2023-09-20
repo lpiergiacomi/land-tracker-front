@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ClienteService} from "../../backend/services/cliente.service";
 import {Cliente} from "../../backend/model/cliente";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-dialog-crear-cliente',
@@ -12,7 +13,8 @@ export class DialogCrearClienteComponent {
   public nuevoCliente: Cliente = new Cliente();
 
   constructor(public dialogRef: MatDialogRef<DialogCrearClienteComponent>,
-              private clienteService: ClienteService) {
+              private clienteService: ClienteService,
+              private snackBar: MatSnackBar) {
   }
 
   onNoClick(): void {
@@ -23,13 +25,13 @@ export class DialogCrearClienteComponent {
     this.clienteService.crearCliente(this.nuevoCliente)
       .subscribe({
         next: (response) => {
-          console.log(response);
+          this.nuevoCliente = response;
         },
         error: (error) => {
           console.error(error);
         },
         complete: () => {
-          // Cierra el diálogo y pasa los datos del nuevo cliente de vuelta
+          this.snackBar.open(`El cliente ${this.nuevoCliente.nombre} fue creado con éxito`);
           this.dialogRef.close(this.nuevoCliente);
         },
       });
