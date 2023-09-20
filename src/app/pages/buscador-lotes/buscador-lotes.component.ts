@@ -17,6 +17,7 @@ export class BuscadorLotesComponent implements OnInit{
   changeLotesEventEmitter = new EventEmitter<Lote[]>();
 
   lotes: Lote[] = [];
+  panelOpenState = true;
 
   constructor(private loteService: LoteService) {
   }

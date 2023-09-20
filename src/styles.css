@@ -9,3 +9,8 @@ body {
   position: relative;
   font-family: 'Roboto', sans-serif;
 }
+
+mat-panel-title {
+  font-size: 18px;
+}
+

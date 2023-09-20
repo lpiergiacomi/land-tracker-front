@@ -38,6 +38,7 @@ import {MatBadgeModule} from "@angular/material/badge";
 import {MatMenuModule} from "@angular/material/menu";
 import { BodyComponent } from './body/body.component';
 import { SublevelMenuComponent } from './pages/menu/sublevel-menu.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { SublevelMenuComponent } from './pages/menu/sublevel-menu.component';
     MatListModule,
     MatBadgeModule,
     MatMenuModule,
+    MatCardModule,
   ],
   providers: [
     HttpService,

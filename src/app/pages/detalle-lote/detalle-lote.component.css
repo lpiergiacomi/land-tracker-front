@@ -1,0 +1,37 @@
+.example-header-image {
+    background-image: url('https://terraz.com.ar/Content/img/prototipos.jpg');
+    background-size: cover;
+}
+
+/* Estilo general de la lista */
+.mat-list {
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Estilo de los elementos de la lista */
+.mat-list-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para los iconos de check y cross */
+.mat-list-item i {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+/* Estilo para elementos con fondo resaltado */
+.highlighted {
+    background-color: #f0f8ff; /* Color de fondo resaltado */
+}
+
+/* Efecto de hover */
+.mat-list-item:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
