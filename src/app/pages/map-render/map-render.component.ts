@@ -14,7 +14,7 @@ import {Lote} from '../../backend/model/lote';
 import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping} from "three";
+import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping, Color} from "three";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
 
@@ -315,6 +315,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     })
   }
 
+  cambiarColorLoteReservado(loteReservado: Lote) {
+    const marker = this.annotationMarkers.find(marker => marker.userData['id'] == loteReservado.id)
+    marker.material.color = new Color(0xffc107);
+  }
 }
 
 

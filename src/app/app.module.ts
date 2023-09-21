@@ -30,6 +30,8 @@ import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ToastrModule} from "ngx-toastr";
+import {ReservaService} from "./backend/services/reserva.service";
+import {ReservasApi} from "./backend/api/reservas.api";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import {ToastrModule} from "ngx-toastr";
     LoteService,
     LotesApi,
     ClienteService,
-    ClientesApi
+    ClientesApi,
+    ReservaService,
+    ReservasApi
   ],
   bootstrap: [AppComponent]
 })

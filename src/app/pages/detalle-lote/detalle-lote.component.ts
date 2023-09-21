@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Lote} from "../../backend/model/lote";
 import {LoteService} from "../../backend/services/lote.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -12,6 +12,7 @@ import {DialogReservaComponent} from "../dialog-reserva/dialog-reserva.component
 export class DetalleLoteComponent implements OnInit {
 
   @Input() loteSeleccionado: Lote;
+  @Output() loteReservadoEvent = new EventEmitter<Lote>();
 
   constructor(private loteService: LoteService, public dialogReserva: MatDialog) {
 
@@ -30,9 +31,10 @@ export class DetalleLoteComponent implements OnInit {
       data: this.loteSeleccionado,
     });
 
-    dialogReserva.afterClosed().subscribe(result => {
-      console.log(result);
-      //this.animal = result;
+    dialogReserva.afterClosed().subscribe(reserva => {
+      this.loteSeleccionado.estadoLote = 'RESERVADO';
+      this.loteReservadoEvent.emit(this.loteSeleccionado);
+      console.log(reserva)
     });
   }
 }
