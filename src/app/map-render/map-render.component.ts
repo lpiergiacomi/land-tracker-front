@@ -14,9 +14,10 @@ import {Lote} from '../backend/model/lote';
 import {Observable, map} from 'rxjs';
 import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping} from "three";
+import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping, Sprite} from "three";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
+import {log} from "three/examples/jsm/nodes/shadernode/ShaderNodeBaseElements";
 
 
 @Component({
@@ -48,7 +49,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private width = 800;
   private height = 600;
   private cardContainer;
-  private labelGroup = new THREE.Group();
+  private circleGroup = new THREE.Group();
+  private lotesOriginales: Lote[];
 
   constructor(private loteService: LoteService, private elementRef: ElementRef) {
   }
@@ -86,10 +88,12 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private loadLotes() {
     this.getLotes().subscribe({
       next: (response) => {
+        this.lotesOriginales = response;
         this.lotes = response;
         this.lotes.forEach((lote) => {
           this.loadMeshLote(lote);
         })
+        this.scene.add(this.circleGroup);
       },
       error: (error) => {
         console.error(error);
@@ -156,9 +160,9 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     let positionLote = new Vector3(lote.posicionLote.x, lote.posicionLote.y, lote.posicionLote.z);
     annotationSprite.position.copy(positionLote)
     annotationSprite.userData['id'] = lote['id'];
-    this.scene.add(annotationSprite)
-
     this.annotationMarkers.push(annotationSprite);
+    this.circleGroup.add(annotationSprite);
+
 
     this.childElements.changes.subscribe((changes: QueryList<ElementRef>) => {
       const changedRefs = changes.toArray();
@@ -166,12 +170,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       let annotationLabel = new CSS2DObject(annotationDiv);
       annotationLabel.position.copy(positionLote);
       annotationLabel.userData['id'] = lote['id'];
-      // Agrego el label al grupo
-      this.labelGroup.add(annotationLabel);
+
+      annotationDiv.id = `annotationDivLote${lote.id}`;
+      this.scene.add(annotationLabel);
+
 
     })
     // Agrego a la escena el grupo con todos los labels
-    this.scene.add(this.labelGroup);
   }
 
   private loadMeshFloor() {
@@ -275,7 +280,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     mouse.x = (event.offsetX / this.renderer.domElement.clientWidth) * 2 - 1;
     mouse.y = -(event.offsetY / this.renderer.domElement.clientHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, this.camera);
-    return raycaster.intersectObjects(this.annotationMarkers);
+    return raycaster.intersectObjects(this.annotationMarkers.filter(marker => marker.visible));
   }
 
   private setColorObject(lote) {
@@ -297,21 +302,26 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   mostrarLotesFiltrados(lotes: Lote[]) {
-    this.lotes = lotes;
+    this.lotes = this.lotesOriginales;
+    const idsLotes = lotes.map(l => l.id);
 
-    let labelsAEliminar = [];
-    // Aca la idea es recorrer el grupo de los labels, y eliminar tanto de la escena como del DOM todos los que no esten
-    // incluídos en los lotes filtrados que se tienen que mostrar. Esto si se pone un debugger se ve que funciona, pero
-    // vuelve a poner todos los labels el @ViewChildren.
-    this.labelGroup.traverse((label:CSS2DObject) => {
-      const elementoHTML = label.element;
-      if(elementoHTML && elementoHTML.parentNode && !this.lotes.map(l => l.id).includes(parseInt(elementoHTML.innerText))) {
-        elementoHTML.parentNode.removeChild(elementoHTML);
-        labelsAEliminar.push(label);
+    // Label
+    this.lotes.forEach(lote => {
+      if (idsLotes.includes(lote.id)){
+        document.getElementById(`annotationDivLote${lote.id}`).innerHTML = lote.id.toString();
+      } else {
+        document.getElementById(`annotationDivLote${lote.id}`).innerHTML = '';
       }
     })
-    labelsAEliminar.forEach(l => {
-      this.scene.remove(l);
+
+    // Circles
+    this.circleGroup.children.forEach(sprite => {
+      sprite.visible = idsLotes.includes(sprite.userData['id']);
+    });
+
+    // Raycaster
+    this.annotationMarkers.forEach(marker => {
+      marker.visible = idsLotes.includes(marker.userData['id']);
     })
   }
 

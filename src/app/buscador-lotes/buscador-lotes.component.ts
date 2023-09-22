@@ -25,6 +25,7 @@ export class BuscadorLotesComponent implements OnInit{
   }
 
   public filtrarLotes(estado: string) {
+    console.log(this.estadoLote.value)
     this.getLotesFiltrados(estado).subscribe({
       next: (response) => {
         this.lotes = response.content;
