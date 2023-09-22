@@ -1,43 +1,37 @@
-<div class="row">
-    <button mat-raised-button color="primary">Nuevo</button>
-</div>
-
-<div class="row" style="margin-top: 15px;">
+<form [formGroup]="formBuscadorLotes">
+  <div class="row" style="margin-top: 15px;">
     <div class="col-3">
-        <div class="form-group">
-            <mat-form-field>
-                <mat-label>Estado</mat-label>
-                <mat-select [(ngModel)]="estadoLote" multiple>
-                    <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <mat-select multiple formControlName="filtroEstadosLote">
+            <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <form [formGroup]="formBuscadorLotes">
-        <div class="col-3">
-            <div class="form-group">
-                <label class="label">Precio</label>
-                <mat-slider min="1" max="50000" discrete [displayWith]="formatLabel">
-                    <input value="3000" matSliderStartThumb>
-                    <input value="10000" matSliderEndThumb>
-                </mat-slider>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label class="label">Nombre </label>
-                <input formControlName="filtroTextoLote" placeholder="Búsqueda de lote" name="filter"
-                       class="form-control">
-            </div>
-        </div>
-
-        <div style="margin-top: 25px; margin-bottom: 25px; display: flex; justify-content: end">
-            <button mat-raised-button color="primary" (click)="filtrarLotes()">Buscar</button>
-            <button mat-raised-button color="warn">Limpiar</button>
-        </div>
-    </form>
-
-
-</div>
-
+    <!--
+    <div class="col-3">
+      <div class="form-group">
+        <label class="label">Precio</label>
+        <mat-slider min="1" max="50000" discrete [displayWith]="formatLabel">
+          <input value="3000" matSliderStartThumb>
+          <input value="10000" matSliderEndThumb>
+        </mat-slider>
+      </div>
+    </div>
+    -->
+    <div class="col-3">
+      <div class="form-group">
+        <label class="label">Nombre </label>
+        <input formControlName="filtroTextoLote" placeholder="Búsqueda de lote" name="filter"
+               class="form-control">
+      </div>
+    </div>
+    <div style="margin-top: 25px; margin-bottom: 25px; display: flex; justify-content: end">
+      <button mat-raised-button color="primary" (click)="filtrarLotes()">Buscar</button>
+      <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar</button>
+    </div>
+  </div>
+</form>
 

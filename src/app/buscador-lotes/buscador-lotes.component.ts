@@ -8,9 +8,8 @@ import {Lote, LoteParams} from "../backend/model/lote";
   templateUrl: './buscador-lotes.component.html',
   styleUrls: ['./buscador-lotes.component.css']
 })
-export class BuscadorLotesComponent implements OnInit{
+export class BuscadorLotesComponent implements OnInit {
 
-  estadoLote: string[] = [];
   estadosLote: string[] = ['Disponible', 'Reservado', 'Vendido'];
 
   @Output()
@@ -24,7 +23,8 @@ export class BuscadorLotesComponent implements OnInit{
 
   ngOnInit(): void {
     this.formBuscadorLotes = new FormGroup<any>({
-      filtroTextoLote: new FormControl('')
+      filtroTextoLote: new FormControl('', {nonNullable: true}),
+      filtroEstadosLote: new FormControl([], {nonNullable: true})
     })
   }
 
@@ -43,21 +43,23 @@ export class BuscadorLotesComponent implements OnInit{
   public getLotesFiltrados() {
     const params = new LoteParams(
       this.filtroTextoLote.value,
-      1,
-      1000000,
-        this.estadoLote.map(estado => estado.toUpperCase()));
+      null,
+      null,
+      this.filtroEstadosLote.value.map(estado => estado.toUpperCase()));
     return this.loteService.getLotesFiltrados(params);
   }
 
-  formatLabel(value: number): string {
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'k';
-    }
-
-    return `${value}`;
+  get filtroTextoLote() {
+    return this.formBuscadorLotes.get('filtroTextoLote');
   }
 
-  get filtroTextoLote() { return this.formBuscadorLotes.get('filtroTextoLote'); }
+  get filtroEstadosLote() {
+    return this.formBuscadorLotes.get('filtroEstadosLote');
+  }
 
 
+  limpiarFiltros() {
+    this.formBuscadorLotes.reset();
+    this.filtrarLotes();
+  }
 }
