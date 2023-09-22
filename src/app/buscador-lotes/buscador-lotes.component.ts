@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {LoteService} from "../backend/services/lote.service";
 import {Lote, LoteParams} from "../backend/model/lote";
 
@@ -10,23 +10,26 @@ import {Lote, LoteParams} from "../backend/model/lote";
 })
 export class BuscadorLotesComponent implements OnInit{
 
-  estadoLote = new FormControl('');
+  estadoLote: string[] = [];
   estadosLote: string[] = ['Disponible', 'Reservado', 'Vendido'];
 
   @Output()
   changeLotesEventEmitter = new EventEmitter<Lote[]>();
 
   lotes: Lote[] = [];
+  formBuscadorLotes: FormGroup;
 
   constructor(private loteService: LoteService) {
   }
 
   ngOnInit(): void {
+    this.formBuscadorLotes = new FormGroup<any>({
+      filtroTextoLote: new FormControl('')
+    })
   }
 
-  public filtrarLotes(estado: string) {
-    console.log(this.estadoLote.value)
-    this.getLotesFiltrados(estado).subscribe({
+  public filtrarLotes() {
+    this.getLotesFiltrados().subscribe({
       next: (response) => {
         this.lotes = response.content;
         this.changeLotesEventEmitter.emit(this.lotes);
@@ -37,12 +40,12 @@ export class BuscadorLotesComponent implements OnInit{
     });
   }
 
-  public getLotesFiltrados(estado: string) {
+  public getLotesFiltrados() {
     const params = new LoteParams(
-      'Lote',
+      this.filtroTextoLote.value,
       1,
       1000000,
-      [estado]);
+        this.estadoLote.map(estado => estado.toUpperCase()));
     return this.loteService.getLotesFiltrados(params);
   }
 
@@ -53,5 +56,8 @@ export class BuscadorLotesComponent implements OnInit{
 
     return `${value}`;
   }
+
+  get filtroTextoLote() { return this.formBuscadorLotes.get('filtroTextoLote'); }
+
 
 }
