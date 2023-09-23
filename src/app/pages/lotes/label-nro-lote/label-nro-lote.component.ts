@@ -1,5 +1,5 @@
 import {Component, Input } from '@angular/core';
-import {Lote} from "../../backend/model/lote";
+import {Lote} from "../../../backend/model/lote";
 
 @Component({
   selector: 'app-label-nro-lote',

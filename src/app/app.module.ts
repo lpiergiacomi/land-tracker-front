@@ -9,39 +9,20 @@ import { LoteService } from './backend/services/lote.service';
 import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSliderModule} from "@angular/material/slider";
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from "@angular/material/select";
-import {NgFor} from "@angular/common";
-import {MatButtonModule} from "@angular/material/button";
-import { DialogReservaComponent } from './pages/dialog-reserva/dialog-reserva.component';
-import { MatDialogModule} from "@angular/material/dialog";
-import {MatInputModule} from "@angular/material/input";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import { DialogCrearClienteComponent } from './pages/dialog-crear-cliente/dialog-crear-cliente.component';
 import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatIconModule} from "@angular/material/icon";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListModule} from "@angular/material/list";
-import {MatBadgeModule} from "@angular/material/badge";
-import {MatMenuModule} from "@angular/material/menu";
 import { BodyComponent } from './body/body.component';
 import { SublevelMenuComponent } from './pages/menu/sublevel-menu.component';
-import {MatCardModule} from "@angular/material/card";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    DialogReservaComponent,
-    DialogCrearClienteComponent,
     BodyComponent,
     SublevelMenuComponent,
   ],
@@ -49,26 +30,10 @@ import {MatCardModule} from "@angular/material/card";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    MatSliderModule,
-    BrowserAnimationsModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    NgFor,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatIconModule,
     MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatBadgeModule,
-    MatMenuModule,
-    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HttpService,

@@ -11,7 +11,7 @@ export const navbarData: IMenuData[] = [
         label: 'Mapa de lotes',
       },
       {
-        routeLink: 'lotes/lista',
+        routeLink: 'lotes/listado',
         label: 'Lista de lotes',
       }
     ]
@@ -22,7 +22,7 @@ export const navbarData: IMenuData[] = [
     label: 'Clientes',
     items: [
       {
-        routeLink: 'clientes/lista',
+        routeLink: 'clientes/listado',
         label: 'Lista de clientes',
       }
     ]
@@ -33,7 +33,7 @@ export const navbarData: IMenuData[] = [
     label: 'Reservas',
     items: [
       {
-        routeLink: 'reservas/lista',
+        routeLink: 'reservas/listado',
         label: 'Lista de reservas',
       }
     ]

@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Lote} from "../../backend/model/lote";
+import {Lote} from "../../../backend/model/lote";
 import {FormControl} from "@angular/forms";
 import {DialogCrearClienteComponent} from "../dialog-crear-cliente/dialog-crear-cliente.component";
 import {MatAutocompleteTrigger} from "@angular/material/autocomplete";
-import {ClienteService} from "../../backend/services/cliente.service";
+import {ClienteService} from "../../../backend/services/cliente.service";
 import {debounceTime, delay, filter, finalize, startWith, switchMap, tap} from "rxjs";
-import {Cliente, ClienteParams} from "../../backend/model/cliente";
+import {Cliente, ClienteParams} from "../../../backend/model/cliente";
 
 @Component({
   selector: 'app-dialog-reserva',

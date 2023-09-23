@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {ClienteService} from "../../backend/services/cliente.service";
-import {Cliente} from "../../backend/model/cliente";
+import {ClienteService} from "../../../backend/services/cliente.service";
+import {Cliente} from "../../../backend/model/cliente";
 
 @Component({
   selector: 'app-dialog-crear-cliente',
