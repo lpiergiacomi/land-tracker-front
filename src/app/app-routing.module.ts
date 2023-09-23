@@ -1,14 +1,23 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppComponent} from './app.component';
 import {MapRenderComponent} from './pages/map-render/map-render.component';
 
 const routes: Routes = [
 
   {
-    path: "mapa-de-lotes",
-    component: MapRenderComponent
+    path: "lotes",
+    loadChildren: () => import('./pages/map-render/map-render.module').then(m => m.MapRenderModule) //TODO: Deberia ser LoteModule?
+  },
+    /* TODO
+  {
+    path: "clientes",
+    loadChildren: () =>
+  },
+  {
+    path: "reservas",
+    loadChildren: () =>
   }
+     */
 ];
 
 @NgModule({

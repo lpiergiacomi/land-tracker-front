@@ -5,15 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { MenuComponent } from './pages/menu/menu.component';
-import { MapRenderComponent } from './pages/map-render/map-render.component';
 import { LoteService } from './backend/services/lote.service';
 import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import { DetalleLoteComponent } from './pages/detalle-lote/detalle-lote.component';
-import { TooltipMapComponent } from './pages/tooltip-map/tooltip-map.component';
-import { LabelNroLoteComponent } from './pages/label-nro-lote/label-nro-lote.component';
-import { BuscadorLotesComponent } from './pages/buscador-lotes/buscador-lotes.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
@@ -45,11 +40,6 @@ import {MatCardModule} from "@angular/material/card";
     AppComponent,
     HeaderComponent,
     MenuComponent,
-    MapRenderComponent,
-    DetalleLoteComponent,
-    TooltipMapComponent,
-    LabelNroLoteComponent,
-    BuscadorLotesComponent,
     DialogReservaComponent,
     DialogCrearClienteComponent,
     BodyComponent,

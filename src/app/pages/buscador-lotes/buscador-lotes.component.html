@@ -14,7 +14,7 @@
             <!-- Contenido del filtro -->
             <mat-form-field appearance="outline">
                 <mat-label>Estado</mat-label>
-                <mat-select [formControl]="estadoLote" multiple>
+                <mat-select multiple>
                     <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
                 </mat-select>
             </mat-form-field>
