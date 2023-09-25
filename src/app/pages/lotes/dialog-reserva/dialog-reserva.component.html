@@ -3,7 +3,7 @@
   <form [formGroup]="nuevaReservaForm">
     <mat-form-field>
       <mat-label>Precio</mat-label>
-      <input matInput disabled [(ngModel)]="lote.precio">
+      <input matInput disabled [value]="lote.precio.toString()">
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Cliente</mat-label>

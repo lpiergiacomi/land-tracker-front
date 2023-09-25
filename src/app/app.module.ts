@@ -19,6 +19,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {ReservaService} from "./backend/services/reserva.service";
 import {ReservasApi} from "./backend/api/reservas.api";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {ReservasApi} from "./backend/api/reservas.api";
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     HttpService,

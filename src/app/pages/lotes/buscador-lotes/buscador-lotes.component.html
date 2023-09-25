@@ -1,44 +1,44 @@
-<mat-expansion-panel (opened)="panelOpenState = true"
-                     (closed)="panelOpenState = false"
-                     [expanded]="true">
+<form [formGroup]="formBuscadorLotes">
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false"
+                       [expanded]="true">
     <mat-expansion-panel-header>
-        <mat-panel-title>
-            <i class="fal fa-filter" style="padding-right: 5px;"></i>
-            Filtros
-        </mat-panel-title>
+      <mat-panel-title>
+        <i class="fal fa-filter" style="padding-right: 5px;"></i>
+        Filtros
+      </mat-panel-title>
     </mat-expansion-panel-header>
 
     <div class="content-container">
-        <!-- Contenido del panel -->
-        <div class="filter-container">
-            <!-- Contenido del filtro -->
-            <mat-form-field appearance="outline">
-                <mat-label>Estado</mat-label>
-                <mat-select multiple>
-                    <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="custom-label-slider">
-            <!-- Contenido del slider -->
-            <mat-label>Precio</mat-label>
-            <mat-slider min="1" max="50000" discrete [displayWith]="formatLabel">
-                <input value="3000" matSliderStartThumb>
-                <input value="10000" matSliderEndThumb>
-            </mat-slider>
-        </div>
-        <div class="search-container">
-            <!-- Contenido de búsqueda -->
-            <mat-form-field appearance="outline">
-                <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
-            </mat-form-field>
-        </div>
-        <div class="button-container">
-            <!-- Botones de acción -->
-            <button mat-raised-button color="primary" (click)="filtrarLotes('DISPONIBLE')">Buscar</button>
-            <button mat-raised-button color="warn" (click)="filtrarLotes('VENDIDO')">Buscar</button>
-            <button mat-raised-button color="warn">Limpiar</button>
-        </div>
+      <div class="filter-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select multiple formControlName="filtroEstadosLote">
+            <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    <!--
+    <div class="custom-label-slider">
+      <mat-label>Precio</mat-label>
+      <mat-slider min="1" max="50000" discrete [displayWith]="formatLabel">
+        <input value="3000" matSliderStartThumb>
+        <input value="10000" matSliderEndThumb>
+      </mat-slider>
     </div>
-</mat-expansion-panel>
+    -->
+
+      <div class="search-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="filtroTextoLote"  matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
+        </mat-form-field>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="filtrarLotes()">Buscar</button>
+        <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar</button>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</form>
+

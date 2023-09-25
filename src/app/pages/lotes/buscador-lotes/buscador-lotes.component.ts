@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {FormControl} from "@angular/forms";
 import {LoteService} from "../../../backend/services/lote.service";
 import {Lote, LoteParams} from "../../../backend/model/lote";
 

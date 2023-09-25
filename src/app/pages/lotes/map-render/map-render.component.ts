@@ -50,6 +50,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private cardContainer;
   private circleGroup = new THREE.Group();
   private lotesOriginales: Lote[];
+  panelOpenState = true;
 
   constructor(private loteService: LoteService, private elementRef: ElementRef) {
   }
@@ -171,6 +172,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       annotationLabel.userData['id'] = lote['id'];
 
       annotationDiv.id = `annotationDivLote${lote.id}`;
+      annotationDiv.style.marginTop = '4rem';
       this.scene.add(annotationLabel);
 
 
@@ -263,9 +265,11 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   onHover = (event: MouseEvent) => {
     event.preventDefault();
     this.loteParaTooltip = null;
+    document.body.style.cursor = 'default'
     const intersects = this.createRaycaster(event);
 
     if (intersects.length > 0) {
+      document.body.style.cursor = 'pointer'
       const intersection = intersects[0];
       const idloteParaTooltip = intersection.object.userData['id']
       this.loteParaTooltip = this.lotes.find(lote => lote.id == idloteParaTooltip);
@@ -306,9 +310,9 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     // Label
     this.lotes.forEach(lote => {
       if (idsLotes.includes(lote.id)){
-        document.getElementById(`annotationDivLote${lote.id}`).innerHTML = lote.id.toString();
+        document.getElementById(`annotationDivLote${lote.id}`).firstChild.textContent = lote.id.toString();
       } else {
-        document.getElementById(`annotationDivLote${lote.id}`).innerHTML = '';
+        document.getElementById(`annotationDivLote${lote.id}`).firstChild.textContent = '';
       }
     })
 
