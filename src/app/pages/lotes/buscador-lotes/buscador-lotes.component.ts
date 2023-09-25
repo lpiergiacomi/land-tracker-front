@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {LoteService} from "../../../backend/services/lote.service";
 import {Lote, LoteParams} from "../../../backend/model/lote";
 
@@ -10,6 +11,7 @@ import {Lote, LoteParams} from "../../../backend/model/lote";
 })
 export class BuscadorLotesComponent implements OnInit {
 
+  estadoLote = new FormControl('');
   estadosLote: string[] = ['Disponible', 'Reservado', 'Vendido'];
 
   @Output()
@@ -17,6 +19,7 @@ export class BuscadorLotesComponent implements OnInit {
 
   lotes: Lote[] = [];
   formBuscadorLotes: FormGroup;
+  panelOpenState = true;
 
   constructor(private loteService: LoteService) {
   }

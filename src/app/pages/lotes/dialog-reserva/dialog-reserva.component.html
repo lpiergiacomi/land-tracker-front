@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Reserva {{lote.nombre}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="nuevaReservaForm">
-    <mat-form-field >
+    <mat-form-field>
       <mat-label>Precio</mat-label>
-      <input matInput disabled [value]="lote.precio.toString()">
+      <input matInput disabled [(ngModel)]="lote.precio">
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Cliente</mat-label>
@@ -12,7 +12,6 @@
              [matAutocomplete]="auto"
              formControlName="cliente"
              required>
-      <mat-error *ngIf="cliente.errors">{{getErrorMessage()}}</mat-error>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option (click)="abrirDialogCreacionCliente()">
           Nuevo cliente
@@ -22,13 +21,12 @@
           <small>ID: {{cliente.id}}</small>
         </mat-option>
       </mat-autocomplete>
-      <mat-hint *ngIf="cliente?.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
+      <mat-hint *ngIf="cliente.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
       <div *ngIf="isLoading" class="loading-spinner">
         <mat-spinner diameter="32"></mat-spinner>
       </div>
     </mat-form-field>
   </form>
-
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>

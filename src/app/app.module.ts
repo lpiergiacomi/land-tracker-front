@@ -13,7 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
-import {ToastrModule} from "ngx-toastr";
+import { BodyComponent } from './body/body.component';
+import { SublevelMenuComponent } from './pages/menu/sublevel-menu.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
 import {ReservaService} from "./backend/services/reserva.service";
 import {ReservasApi} from "./backend/api/reservas.api";
 
@@ -21,15 +24,18 @@ import {ReservasApi} from "./backend/api/reservas.api";
   declarations: [
     AppComponent,
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    BodyComponent,
+    SublevelMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatToolbarModule,
     MatButtonModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HttpService,

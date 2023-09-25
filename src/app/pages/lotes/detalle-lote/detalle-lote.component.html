@@ -1,44 +1,41 @@
-<div class="card">
-  <div class="card-header">
-    <h3 class="card-title">
-      <b>Detalle de {{loteSeleccionado?.nombre}}</b>
-    </h3>
-  </div>
+<mat-card class="example-card">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{loteSeleccionado?.nombre}}</mat-card-title>
+        <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list role="list">
+            <mat-list-item role="listitem"><b>Superficie:</b> {{loteSeleccionado?.superficie}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Estado:</b> {{loteSeleccionado?.estadoLote}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Metros frente:</b> {{loteSeleccionado?.metrosFrente}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Metros fondo:</b> {{loteSeleccionado?.metrosFondo}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Nro cuenta
+                catastral:</b> {{loteSeleccionado?.nroCuentaCatastral}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Nro cuenta
+                municipal:</b> {{loteSeleccionado?.nroCuentaMunicipal}}</mat-list-item>
+            <mat-list-item role="listitem"><b>Luz:</b>
+                <i *ngIf="loteSeleccionado?.tieneLuz; else elseblock" style='color: #28a745; border-color:#28a745 '
+                   class='fas fa-check'></i>
+                <ng-template #elseblock>
+                    <i style='color: #e74c3c; border-color:#e74c3c ' class='fas fa-lg fa-times'></i>
+                </ng-template>
+            </mat-list-item>
+            <mat-list-item role="listitem"><b>Agua:</b>
+                <i *ngIf="loteSeleccionado?.tieneAgua; else elseblock" style='color: #28a745; border-color:#28a745 '
+                   class='fas fa-check'></i>
+                <ng-template #elseblock>
+                    <i style='color: #e74c3c; border-color:#e74c3c ' class='fas fa-lg fa-times'></i>
+                </ng-template>
+            </mat-list-item>
 
-  <div class="card-body">
-    <dl class="row">
-      <dt class="col-sm-4">Superficie</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.superficie}}</dd>
-      <dt class="col-sm-4">Estado</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.estadoLote}}</dd>
-      <dt class="col-sm-4">Metros frente</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.metrosFrente}}</dd>
-      <dt class="col-sm-4">Metros fondo</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.metrosFondo}}</dd>
-      <dt class="col-sm-4">Nro cuenta catastral</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.nroCuentaCatastral}}</dd>
-      <dt class="col-sm-4">Nro cuenta municipal</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.nroCuentaMunicipal}}</dd>
-      <dt class="col-sm-4">Luz</dt>
-      <dd class="col-sm-8">
-        <i *ngIf="loteSeleccionado?.tieneLuz; else elseblock" style='color: #28a745; border-color:#28a745 '
-           class='fas fa-check'></i>
-        <ng-template #elseblock>
-          <i style='color: #e74c3c; border-color:#e74c3c ' class='fas fa-lg fa-times'></i>
-        </ng-template>
-      </dd>
-      <dt class="col-sm-4">Agua</dt>
-      <dd class="col-sm-8">
-        <i *ngIf="loteSeleccionado?.tieneAgua; else elseblock" style='color: #28a745; border-color:#28a745 '
-           class='fas fa-check'></i>
-        <ng-template #elseblock>
-          <i style='color: #e74c3c; border-color:#e74c3c ' class='fas fa-lg fa-times'></i>
-        </ng-template>
-      </dd>
-      <dt class="col-sm-4">Precio</dt>
-      <dd class="col-sm-8">{{loteSeleccionado?.precio | currency}}</dd>
-    </dl>
-    <button *ngIf="loteSeleccionado.estadoLote == 'DISPONIBLE'" mat-raised-button color="primary" (click)="reservar()">Reservar</button>
+        </mat-list>
 
-  </div>
-</div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button *ngIf="loteSeleccionado.estadoLote == 'DISPONIBLE'" mat-raised-button color="primary"
+                (click)="reservar()">Reservar
+        </button>
+    </mat-card-actions>
+</mat-card>
+
