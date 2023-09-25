@@ -327,7 +327,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     })
   }
 
-  cambiarColorLoteReservado(loteReservado: Lote) {
+  cambiarEstadoLoteAReservado(loteReservado: Lote) {
+    this.lotes.find(lote => lote.id == loteReservado.id).estadoLote = 'RESERVADO';
     const marker = this.annotationMarkers.find(marker => marker.userData['id'] == loteReservado.id)
     marker.material.color = new Color(0xffc107);
   }

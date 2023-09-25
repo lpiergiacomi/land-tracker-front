@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="col-md-4" *ngIf="loteSeleccionado">
-        <app-detalle-lote (loteReservadoEvent)="cambiarColorLoteReservado($event)"
+        <app-detalle-lote (loteReservadoEvent)="cambiarEstadoLoteAReservado($event)"
                           [loteSeleccionado]="loteSeleccionado"></app-detalle-lote>
       </div>
     </div>

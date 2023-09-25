@@ -34,7 +34,6 @@ export class DetalleLoteComponent implements OnInit {
     dialogReserva.afterClosed().subscribe(reserva => {
       this.loteSeleccionado.estadoLote = 'RESERVADO';
       this.loteReservadoEvent.emit(this.loteSeleccionado);
-      console.log(reserva)
     });
   }
 }
