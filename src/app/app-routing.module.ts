@@ -1,17 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AppComponent} from './app.component';
-import {MapRenderComponent} from './pages/map-render/map-render.component';
-
 const routes: Routes = [
 
   {
-    path: "",
-    component: AppComponent
+    path: "lotes",
+    loadChildren: () => import('./pages/lotes/lotes.module').then(m => m.LotesModule)
   },
   {
-    path: "mapa-de-lotes",
-    component: MapRenderComponent
+    path: "clientes",
+    loadChildren: () => import('./pages/clientes/clientes.module').then(m => m.ClientesModule)
+  },
+  {
+    path: "reservas",
+    loadChildren: () => import('./pages/reservas/reservas.module').then(m => m.ReservasModule)
   }
 ];
 

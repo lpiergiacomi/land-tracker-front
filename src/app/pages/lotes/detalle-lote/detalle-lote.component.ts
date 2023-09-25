@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Lote} from "../../backend/model/lote";
-import {LoteService} from "../../backend/services/lote.service";
+import {Lote} from "../../../backend/model/lote";
+import {LoteService} from "../../../backend/services/lote.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogReservaComponent} from "../dialog-reserva/dialog-reserva.component";
 

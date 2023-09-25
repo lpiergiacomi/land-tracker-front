@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {ClienteService} from "../../backend/services/cliente.service";
-import {Cliente} from "../../backend/model/cliente";
+import {ClienteService} from "../../../backend/services/cliente.service";
+import {Cliente} from "../../../backend/model/cliente";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
