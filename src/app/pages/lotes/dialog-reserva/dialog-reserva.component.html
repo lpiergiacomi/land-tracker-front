@@ -18,9 +18,10 @@
         </mat-option>
         <mat-option *ngFor="let cliente of clientes" [value]="cliente">
           <span>{{cliente.nombre}}</span> |
-          <small>ID: {{cliente.id}}</small>
+          <small>DNI: {{cliente.documento}}</small>
         </mat-option>
       </mat-autocomplete>
+      <mat-error *ngIf="cliente.errors">{{getErrorMessage()}}</mat-error>
       <mat-hint *ngIf="cliente.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
       <div *ngIf="isLoading" class="loading-spinner">
         <mat-spinner diameter="32"></mat-spinner>

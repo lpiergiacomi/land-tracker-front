@@ -2,6 +2,10 @@ export class Cliente {
 
   id: number;
   nombre: string;
+  documento: number;
+  email: string;
+  telefono: string;
+  direccion: string;
 
   constructor() {
   }

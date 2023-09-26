@@ -26,6 +26,21 @@ export class DialogCrearClienteComponent implements OnInit {
       nombreCliente: new FormControl('', [
         Validators.required,
         Validators.minLength(3)
+      ]),
+      dniCliente: new FormControl('', [
+        Validators.required,
+        Validators.minLength(7),
+        Validators.minLength(8)
+      ]),
+      emailCliente: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      telefonoCliente: new FormControl('', [
+        Validators.required
+      ]),
+      direccionCliente: new FormControl('', [
+        Validators.required
       ])
     })
   }
@@ -38,13 +53,33 @@ export class DialogCrearClienteComponent implements OnInit {
     return this.nuevoClienteForm.get('nombreCliente');
   }
 
+  get dniCliente() {
+    return this.nuevoClienteForm.get('dniCliente');
+  }
+
+  get emailCliente() {
+    return this.nuevoClienteForm.get('emailCliente');
+  }
+
+  get telefonoCliente() {
+    return this.nuevoClienteForm.get('telefonoCliente');
+  }
+
+  get direccionCliente() {
+    return this.nuevoClienteForm.get('direccionCliente');
+  }
+
   crearCliente(): void {
     this.nuevoCliente.nombre = this.nombreCliente.value;
+    this.nuevoCliente.documento = this.dniCliente.value;
+    this.nuevoCliente.email = this.emailCliente.value;
+    this.nuevoCliente.telefono = this.telefonoCliente.value;
+    this.nuevoCliente.direccion = this.direccionCliente.value;
+
     this.isLoading = true;
     this.clienteService.crearCliente(this.nuevoCliente)
       .subscribe({
         next: (response) => {
-          console.log(response)
           this.nuevoCliente = response;
         },
         error: (error) => {
@@ -59,10 +94,4 @@ export class DialogCrearClienteComponent implements OnInit {
       });
   }
 
-  getErrorMessage() {
-    if (this.nombreCliente.hasError('required')) {
-      return 'Debe ingresar un cliente';
-    }
-    return this.nombreCliente.hasError('minlength') ? 'Escriba al menos 3 letras' : '';
-  }
 }
