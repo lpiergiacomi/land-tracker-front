@@ -46,5 +46,5 @@
 </div>
 <mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button color="primary" [disabled]="nuevoClienteForm.invalid" (click)="crearCliente()" cdkFocusInitial [mat-dialog-close]="nuevoCliente">Crear</button>
+  <button mat-button color="primary" [disabled]="nuevoClienteForm.invalid" (click)="crearCliente()" [mat-dialog-close]="nuevoCliente">Crear</button>
 </mat-dialog-actions>

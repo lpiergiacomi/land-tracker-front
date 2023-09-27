@@ -6,7 +6,7 @@
       <input matInput disabled [value]="lote.precio.toString()" type="number">
       <span matTextPrefix>$&nbsp;</span>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Cliente</mat-label>
       <input matInput
              aria-label="Cliente"
@@ -32,5 +32,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button color="primary" [disabled]="nuevaReservaForm.invalid" (click)="reservar()" cdkFocusInitial>Reservar</button>
+  <button mat-button color="primary" [disabled]="nuevaReservaForm.invalid" (click)="reservar()">Reservar</button>
 </div>
