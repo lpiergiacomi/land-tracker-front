@@ -30,7 +30,7 @@ export class DialogCrearClienteComponent implements OnInit {
       dniCliente: new FormControl('', [
         Validators.required,
         Validators.minLength(7),
-        Validators.minLength(8)
+        Validators.maxLength(8)
       ]),
       emailCliente: new FormControl('', [
         Validators.required,

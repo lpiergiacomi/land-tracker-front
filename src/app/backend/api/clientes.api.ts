@@ -18,6 +18,9 @@ export class ClientesApi {
     return this.api.post(`${this.apiController}`, cliente);
   }
 
+  eliminarCliente(idCliente: number) {
+    return this.api.delete(`${this.apiController}/${idCliente}`);
+  }
   getClientesFiltrados(params: ClienteParams) {
     return this.api.post(`${this.apiController}/filter`, params);
   }

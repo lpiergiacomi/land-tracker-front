@@ -19,6 +19,9 @@ export class ClienteService {
     return this.api.crearCliente(cliente);
   }
 
+  eliminarCliente(idCliente: number): any {
+    return this.api.eliminarCliente(idCliente);
+  }
   getClientesFiltrados(params: ClienteParams): Observable<any> {
     return this.api.getClientesFiltrados(params);
   }

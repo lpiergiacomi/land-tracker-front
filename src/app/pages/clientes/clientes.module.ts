@@ -8,20 +8,39 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSortModule} from "@angular/material/sort";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatIconModule} from "@angular/material/icon";
+import {TableModule} from "primeng/table";
+import {ChipsModule} from "primeng/chips";
+import {DropdownModule} from "primeng/dropdown";
+import {ButtonModule} from "primeng/button";
+import {RippleModule} from "primeng/ripple";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
   declarations: [
     ListadoComponent
   ],
-  imports: [
-    CommonModule,
-    ClientesRoutingModule,
-    MatTableModule,
-    MatInputModule,
-    MatSortModule,
-    MatButtonModule,
-    MatDialogModule
-  ]
+    imports: [
+        CommonModule,
+        ClientesRoutingModule,
+        MatTableModule,
+        MatInputModule,
+        MatSortModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        TableModule,
+        FormsModule,
+        ChipsModule,
+        DropdownModule,
+        ButtonModule,
+        RippleModule,
+        MatProgressSpinnerModule
+    ]
 })
 export class ClientesModule { }
