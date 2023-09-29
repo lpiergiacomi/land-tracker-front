@@ -17,6 +17,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         DropdownModule,
         ButtonModule,
         RippleModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatProgressBarModule
     ]
 })
 export class ClientesModule { }

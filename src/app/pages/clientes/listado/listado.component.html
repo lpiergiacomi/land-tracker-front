@@ -41,7 +41,8 @@
         <td>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="email" [(ngModel)]="cliente.email" required>
+              <input pInputText type="email" [(ngModel)]="cliente.email" required
+                     [class.custom-invalid]="isInvalidEmail(cliente.email)">
             </ng-template>
             <ng-template pTemplate="output">
               {{cliente.email}}
@@ -83,8 +84,13 @@
                     *ngIf="!editing" color="warn">
               <mat-icon>delete</mat-icon>
             </button>
-            <!-- TODO: Se muestra el spinner en todos los rows -->
-            <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+            <div style="display: flex; flex-direction: column-reverse;">
+              <button (click)="confirmUndoDelete()" mat-raised-button color="primary" *ngIf="rowAEliminar === cliente">
+                Deshacer
+              </button>
+              <mat-progress-bar [color]="colorProgressDeshacer" style="margin-bottom: 3px;" *ngIf="rowAEliminar === cliente" [value]="progresoDeshacer" mode="determinate"></mat-progress-bar>
+            </div>
+            <mat-spinner *ngIf="isLoading && rowCargando === cliente" diameter="24"></mat-spinner>
           </div>
         </td>
       </tr>

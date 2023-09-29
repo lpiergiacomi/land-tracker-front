@@ -18,6 +18,11 @@ export class ListadoComponent implements OnInit {
   clientes!: Cliente[];
   clientesClonados: { [s: string]: Cliente } = {};
   isLoading = false;
+  rowAEliminar: any = null;
+  rowCargando: any = null;
+  progresoDeshacer: number = 0;
+  colorProgressDeshacer: string = 'primary';
+  intervalDeshacer;
 
   constructor(private clienteService: ClienteService,
               private crearClienteDialog: MatDialog,
@@ -44,14 +49,16 @@ export class ListadoComponent implements OnInit {
   }
 
   onRowEditSave(cliente: Cliente) {
+    this.rowCargando = cliente;
     let error = this.validarCliente(cliente);
     if (error !== ''){
       this.dataTable.editingRowKeys = {[cliente.id]:true};
+      this.rowCargando = null;
       return this.toastr.error(error);
     }
     this.crearCliente(cliente);
     delete this.clientesClonados[cliente.id.toString()];
-    return this.toastr.success(`Se editó el cliente correctamente`);
+    return this.toastr.success(`El cliente ${cliente.nombre} fue editado correctamente`);
   }
 
   onRowEditCancel(cliente: Cliente, index: number) {
@@ -77,15 +84,40 @@ export class ListadoComponent implements OnInit {
         },
         complete: () => {
           this.isLoading = false;
+          this.rowCargando = null;
         },
       });
   }
 
   onRowDelete(cliente: any) {
+    this.progresoDeshacer = 0;
+    this.rowAEliminar = cliente;
+    const duracionTotal = 5000;
+    const tiempoActualizacionIntervalo = 50;
+    const progreso = 100 / (duracionTotal / tiempoActualizacionIntervalo);
 
-    this.isLoading = true;
-    this.clienteService.eliminarCliente(cliente.id)
-      .subscribe({
+    this.intervalDeshacer = setInterval(() => {
+      this.progresoDeshacer += progreso;
+
+      if (this.progresoDeshacer >= 100) {
+        clearInterval(this.intervalDeshacer);
+        this.confirmDelete(cliente);
+      }
+
+      if (this.progresoDeshacer <= 25) {
+        this.colorProgressDeshacer = 'primary';
+      } else if (this.progresoDeshacer <= 75) {
+        this.colorProgressDeshacer = 'accent';
+      } else {
+        this.colorProgressDeshacer = 'warn';
+      }
+    }, tiempoActualizacionIntervalo);
+  }
+
+
+  confirmDelete(cliente: any) {
+    if (this.rowAEliminar === cliente) {
+      this.clienteService.eliminarCliente(cliente.id).subscribe({
         next: () => {
           delete this.clientesClonados[cliente.id.toString()];
           this.clientes = this.clientes.filter(c => c.id != cliente.id);
@@ -94,16 +126,24 @@ export class ListadoComponent implements OnInit {
         error: (error) => {
           console.error(error);
           this.toastr.error(error.error.message);
-          this.isLoading = false;
+          this.rowAEliminar = null;
+          this.progresoDeshacer = 0;
         },
         complete: () => {
           this.isLoading = false;
         },
       });
+    }
+  }
+
+
+  confirmUndoDelete() {
+    this.rowAEliminar = null;
+    this.progresoDeshacer = 0;
+    clearInterval(this.intervalDeshacer);
   }
 
   private validarCliente(cliente: Cliente) {
-    var validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (cliente.nombre.length < 3){
       return 'El nombre del cliente es inválido';
@@ -111,12 +151,17 @@ export class ListadoComponent implements OnInit {
     if (cliente.documento.toString().length < 7 || cliente.documento.toString().length > 8){
       return 'El documento del cliente es inválido';
     }
-    if (cliente.email.length == 0 || !cliente.email.match(validRegexEmail)){
+    if (this.isInvalidEmail(cliente.email)){
       return 'El email del cliente es inválido';
     }
     if (cliente.telefono.length == 0){
       return 'El teléfono del cliente es inválido';
     }
     return '';
+  }
+
+  isInvalidEmail(email: string): boolean {
+    var validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return email.length == 0 || !email.match(validRegexEmail)
   }
 }
