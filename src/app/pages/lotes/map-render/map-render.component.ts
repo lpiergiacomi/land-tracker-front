@@ -85,20 +85,14 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     requestAnimationFrame(() => this.animate());
   }
 
-  private loadLotes() {
-    this.getLotes().subscribe({
-      next: (response) => {
-        this.lotesOriginales = response;
-        this.lotes = response;
-        this.lotes.forEach((lote) => {
-          this.loadMeshLote(lote);
-        })
-        this.scene.add(this.circleGroup);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+  private async loadLotes() {
+    const response = await this.getLotes();
+    this.lotesOriginales = response;
+    this.lotes = response;
+    this.lotes.forEach((lote) => {
+      this.loadMeshLote(lote);
+    })
+    this.scene.add(this.circleGroup);
   }
 
   private createControls = () => {
@@ -204,14 +198,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     return this.width / this.height;
   }
 
-  private getLotes(): Observable<Lote[]> {
-    return this.loteService.getLotes()
-      .pipe(
-        map((response: any) => {
-          return response as Lote[];
-        })
-      );
+  private async getLotes() {
+    return await this.loteService.getLotes();
   }
+
 
   private tween(posicionLote) {
     let {x, y, z} = posicionLote;
@@ -309,11 +299,8 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
     // Label
     this.lotes.forEach(lote => {
-      if (idsLotes.includes(lote.id)){
-        document.getElementById(`annotationDivLote${lote.id}`).firstChild.textContent = lote.id.toString();
-      } else {
-        document.getElementById(`annotationDivLote${lote.id}`).firstChild.textContent = '';
-      }
+      const newTextContent = idsLotes.includes(lote.id) ? lote.id.toString() : ''
+      document.getElementById(`annotationDivLote${lote.id}`).firstChild.textContent = newTextContent;
     })
 
     // Circles
@@ -327,9 +314,9 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     })
   }
 
-  cambiarEstadoLoteAReservado(loteReservado: Lote) {
-    this.lotes.find(lote => lote.id == loteReservado.id).estadoLote = 'RESERVADO';
-    const marker = this.annotationMarkers.find(marker => marker.userData['id'] == loteReservado.id)
+  cambiarEstadoLoteAReservado() {
+    this.loteSeleccionado.estadoLote = 'RESERVADO';
+    const marker = this.annotationMarkers.find(marker => marker.userData['id'] == this.loteSeleccionado.id)
     marker.material.color = new Color(0xffc107);
   }
 }

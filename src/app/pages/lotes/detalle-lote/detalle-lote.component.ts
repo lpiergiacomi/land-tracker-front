@@ -12,7 +12,7 @@ import {DialogReservaComponent} from "../dialog-reserva/dialog-reserva.component
 export class DetalleLoteComponent implements OnInit {
 
   @Input() loteSeleccionado: Lote;
-  @Output() loteReservadoEvent = new EventEmitter<Lote>();
+  @Output() loteReservadoEvent = new EventEmitter();
 
   constructor(private loteService: LoteService, public dialogReserva: MatDialog) {
 
@@ -34,7 +34,7 @@ export class DetalleLoteComponent implements OnInit {
     dialogReserva.afterClosed().subscribe(reserva => {
       if (reserva) {
         this.loteSeleccionado.estadoLote = 'RESERVADO';
-        this.loteReservadoEvent.emit(this.loteSeleccionado);
+        this.loteReservadoEvent.emit();
       }
     });
   }
