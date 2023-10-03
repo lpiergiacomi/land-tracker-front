@@ -1,0 +1,115 @@
+<div class="login-page">
+  <mat-card class="mat-elevation-z12">
+    <img src="../../../assets/dist/img/logo2.png"
+         alt="Land Tracker logo">
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+      <mat-tab label="Login">
+        <mat-card-content>
+          <form [formGroup]="formLogin">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                formControlName="email"
+                matInput
+                placeholder="Email"
+                required
+                name="email">
+              <mat-error *ngIf="this.emailLogin.hasError('required')">Debe ingresar un email</mat-error>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                placeholder="Contraseña"
+                type="password"
+                required
+                minlength="6"
+                formControlName="password">
+              <mat-error *ngIf="this.passwordLogin.hasError('required')">Debe ingresar una contraseña</mat-error>
+              <mat-error *ngIf="this.passwordLogin.hasError('minlength')">La contraseña debe tener al menos 6 caracteres
+              </mat-error>
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <mat-checkbox>Recordarme</mat-checkbox>
+            <button
+              mat-raised-button
+              color="primary"
+              class="login-button">
+              Login
+            </button>
+            <!--
+            <button
+              mat-raised-button
+              class="login-button">
+              Login with Google
+            </button>
+            -->
+          </form>
+        </mat-card-content>
+      </mat-tab>
+      <mat-tab label="Registrarse">
+        <mat-card-content>
+          <form [formGroup]="formRegistro">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                placeholder="User Name"
+                required
+                name="username"
+                formControlName="username">
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <mat-error *ngIf="this.usernameRegistro.hasError('required')">Debe ingresar una username</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                placeholder="Email"
+                required
+                name="email"
+              formControlName="email">
+              <mat-error *ngIf="this.emailRegistro.hasError('required')">Debe ingresar una email</mat-error>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                type="password"
+                required
+                minlength="6"
+                name="password"
+              formControlName="password">
+              <mat-error *ngIf="this.passwordRegistro.hasError('required')">Debe ingresar una contraseña</mat-error>
+              <mat-error *ngIf="this.passwordRegistro.hasError('minlength')">La contraseña debe tener al menos 6 caracteres</mat-error>
+              <mat-icon matSuffix>lock</mat-icon>
+
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                type="password"
+                required
+                minlength="6"
+                name="repassword"
+              formControlName="repassword">
+              <mat-error *ngIf="this.repasswordRegistro.hasError('required')">Debe ingresar una contraseña</mat-error>
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <button
+              mat-raised-button
+              color="primary"
+              class="login-button">
+              Registrarse
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
