@@ -22,6 +22,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import { ListadoComponent } from './listado/listado.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MetrosPipe} from "../../pipes/metros.pipe";
+import {MetrosCuadradosPipe} from "../../pipes/metros-cuadrados.pipe";
 
 
 @NgModule({
@@ -33,7 +36,9 @@ import { ListadoComponent } from './listado/listado.component';
     LabelNroLoteComponent,
     MapRenderComponent,
     TooltipMapComponent,
-    ListadoComponent
+    ListadoComponent,
+    MetrosPipe,
+    MetrosCuadradosPipe
   ],
   imports: [
     CommonModule,
@@ -50,7 +55,8 @@ import { ListadoComponent } from './listado/listado.component';
     MatExpansionModule,
     MatSelectModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatChipsModule
   ]
 })
 export class LotesModule { }
