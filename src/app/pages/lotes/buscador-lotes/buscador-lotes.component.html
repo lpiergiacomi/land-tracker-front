@@ -10,34 +10,19 @@
     </mat-expansion-panel-header>
 
     <div class="content-container">
-      <div class="filter-container">
         <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
           <mat-select multiple formControlName="filtroEstadosLote">
             <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
-    <!--
-    <div class="custom-label-slider">
-      <mat-label>Precio</mat-label>
-      <mat-slider min="1" max="50000" discrete [displayWith]="formatLabel">
-        <input value="3000" matSliderStartThumb>
-        <input value="10000" matSliderEndThumb>
-      </mat-slider>
-    </div>
-    -->
-
-      <div class="search-container">
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input formControlName="filtroTextoLote"  matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
         </mat-form-field>
-      </div>
-      <div class="button-container">
+
         <button mat-raised-button color="primary" (click)="filtrarLotes()">Buscar</button>
         <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar</button>
-      </div>
     </div>
   </mat-expansion-panel>
 </form>
