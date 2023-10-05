@@ -1,0 +1,74 @@
+.head {
+  width: calc(100% - 16.5rem);
+  margin-left: 17rem;
+  z-index: 1;
+  transition: all .5s ease;
+  padding: 1rem 1.5rem 0 1.5rem;
+  /*background-color: #424242;*/
+  position: fixed;
+  top: 0;
+
+  .head-content {
+    background-color: #424242;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 rgb(34 41 47 / 10%);
+    padding: 0.813rem 1.563rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse; /*Esto porque por ahora tenemos solo el icono, si queremos agregar mas cosas seguro cambie*/
+
+    .head-content-right {
+      display: flex;
+      align-items: center;
+
+      .head-user-avatar-container{
+        margin-left: 20px;
+
+        .head-user-avatar {
+          position: relative;
+        }
+
+        .user-avatar {
+          margin-bottom: -4px;
+          width: 50px;
+          border-radius: 10px;
+          border: rgb(56 142 60 / 65%) solid;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.overlay {
+  background: #5c5c5c;
+  margin-top: 10px;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+  border-radius: 0.25rem;
+}
+
+.overlay-user {
+  & ul {
+    padding: 0.5rem 0;
+    list-style: none;
+    width: 10rem;
+
+    & li {
+      padding: 0.35rem 1.5rem;
+      font-size: 14px;
+      font-weight: 400;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .icon {
+      margin-right: 0.6rem;
+    }
+
+    & li:hover {
+      background: #eff2f3;
+      color: #495057;
+    }
+  }
+}

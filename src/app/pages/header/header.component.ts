@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../../backend/services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -7,4 +9,15 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  userInfo: any;
+
+  constructor(private router: Router, private authService: AuthService) {
+    this.userInfo = this.authService.getLoggedUser();
+  }
+
+  logout() {
+    localStorage.setItem('access-token', '');
+    localStorage.setItem('token_decoded', '');
+    this.router.navigate(['/auth/login']);
+  }
 }

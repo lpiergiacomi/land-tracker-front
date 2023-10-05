@@ -8,8 +8,18 @@ import {HttpResponse} from "@angular/common/http";
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedUser: Usuario | null = null;
 
   constructor(private api: AuthApi) { }
+
+  setLoggedUser(decodedToken: any) {
+    this.loggedUser = new Usuario();
+    this.loggedUser.username = decodedToken.sub;
+  }
+
+  getLoggedUser(): Usuario | null {
+    return this.loggedUser;
+  }
 
   login(usuario: Usuario): Observable<HttpResponse<void>> {
     return this.api.login(usuario);

@@ -5,6 +5,7 @@ import {AuthService} from "../../backend/services/auth.service";
 import {take} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit{
   hideRepasswordRegister: boolean = true;
   activeTabIndex: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService, private jwtHelper: JwtHelperService) {
   }
 
   ngOnInit() {
@@ -79,12 +80,12 @@ export class LoginComponent implements OnInit{
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          localStorage.setItem(
-            'access-token',
-            response.body['access-token'] || ''
-          );
-          if (localStorage.getItem('access-token') != '') {
-            this.toastr.success(`Inicio de sesión con éxito`);
+          localStorage.setItem('access-token',response.body['access-token'] || '');
+          const token = localStorage.getItem('access-token');
+          if (token != '') {
+            const decodedToken = this.jwtHelper.decodeToken(token);
+            localStorage.setItem('token_decoded', JSON.stringify(decodedToken));
+            this.authService.setLoggedUser(decodedToken);
             this.router.navigate(['/pages/lotes/mapa']);
           }
         },

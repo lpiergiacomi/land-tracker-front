@@ -11,7 +11,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import {OverlayModule} from "@angular/cdk/overlay";
+import {CdkMenuModule} from "@angular/cdk/menu";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PagesRoutingModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    CdkMenuModule,
+    OverlayModule
   ]
 })
 export class PagesModule { }

@@ -20,6 +20,7 @@ import {AuthApi} from "./backend/api/auth.api";
 import {AuthService} from "./backend/services/auth.service";
 import {AuthModule} from "./auth/auth.module";
 import {AuthInterceptor} from "./auth/auth.interceptor";
+import {JwtModule} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,13 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
     MatInputModule,
     ReactiveFormsModule,
     AuthModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        }
+      },
+    }),
   ],
   providers: [
     HttpService,
