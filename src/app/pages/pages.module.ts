@@ -10,6 +10,7 @@ import {SublevelMenuComponent} from "./menu/sublevel-menu.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatIconModule} from "@angular/material/icon";
     BodyComponent,
     HeaderComponent,
     MenuComponent,
-    SublevelMenuComponent
+    SublevelMenuComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
