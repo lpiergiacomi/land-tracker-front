@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {Usuario} from "../model/usuario";
+import { Usuario} from "../model/usuario";
+import {Observable} from "rxjs";
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable()
 export class AuthApi {
@@ -8,11 +10,11 @@ export class AuthApi {
 
   constructor(private api: HttpService) {}
 
-  getUsuarioById(id: number) {
-    return this.api.get(`${this.apiController}/${id}`);
+  login(usuario: Usuario): Observable<HttpResponse<void>> {
+    return this.api.post(`${this.apiController}/login`, usuario, {observe: 'response'});
   }
 
   registrar(usuario: Usuario) {
-    return this.api.post(`${this.apiController}`, usuario);
+    return this.api.post(`${this.apiController}/register`, usuario);
   }
 }

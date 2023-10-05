@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoteService } from './backend/services/lote.service';
 import { LotesApi } from './backend/api/lotes.api';
 import { HttpService } from './backend/api/http.service';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ClienteService} from "./backend/services/cliente.service";
 import {ClientesApi} from "./backend/api/clientes.api";
@@ -19,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AuthApi} from "./backend/api/auth.api";
 import {AuthService} from "./backend/services/auth.service";
 import {AuthModule} from "./auth/auth.module";
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {AuthModule} from "./auth/auth.module";
     ReservaService,
     ReservasApi,
     AuthService,
-    AuthApi
+    AuthApi,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   exports: [
   ],

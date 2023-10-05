@@ -5,6 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: `./pages.component.html`,
   styleUrls: ['./pages.component.css']
 })
+
 export class PagesComponent {
+
+  estaAutenticado: boolean = true;
+
+  constructor() {
+    this.estaAutenticado = localStorage.getItem('access-token') !== '';
+  }
 
 }

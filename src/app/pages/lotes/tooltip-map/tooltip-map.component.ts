@@ -11,7 +11,6 @@ export class TooltipMapComponent {
   @Input() lote: Lote;
   @Input() loteSeleccionado: Lote;
   @Input() loteParaTooltip: Lote;
-  @Output() cerrarTooltipEvent = new EventEmitter<void>(); //TODO: Por ahora no se usa
 
   public mostrarTooltip(){
     return this.loteParaTooltip?.id == this.lote.id;
