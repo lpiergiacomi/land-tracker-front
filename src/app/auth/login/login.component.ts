@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit{
   hideRepasswordRegister: boolean = true;
   activeTabIndex: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService, private jwtHelper: JwtHelperService) {
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -80,14 +80,8 @@ export class LoginComponent implements OnInit{
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          localStorage.setItem('access-token',response.body['access-token'] || '');
-          const token = localStorage.getItem('access-token');
-          if (token != '') {
-            const decodedToken = this.jwtHelper.decodeToken(token);
-            localStorage.setItem('token_decoded', JSON.stringify(decodedToken));
-            this.authService.setLoggedUser(decodedToken);
-            this.router.navigate(['/pages/lotes/mapa']);
-          }
+          this.authService.setLoggedUser(response.body['access-token'] || '');
+          this.router.navigate(['/pages/lotes/mapa']);
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ?? 'Ocurrió un error');

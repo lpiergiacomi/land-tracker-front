@@ -11,13 +11,11 @@ export class HeaderComponent {
 
   userInfo: any;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private authService: AuthService) {
     this.userInfo = this.authService.getLoggedUser();
   }
 
   logout() {
-    localStorage.setItem('access-token', '');
-    localStorage.setItem('token_decoded', '');
-    this.router.navigate(['/auth/login']);
+    this.authService.logout();
   }
 }
