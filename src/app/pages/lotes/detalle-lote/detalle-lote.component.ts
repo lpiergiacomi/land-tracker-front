@@ -9,21 +9,13 @@ import {DialogReservaComponent} from "../dialog-reserva/dialog-reserva.component
   templateUrl: './detalle-lote.component.html',
   styleUrls: ['./detalle-lote.component.css']
 })
-export class DetalleLoteComponent implements OnInit {
+export class DetalleLoteComponent {
 
   @Input() loteSeleccionado: Lote;
   @Output() loteReservadoEvent = new EventEmitter();
 
   constructor(private loteService: LoteService, public dialogReserva: MatDialog) {
 
-  }
-  ngOnInit(): void {
-    this.getLoteById(this.loteSeleccionado.id);
-  }
-
-  private getLoteById(idLote: number) {
-    this.loteService.getLoteById(idLote)
-      .subscribe(lote => this.loteSeleccionado = lote);
   }
 
   reservar() {
@@ -37,15 +29,6 @@ export class DetalleLoteComponent implements OnInit {
         this.loteReservadoEvent.emit();
       }
     });
-  }
-
-  getStyleBorderByState() {
-    let colorClass = 'mat-card-green';
-    if (this.loteSeleccionado.estadoLote == 'RESERVADO')
-      colorClass = 'mat-card-yellow';
-    if (this.loteSeleccionado.estadoLote == 'VENDIDO')
-      colorClass = 'mat-card-red';
-    return colorClass;
   }
 
   getColorState() {

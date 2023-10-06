@@ -12,10 +12,10 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Documento</mat-label>
-        <input matInput type="number" formControlName="dniCliente" required >
+        <input matInput inputmode="numeric" formControlName="dniCliente" required >
         <mat-error *ngIf="this.dniCliente.hasError('required')">Debe ingresar un DNI</mat-error>
-        <mat-error *ngIf="this.dniCliente.hasError('minlength')">El DNI debe tener al menos 7 dígitos</mat-error>
-        <mat-error *ngIf="this.dniCliente.hasError('maxlength')">El DNI debe tener como máximo 8 dígitos</mat-error>
+        <mat-error *ngIf="this.dniCliente.hasError('minlength')">Debe tener al menos 7 dígitos</mat-error>
+        <mat-error *ngIf="this.dniCliente.hasError('maxlength')">Debe tener como máximo 8 dígitos</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
