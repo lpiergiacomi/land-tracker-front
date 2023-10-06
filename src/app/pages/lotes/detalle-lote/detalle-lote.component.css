@@ -1,5 +1,15 @@
-mat-card {
+.mat-card-green {
   border: #7bb95dab 3px dashed;
+  border-radius: 2%;
+}
+
+.mat-card-yellow {
+  border: #ffed48 3px dashed;
+  border-radius: 2%;
+}
+
+.mat-card-red {
+  border: #ff0000db 3px dashed;
   border-radius: 2%;
 }
 

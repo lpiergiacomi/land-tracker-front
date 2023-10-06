@@ -1,9 +1,12 @@
-<mat-card>
+<mat-card [ngStyle]="{'border-radius': '2%', 'border': getColorState() + ' 3px dashed' }">
   <mat-card-header class="card-header">
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{loteSeleccionado?.nombre}}</mat-card-title>
     <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
     <div class="chips-container">
+      <mat-chip class="chip-item" [ngStyle]="{'background-color': getColorState()}">
+        {{loteSeleccionado?.estadoLote}}
+      </mat-chip>
       <mat-chip *ngIf="loteSeleccionado?.tieneAgua" class="chip-item" style="background-color:#00ffff75">
         <i class='fal fa-tint'></i>
         Agua
@@ -17,7 +20,6 @@
   <mat-card-content>
     <mat-list role="list">
       <mat-list-item role="listitem"><b>Superficie:</b> {{loteSeleccionado?.superficie | metrosCuadrados }}</mat-list-item>
-      <mat-list-item role="listitem"><b>Estado:</b> {{loteSeleccionado?.estadoLote}}</mat-list-item>
       <mat-list-item role="listitem"><b>Metros frente:</b> {{loteSeleccionado?.metrosFrente | metros}}</mat-list-item>
       <mat-list-item role="listitem"><b>Metros fondo:</b> {{loteSeleccionado?.metrosFondo | metros}}</mat-list-item>
       <mat-list-item role="listitem"><b>Nro cuenta

@@ -38,4 +38,22 @@ export class DetalleLoteComponent implements OnInit {
       }
     });
   }
+
+  getStyleBorderByState() {
+    let colorClass = 'mat-card-green';
+    if (this.loteSeleccionado.estadoLote == 'RESERVADO')
+      colorClass = 'mat-card-yellow';
+    if (this.loteSeleccionado.estadoLote == 'VENDIDO')
+      colorClass = 'mat-card-red';
+    return colorClass;
+  }
+
+  getColorState() {
+    let color = '#7bb95dab';
+    if (this.loteSeleccionado.estadoLote == 'RESERVADO')
+      color = '#ffed4887';
+    if (this.loteSeleccionado.estadoLote == 'VENDIDO')
+      color = '#ff000096';
+    return color;
+  }
 }
