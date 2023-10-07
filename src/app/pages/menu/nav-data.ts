@@ -27,15 +27,4 @@ export const navbarData: IMenuData[] = [
       }
     ]
   },
-  {
-    routeLink: 'reservas',
-    icon: 'fal fa-calendar-check',
-    label: 'Reservas',
-    items: [
-      {
-        routeLink: 'reservas/listado',
-        label: 'Lista de reservas',
-      }
-    ]
-  }
 ];
