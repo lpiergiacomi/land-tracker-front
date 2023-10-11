@@ -1,11 +1,11 @@
 export class Reserve {
 
   id: number;
-  idLot: number;
-  idClient: number;
+  lotId: number;
+  clientId: number;
 
   constructor(idLot: number, idClient: number) {
-    this.idLot = idLot;
-    this.idClient = idClient;
+    this.lotId = idLot;
+    this.clientId = idClient;
   }
 }
