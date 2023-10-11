@@ -1211,7 +1211,7 @@
   var SELECTOR_TAB_LOADING = SELECTOR_TAB_CONTENT + " .tab-loading";
   var SELECTOR_TAB_PANE = SELECTOR_TAB_CONTENT + " .tab-pane";
   var SELECTOR_SIDEBAR_MENU_ITEM = '.main-sidebar .nav-item > a.nav-link';
-  var SELECTOR_SIDEBAR_SEARCH_ITEM = '.sidebar-search-results .list-group-item';
+  var SELECTOR_SIDEBAR_SEARCH_ITEM = '.sidebar-search-results .client-list-group-item';
   var SELECTOR_HEADER_MENU_ITEM = '.main-header .nav-item a.nav-link';
   var SELECTOR_HEADER_DROPDOWN_ITEM = '.main-header a.dropdown-item';
   var CLASS_NAME_IFRAME_MODE$1 = 'iframe-mode';
@@ -1861,7 +1861,7 @@
     };
 
     _proto._max = function _max(numbers) {
-      // Calculate the maximum number in a list
+      // Calculate the maximum number in a client-list
       var max = 0;
       Object.keys(numbers).forEach(function (key) {
         if (numbers[key] > max) {
@@ -2173,7 +2173,7 @@
   var CLASS_NAME_ICON_CLOSE = 'fa-times';
   var CLASS_NAME_HEADER = 'nav-header';
   var CLASS_NAME_SEARCH_RESULTS = 'sidebar-search-results';
-  var CLASS_NAME_LIST_GROUP = 'list-group';
+  var CLASS_NAME_LIST_GROUP = 'client-list-group';
   var SELECTOR_DATA_WIDGET$1 = '[data-widget="sidebar-search"]';
   var SELECTOR_SIDEBAR = '.main-sidebar .nav-sidebar';
   var SELECTOR_NAV_LINK = '.nav-link';
@@ -2345,7 +2345,7 @@
 
       var groupItemElement = $__default["default"]('<a/>', {
         href: decodeURIComponent(link),
-        class: 'list-group-item'
+        class: 'client-list-group-item'
       });
       var searchTitleElement = $__default["default"]('<div/>', {
         class: 'search-title'
@@ -2774,7 +2774,7 @@
   var NAME$1 = 'TodoList';
   var DATA_KEY$1 = 'lte.todolist';
   var JQUERY_NO_CONFLICT$1 = $__default["default"].fn[NAME$1];
-  var SELECTOR_DATA_TOGGLE = '[data-widget="todo-list"]';
+  var SELECTOR_DATA_TOGGLE = '[data-widget="todo-client-list"]';
   var CLASS_NAME_TODO_LIST_DONE = 'done';
   var Default$1 = {
     onCheck: function onCheck(item) {

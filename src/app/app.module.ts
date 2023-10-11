@@ -3,15 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { LoteService } from './backend/services/lote.service';
-import { LotesApi } from './backend/api/lotes.api';
+import { LotService } from './backend/services/lot.service';
+import { LotsApi } from './backend/api/lots-api.service';
 import { HttpService } from './backend/api/http.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ClienteService} from "./backend/services/cliente.service";
-import {ClientesApi} from "./backend/api/clientes.api";
-import {ReservaService} from "./backend/services/reserva.service";
-import {ReservasApi} from "./backend/api/reservas.api";
+import {ClientService} from "./backend/services/client.service";
+import {ClientsApi} from "./backend/api/clients-api.service";
+import {ReserveService} from "./backend/services/reserve.service";
+import {ReservesApi} from "./backend/api/reserves-api.service";
 import {ToastrModule} from "ngx-toastr";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
@@ -46,12 +46,12 @@ import {JwtModule} from "@auth0/angular-jwt";
   ],
   providers: [
     HttpService,
-    LoteService,
-    LotesApi,
-    ClienteService,
-    ClientesApi,
-    ReservaService,
-    ReservasApi,
+    LotService,
+    LotsApi,
+    ClientService,
+    ClientsApi,
+    ReserveService,
+    ReservesApi,
     AuthService,
     AuthApi,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

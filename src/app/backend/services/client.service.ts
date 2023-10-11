@@ -1,28 +1,28 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {ClientesApi} from "../api/clientes.api";
+import {ClientsApi} from "../api/clients-api.service";
 import {Client, ClientParams} from "../model/client";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class ClientService {
 
-  constructor(private api: ClientesApi) {
+  constructor(private api: ClientsApi) {
   }
 
-  getClientes(): Observable<Client[]> {
-    return this.api.getAllClientes();
+  getClients(): Observable<Client[]> {
+    return this.api.getAllClients();
   }
 
-  crearCliente(cliente: Client): Observable<Client> {
-    return this.api.crearCliente(cliente);
+  createClient(client: Client): Observable<Client> {
+    return this.api.createClient(client);
   }
 
-  eliminarCliente(idCliente: number): any {
-    return this.api.eliminarCliente(idCliente);
+  deleteClient(idClient: number): any {
+    return this.api.deleteClient(idClient);
   }
-  getClientesFiltrados(params: ClientParams): Observable<any> {
-    return this.api.getClientesFiltrados(params);
+  getFilteredClients(params: ClientParams): Observable<any> {
+    return this.api.getFilteredClients(params);
   }
 }

@@ -1,37 +1,37 @@
-export class Lote {
+export class Lot {
 
   id: number;
-  nombre: string;
-  superficie: number;
-  estadoLote: string;
-  posicionLote: PosicionLote;
-  metrosFrente: number;
-  metrosFondo: number;
-  nroCuentaCatastral: string;
-  nroCuentaMunicipal: string;
-  tieneLuz: boolean;
-  tieneAgua: boolean;
-  precio: number;
+  name: string;
+  area: number;
+  state: string;
+  position: LotPosition;
+  metersFront: number;
+  metersBack: number;
+  cadastralAccNumber: string;
+  municipalAccNumber: string;
+  hasLight: boolean;
+  hasWater: boolean;
+  price: number;
 
   constructor() {
   }
 }
 
-export class LoteParams {
-  nombre: string;
-  precioMin: number;
-  precioMax: number;
-  estados: string[];
+export class LotParams {
+  name: string;
+  minPrice: number;
+  maxPrice: number;
+  states: string[];
 
-  constructor(nombre: string, precioMin: number, precioMax: number, estados: string[]) {
-    this.nombre = nombre;
-    this.precioMin = precioMin;
-    this.precioMax = precioMax;
-    this.estados = estados;
+  constructor(name: string, minPrice: number, maxPrice: number, states: string[]) {
+    this.name = name;
+    this.minPrice = minPrice;
+    this.maxPrice = maxPrice;
+    this.states = states;
   }
 }
 
-export class PosicionLote {
+export class LotPosition {
 
   x: number;
   y: number;

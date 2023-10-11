@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Usuario} from "../../backend/model/usuario";
+import {User} from "../../backend/model/user";
 import {AuthService} from "../../backend/services/auth.service";
 import {take} from "rxjs";
 import {Router} from "@angular/router";
@@ -13,8 +13,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-  formLogin!: FormGroup;
-  formRegistro!: FormGroup;
+  loginForm!: FormGroup;
+  registerForm!: FormGroup;
   hidePasswordLogin: boolean = true;
   hidePasswordRegister: boolean = true;
   hideRepasswordRegister: boolean = true;
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.formLogin = new FormGroup({
+    this.loginForm = new FormGroup({
       username: new FormControl('', [
         Validators.required
       ]),
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit{
         Validators.required
       ])
     });
-    this.formRegistro = new FormGroup({
+    this.registerForm = new FormGroup({
       username: new FormControl('', [
         Validators.required
       ]),
@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit{
       ])
     });
 
-    this.formRegistro.get('password')?.valueChanges.subscribe(() => {
-      const repasswordControl = this.formRegistro.get('repassword');
+    this.registerForm.get('password')?.valueChanges.subscribe(() => {
+      const repasswordControl = this.registerForm.get('repassword');
       if (repasswordControl && repasswordControl.dirty) {
         repasswordControl.updateValueAndValidity();
       }
@@ -55,24 +55,24 @@ export class LoginComponent implements OnInit{
   }
 
   get usernameLogin() {
-    return this.formLogin.get('username');
+    return this.loginForm.get('username');
   }
   get passwordLogin() {
-    return this.formLogin.get('password');
+    return this.loginForm.get('password');
   }
-  get usernameRegistro() {
-    return this.formRegistro.get('username');
+  get usernameRegister() {
+    return this.registerForm.get('username');
   }
-  get passwordRegistro() {
-    return this.formRegistro.get('password');
+  get passwordRegister() {
+    return this.registerForm.get('password');
   }
-  get repasswordRegistro() {
-    return this.formRegistro.get('repassword');
+  get repasswordRegister() {
+    return this.registerForm.get('repassword');
   }
 
 
   login() {
-    const usuario = new Usuario();
+    const usuario = new User();
     usuario.username = this.usernameLogin.value;
     usuario.password = this.passwordLogin.value;
     this.authService
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit{
       .subscribe({
         next: (response) => {
           this.authService.setLoggedUser(response.body['access-token'] || '');
-          this.router.navigate(['/pages/lotes/mapa']);
+          this.router.navigate(['/pages/lots/map']);
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ?? 'Ocurrió un error');
@@ -89,17 +89,17 @@ export class LoginComponent implements OnInit{
       });
   }
 
-  registrarUsuario() {
-    const usuario = new Usuario();
-    usuario.username = this.usernameRegistro.value;
-    usuario.password = this.passwordRegistro.value;
+  registerUser() {
+    const user = new User();
+    user.username = this.usernameRegister.value;
+    user.password = this.passwordRegister.value;
     this.authService
-      .registrarUsuario(usuario)
+      .registerUser(user)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
           this.toastr.success(`Usuario registrado con éxito`);
-          this.reiniciarFormRegistro();
+          this.resetRegisterForm();
         },
         error: (error) => {
           this.toastr.error(error.error.message);
@@ -109,28 +109,28 @@ export class LoginComponent implements OnInit{
 
   repasswordValidator(control: FormControl) {
     const repassword = control.value;
-    if (this.formRegistro && this.passwordRegistro.value !== repassword) {
+    if (this.registerForm && this.passwordRegister.value !== repassword) {
       return {invalidRepassword: true};
     }
     return null;
   }
 
   getErrorMessageRepassword() {
-    if (this.repasswordRegistro.hasError('required')) {
+    if (this.repasswordRegister.hasError('required')) {
       return 'Debe ingresar una contraseña';
     }
-    if (this.repasswordRegistro.hasError('invalidRepassword')) {
+    if (this.repasswordRegister.hasError('invalidRepassword')) {
       return 'Las contraseñas deben coincidir';
     }
     return '';
   }
 
 
-  private reiniciarFormRegistro() {
-    this.formRegistro.reset();
-    this.formRegistro.get('username')?.setErrors(null);
-    this.formRegistro.get('password')?.setErrors(null);
-    this.formRegistro.get('repassword')?.setErrors(null);
+  private resetRegisterForm() {
+    this.registerForm.reset();
+    this.registerForm.get('username')?.setErrors(null);
+    this.registerForm.get('password')?.setErrors(null);
+    this.registerForm.get('repassword')?.setErrors(null);
     this.activeTabIndex = 0;
   }
 }

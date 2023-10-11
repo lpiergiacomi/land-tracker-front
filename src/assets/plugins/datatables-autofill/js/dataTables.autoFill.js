@@ -52,7 +52,7 @@ var DataTable = $.fn.dataTable;
 
 var _instance = 0;
 
-/** 
+/**
  * AutoFill provides Excel like auto-fill features for a DataTable
  *
  * @class AutoFill
@@ -125,7 +125,7 @@ var AutoFill = function( dt, opts )
 		background: $('<div class="dt-autofill-background"/>'),
 
 		/** @type {jQuery} Fill type chooser */
-		list: $('<div class="dt-autofill-list">'+this.s.dt.i18n('autoFill.info', '')+'<ul/></div>'),
+		list: $('<div class="dt-autofill-client-list">'+this.s.dt.i18n('autoFill.info', '')+'<ul/></div>'),
 
 		/** @type {jQuery} DataTables scrolling container */
 		dtScroll: null,
@@ -479,7 +479,7 @@ $.extend( AutoFill.prototype, {
 				var id = dt.row( cell.index.row ).id();
 				idValues[ fieldName ][ id ] = cell.set;
 
-				// Keep a list of cells so we can activate the bubble editing
+				// Keep a client-list of cells so we can activate the bubble editing
 				// with them
 				nodes.push( cell.index );
 			}
@@ -681,7 +681,7 @@ $.extend( AutoFill.prototype, {
 	 * @private
 	 */
 	_mousemove: function ( e )
-	{	
+	{
 		var that = this;
 		var dt = this.s.dt;
 		var name = e.target.nodeName.toLowerCase();
@@ -787,7 +787,7 @@ $.extend( AutoFill.prototype, {
 		}
 
 		this._actionSelector( selected );
-		
+
 		// Stop shiftScroll
 		clearInterval( this.s.scrollInterval );
 		this.s.scrollInterval = null;
@@ -797,7 +797,7 @@ $.extend( AutoFill.prototype, {
 	/**
 	 * Create an array with a range of numbers defined by the start and end
 	 * parameters passed in (inclusive!).
-	 * 
+	 *
 	 * @param  {integer} start Start
 	 * @param  {integer} end   End
 	 * @private
@@ -1078,7 +1078,7 @@ AutoFill.actions = {
 	},
 
 	// Special type that does not make itself available, but is added
-	// automatically by AutoFill if a multi-choice list is shown. This allows
+	// automatically by AutoFill if a multi-choice client-list is shown. This allows
 	// sensible code reuse
 	cancel: {
 		available: function () {
@@ -1098,7 +1098,7 @@ AutoFill.actions = {
 
 /**
  * AutoFill version
- * 
+ *
  * @static
  * @type      String
  */
@@ -1107,7 +1107,7 @@ AutoFill.version = '2.3.9';
 
 /**
  * AutoFill defaults
- * 
+ *
  * @namespace
  */
 AutoFill.defaults = {
@@ -1139,7 +1139,7 @@ AutoFill.defaults = {
 
 /**
  * Classes used by AutoFill that are configurable
- * 
+ *
  * @namespace
  */
 AutoFill.classes = {

@@ -1,11 +1,11 @@
-export class Reserva {
+export class Reserve {
 
   id: number;
-  idLote: number;
-  idCliente: number;
+  idLot: number;
+  idClient: number;
 
-  constructor(idLote: number, idCliente: number) {
-    this.idLote = idLote;
-    this.idCliente = idCliente;
+  constructor(idLot: number, idClient: number) {
+    this.idLot = idLot;
+    this.idClient = idClient;
   }
 }

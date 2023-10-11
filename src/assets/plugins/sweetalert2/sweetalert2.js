@@ -1402,7 +1402,7 @@
 
   // Adding aria-hidden="true" to elements outside of the active modal dialog ensures that
   // elements not within the active modal dialog will not be surfaced if a user opens a screen
-  // reader’s list of elements (headings, form controls, landmarks, etc.) in the document.
+  // reader’s client-list of elements (headings, form controls, landmarks, etc.) in the document.
 
   const setAriaHidden = () => {
     const bodyChildren = toArray(document.body.children);

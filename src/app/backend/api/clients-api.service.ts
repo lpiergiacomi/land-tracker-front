@@ -1,27 +1,26 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {LotParams} from "../model/lot";
 import {Client, ClientParams} from "../model/client";
 
 @Injectable()
-export class ClientesApi {
-  private readonly apiController: string = 'clientes';
+export class ClientsApi {
+  private readonly apiController: string = 'clients';
 
   constructor(private api: HttpService) {
   }
 
-  getAllClientes() {
+  getAllClients() {
     return this.api.get(`${this.apiController}`);
   }
 
-  crearCliente(cliente: Client) {
-    return this.api.post(`${this.apiController}`, cliente);
+  createClient(client: Client) {
+    return this.api.post(`${this.apiController}`, client);
   }
 
-  eliminarCliente(idCliente: number) {
-    return this.api.delete(`${this.apiController}/${idCliente}`);
+  deleteClient(idClient: number) {
+    return this.api.delete(`${this.apiController}/${idClient}`);
   }
-  getClientesFiltrados(params: ClientParams) {
+  getFilteredClients(params: ClientParams) {
     return this.api.post(`${this.apiController}/filter`, params);
   }
 

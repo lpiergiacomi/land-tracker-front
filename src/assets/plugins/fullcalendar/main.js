@@ -1738,7 +1738,7 @@ var FullCalendar = (function (exports) {
         visibleRange: identity,
         titleFormat: identity,
         eventInteractive: Boolean,
-        // only used by list-view, but languages define the value, so we need it in base options
+        // only used by client-list-view, but languages define the value, so we need it in base options
         noEventsText: String,
         viewHint: identity,
         navLinkHint: identity,
@@ -4210,7 +4210,7 @@ var FullCalendar = (function (exports) {
         moreLinkText: 'more',
         noEventsText: 'No events to display',
     };
-    var RAW_EN_LOCALE = __assign(__assign({}, MINIMAL_RAW_EN_LOCALE), { 
+    var RAW_EN_LOCALE = __assign(__assign({}, MINIMAL_RAW_EN_LOCALE), {
         // Includes things we don't want other locales to inherit,
         // things that derive from other translatable strings.
         buttonHints: {
@@ -6789,7 +6789,7 @@ var FullCalendar = (function (exports) {
         var endMarker = framingRange.end;
         var instanceStarts = [];
         while (dayMarker < endMarker) {
-            var instanceStart 
+            var instanceStart
             // if everyday, or this particular day-of-week
             = void 0;
             // if everyday, or this particular day-of-week
@@ -7657,7 +7657,7 @@ var FullCalendar = (function (exports) {
                 var searchRes = binarySearch(trackingEntries, newEntry.span.start, getEntrySpanEnd); // find first entry after newEntry's end
                 var lateralIndex = searchRes[0] + searchRes[1]; // if exact match (which doesn't collide), go to next one
                 while ( // loop through entries that horizontally intersect
-                (trackingEntry = trackingEntries[lateralIndex]) && // but not past the whole entry list
+                (trackingEntry = trackingEntries[lateralIndex]) && // but not past the whole entry client-list
                     trackingEntry.span.start < newEntry.span.end // and not entirely past newEntry
                 ) {
                     var trackingEntryBottom = trackingCoord + trackingEntry.thickness;
@@ -8720,8 +8720,8 @@ var FullCalendar = (function (exports) {
         */
         Slicer.prototype.sliceEventRange = function (eventRange, extraArgs) {
             var dateRange = eventRange.range;
-            // hack to make multi-day events that are being force-displayed as list-items to take up only one day
-            if (this.forceDayIfListItem && eventRange.ui.display === 'list-item') {
+            // hack to make multi-day events that are being force-displayed as client-list-items to take up only one day
+            if (this.forceDayIfListItem && eventRange.ui.display === 'client-list-item') {
                 dateRange = {
                     start: dateRange.start,
                     end: addDays(dateRange.start, 1),
@@ -12215,7 +12215,7 @@ var FullCalendar = (function (exports) {
     });
     function hasListItemDisplay(seg) {
         var display = seg.eventRange.ui.display;
-        return display === 'list-item' || (display === 'auto' &&
+        return display === 'client-list-item' || (display === 'auto' &&
             !seg.eventRange.def.allDay &&
             seg.firstCol === seg.lastCol && // can't be multi-day
             seg.isStart && // "
@@ -12656,7 +12656,7 @@ var FullCalendar = (function (exports) {
                         }
                     }
                     /*
-                    known bug: events that are force to be list-item but span multiple days still take up space in later columns
+                    known bug: events that are force to be client-list-item but span multiple days still take up space in later columns
                     todo: in print view, for multi-day events, don't display title within non-start/end segs
                     */
                     nodes.push(createElement("div", { className: 'fc-daygrid-event-harness' + (isAbsolute ? ' fc-daygrid-event-harness-abs' : ''), key: key, ref: isMirror ? null : this.segHarnessRefs.createRef(key), style: {
@@ -13123,7 +13123,7 @@ var FullCalendar = (function (exports) {
                     view: viewApi,
                 };
                 return (
-                // TODO: make reusable hook. used in list view too
+                // TODO: make reusable hook. used in client-list view too
                 createElement(RenderHook, { hookProps: hookProps, classNames: options.allDayClassNames, content: options.allDayContent, defaultContent: renderAllDayInner$1, didMount: options.allDayDidMount, willUnmount: options.allDayWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, "aria-hidden": true, className: [
                         'fc-timegrid-axis',
                         'fc-scrollgrid-shrink',
@@ -13568,7 +13568,7 @@ var FullCalendar = (function (exports) {
             var lateralStart = searchIndex[0] + searchIndex[1]; // if exact match (which doesn't collide), go to next one
             var lateralEnd = lateralStart;
             while ( // loop through entries that horizontally intersect
-            (entry = entries[lateralEnd]) && // but not past the whole seg list
+            (entry = entries[lateralEnd]) && // but not past the whole seg client-list
                 entry.span.start < subjectEntry.span.end) {
                 lateralEnd += 1;
             }
@@ -13816,7 +13816,7 @@ var FullCalendar = (function (exports) {
             if (!slatCoords) {
                 return null;
             }
-            return segs.map(function (seg, i) { return (createElement(NowIndicatorRoot, { isAxis: false, date: date, 
+            return segs.map(function (seg, i) { return (createElement(NowIndicatorRoot, { isAxis: false, date: date,
                 // key doesn't matter. will only ever be one
                 key: i }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { ref: rootElRef, className: ['fc-timegrid-now-indicator-line'].concat(classNames).join(' '), style: { top: slatCoords.computeDateTop(seg.start, date) } }, innerContent)); })); });
         };
@@ -14237,18 +14237,18 @@ var FullCalendar = (function (exports) {
             var hookProps = __assign({ date: dateEnv.toDate(dayDate), view: viewApi, textId: textId,
                 text: text,
                 sideText: sideText, navLinkAttrs: buildNavLinkAttrs(this.context, dayDate), sideNavLinkAttrs: buildNavLinkAttrs(this.context, dayDate, 'day', false) }, dayMeta);
-            var classNames = ['fc-list-day'].concat(getDayClassNames(dayMeta, theme));
+            var classNames = ['fc-client-list-day'].concat(getDayClassNames(dayMeta, theme));
             // TODO: make a reusable HOC for dayHeader (used in daygrid/timegrid too)
             return (createElement(RenderHook, { hookProps: hookProps, classNames: options.dayHeaderClassNames, content: options.dayHeaderContent, defaultContent: renderInnerContent, didMount: options.dayHeaderDidMount, willUnmount: options.dayHeaderWillUnmount }, function (rootElRef, customClassNames, innerElRef, innerContent) { return (createElement("tr", { ref: rootElRef, className: classNames.concat(customClassNames).join(' '), "data-date": formatDayString(dayDate) },
                 createElement("th", { scope: "colgroup", colSpan: 3, id: cellId, "aria-labelledby": textId },
-                    createElement("div", { className: 'fc-list-day-cushion ' + theme.getClass('tableCellShaded'), ref: innerElRef }, innerContent)))); }));
+                    createElement("div", { className: 'fc-client-list-day-cushion ' + theme.getClass('tableCellShaded'), ref: innerElRef }, innerContent)))); }));
         };
         return ListViewHeaderRow;
     }(BaseComponent));
     function renderInnerContent(props) {
         return (createElement(Fragment, null,
-            props.text && (createElement("a", __assign({ id: props.textId, className: "fc-list-day-text" }, props.navLinkAttrs), props.text)),
-            props.sideText && ( /* not keyboard tabbable */createElement("a", __assign({ "aria-hidden": true, className: "fc-list-day-side-text" }, props.sideNavLinkAttrs), props.sideText))));
+            props.text && (createElement("a", __assign({ id: props.textId, className: "fc-client-list-day-text" }, props.navLinkAttrs), props.text)),
+            props.sideText && ( /* not keyboard tabbable */createElement("a", __assign({ "aria-hidden": true, className: "fc-client-list-day-side-text" }, props.sideNavLinkAttrs), props.sideText))));
     }
 
     var DEFAULT_TIME_FORMAT = createFormatter({
@@ -14266,11 +14266,11 @@ var FullCalendar = (function (exports) {
             var seg = props.seg, timeHeaderId = props.timeHeaderId, eventHeaderId = props.eventHeaderId, dateHeaderId = props.dateHeaderId;
             var timeFormat = context.options.eventTimeFormat || DEFAULT_TIME_FORMAT;
             return (createElement(EventRoot, { seg: seg, timeText: "" // BAD. because of all-day content
-                , disableDragging: true, disableResizing: true, defaultContent: function () { return renderEventInnerContent(seg, context); } /* weird */, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday, isSelected: props.isSelected, isDragging: props.isDragging, isResizing: props.isResizing, isDateSelecting: props.isDateSelecting }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("tr", { className: ['fc-list-event', hookProps.event.url ? 'fc-event-forced-url' : ''].concat(classNames).join(' '), ref: rootElRef },
+                , disableDragging: true, disableResizing: true, defaultContent: function () { return renderEventInnerContent(seg, context); } /* weird */, isPast: props.isPast, isFuture: props.isFuture, isToday: props.isToday, isSelected: props.isSelected, isDragging: props.isDragging, isResizing: props.isResizing, isDateSelecting: props.isDateSelecting }, function (rootElRef, classNames, innerElRef, innerContent, hookProps) { return (createElement("tr", { className: ['fc-client-list-event', hookProps.event.url ? 'fc-event-forced-url' : ''].concat(classNames).join(' '), ref: rootElRef },
                 buildTimeContent(seg, timeFormat, context, timeHeaderId, dateHeaderId),
-                createElement("td", { "aria-hidden": true, className: "fc-list-event-graphic" },
-                    createElement("span", { className: "fc-list-event-dot", style: { borderColor: hookProps.borderColor || hookProps.backgroundColor } })),
-                createElement("td", { ref: innerElRef, headers: eventHeaderId + " " + dateHeaderId, className: "fc-list-event-title" }, innerContent))); }));
+                createElement("td", { "aria-hidden": true, className: "fc-client-list-event-graphic" },
+                    createElement("span", { className: "fc-client-list-event-dot", style: { borderColor: hookProps.borderColor || hookProps.backgroundColor } })),
+                createElement("td", { ref: innerElRef, headers: eventHeaderId + " " + dateHeaderId, className: "fc-client-list-event-title" }, innerContent))); }));
         };
         return ListViewEventRow;
     }(BaseComponent));
@@ -14307,9 +14307,9 @@ var FullCalendar = (function (exports) {
                     text: context.options.allDayText,
                     view: context.viewApi,
                 };
-                return (createElement(RenderHook, { hookProps: hookProps, classNames: options.allDayClassNames, content: options.allDayContent, defaultContent: renderAllDayInner, didMount: options.allDayDidMount, willUnmount: options.allDayWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, headers: timeHeaderId + " " + dateHeaderId, className: ['fc-list-event-time'].concat(classNames).join(' ') }, innerContent)); }));
+                return (createElement(RenderHook, { hookProps: hookProps, classNames: options.allDayClassNames, content: options.allDayContent, defaultContent: renderAllDayInner, didMount: options.allDayDidMount, willUnmount: options.allDayWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("td", { ref: rootElRef, headers: timeHeaderId + " " + dateHeaderId, className: ['fc-client-list-event-time'].concat(classNames).join(' ') }, innerContent)); }));
             }
-            return (createElement("td", { className: "fc-list-event-time" }, timeText));
+            return (createElement("td", { className: "fc-client-list-event-time" }, timeText));
         }
         return null;
     }
@@ -14347,9 +14347,9 @@ var FullCalendar = (function (exports) {
             var _this = this;
             var _a = this, props = _a.props, context = _a.context;
             var extraClassNames = [
-                'fc-list',
+                'fc-client-list',
                 context.theme.getClass('table'),
-                context.options.stickyHeaderDates !== false ? 'fc-list-sticky' : '',
+                context.options.stickyHeaderDates !== false ? 'fc-client-list-sticky' : '',
             ];
             var _b = this.computeDateVars(props.dateProfile), dayDates = _b.dayDates, dayRanges = _b.dayRanges;
             var eventSegs = this.eventStoreToSegs(props.eventStore, props.eventUiBases, dayRanges);
@@ -14364,8 +14364,8 @@ var FullCalendar = (function (exports) {
                 text: options.noEventsText,
                 view: viewApi,
             };
-            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.noEventsClassNames, content: options.noEventsContent, defaultContent: renderNoEventsInner, didMount: options.noEventsDidMount, willUnmount: options.noEventsWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { className: ['fc-list-empty'].concat(classNames).join(' '), ref: rootElRef },
-                createElement("div", { className: "fc-list-empty-cushion", ref: innerElRef }, innerContent))); }));
+            return (createElement(RenderHook, { hookProps: hookProps, classNames: options.noEventsClassNames, content: options.noEventsContent, defaultContent: renderNoEventsInner, didMount: options.noEventsDidMount, willUnmount: options.noEventsWillUnmount }, function (rootElRef, classNames, innerElRef, innerContent) { return (createElement("div", { className: ['fc-client-list-empty'].concat(classNames).join(' '), ref: rootElRef },
+                createElement("div", { className: "fc-client-list-empty-cushion", ref: innerElRef }, innerContent))); }));
         };
         ListView.prototype.renderSegList = function (allSegs, dayDates) {
             var _a = this.context, theme = _a.theme, options = _a.options;
@@ -14387,7 +14387,7 @@ var FullCalendar = (function (exports) {
                         }
                     }
                 }
-                return (createElement("table", { className: 'fc-list-table ' + theme.getClass('table') },
+                return (createElement("table", { className: 'fc-client-list-table ' + theme.getClass('table') },
                     createElement("thead", null,
                         createElement("tr", null,
                             createElement("th", { scope: "col", id: timeHeaderId }, options.timeHint),

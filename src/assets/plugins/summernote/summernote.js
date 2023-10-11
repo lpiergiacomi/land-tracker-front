@@ -1,5 +1,5 @@
 /*!
- * 
+ *
  * Super simple WYSIWYG editor v0.8.20
  * https://summernote.org
  *
@@ -114,8 +114,8 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default().extend((jquery__WEBPACK_IMPORTED_M
       h6: 'Header 6'
     },
     lists: {
-      unordered: 'Unordered list',
-      ordered: 'Ordered list'
+      unordered: 'Unordered client-list',
+      ordered: 'Ordered client-list'
     },
     options: {
       help: 'Help',
@@ -167,8 +167,8 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default().extend((jquery__WEBPACK_IMPORTED_M
       'justifyCenter': 'Set center align',
       'justifyRight': 'Set right align',
       'justifyFull': 'Set full align',
-      'insertUnorderedList': 'Toggle unordered list',
-      'insertOrderedList': 'Toggle ordered list',
+      'insertUnorderedList': 'Toggle unordered client-list',
+      'insertOrderedList': 'Toggle ordered client-list',
       'outdent': 'Outdent on current paragraph',
       'indent': 'Indent on current paragraph',
       'formatPara': 'Change current block\'s format as a paragraph(P tag)',
@@ -208,7 +208,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -222,14 +222,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -242,7 +242,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -254,12 +254,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -270,7 +270,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1145__;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -627,7 +627,7 @@ function lists_all(array, pred) {
   return true;
 }
 /**
- * returns true if the value is present in the list.
+ * returns true if the value is present in the client-list.
  */
 
 
@@ -644,7 +644,7 @@ function contains(array, item) {
   return false;
 }
 /**
- * get sum from a list
+ * get sum from a client-list
  *
  * @param {Array} array - array
  * @param {Function} fn - iterator
@@ -675,7 +675,7 @@ function from(collection) {
   return result;
 }
 /**
- * returns whether list is empty or not
+ * returns whether client-list is empty or not
  */
 
 
@@ -777,10 +777,10 @@ function prev(array, item) {
 /**
  * @class core.list
  *
- * list utils
+ * client-list utils
  *
  * @singleton
- * @alternateClassName list
+ * @alternateClassName client-list
  */
 
 
@@ -2572,7 +2572,7 @@ var WrappedRange = /*#__PURE__*/function () {
     this.ec = ec;
     this.eo = eo; // isOnEditable: judge whether range is on editable or not
 
-    this.isOnEditable = this.makeIsOn(dom.isEditable); // isOnList: judge whether range is on list node or not
+    this.isOnEditable = this.makeIsOn(dom.isEditable); // isOnList: judge whether range is on client-list node or not
 
     this.isOnList = this.makeIsOn(dom.isList); // isOnAnchor: judge whether range is on anchor node or not
 
@@ -3735,7 +3735,7 @@ var Style = /*#__PURE__*/function () {
   }, {
     key: "fromNode",
     value: function fromNode($node) {
-      var properties = ['font-family', 'font-size', 'text-align', 'list-style-type', 'line-height'];
+      var properties = ['font-family', 'font-size', 'text-align', 'client-list-style-type', 'line-height'];
       var styleInfo = this.jQueryCSS($node, properties) || {};
       var fontSize = $node[0].style.fontSize || styleInfo['font-size'];
       styleInfo['font-size'] = parseInt(fontSize, 10);
@@ -3836,14 +3836,14 @@ var Style = /*#__PURE__*/function () {
           'font-family': document.queryCommandValue('fontname') || styleInfo['font-family']
         });
       } catch (e) {// eslint-disable-next-line
-      } // list-style-type to list-style(unordered, ordered)
+      } // client-list-style-type to client-list-style(unordered, ordered)
 
 
       if (!rng.isOnList()) {
         styleInfo['list-style'] = 'none';
       } else {
         var orderedTypes = ['circle', 'disc', 'disc-leading-zero', 'square'];
-        var isUnordered = orderedTypes.indexOf(styleInfo['list-style-type']) > -1;
+        var isUnordered = orderedTypes.indexOf(styleInfo['client-list-style-type']) > -1;
         styleInfo['list-style'] = isUnordered ? 'unordered' : 'ordered';
       }
 
@@ -3889,13 +3889,13 @@ var Bullet = /*#__PURE__*/function () {
     key: "insertOrderedList",
     value:
     /**
-     * toggle ordered list
+     * toggle ordered client-list
      */
     function insertOrderedList(editable) {
       this.toggleList('OL', editable);
     }
     /**
-     * toggle unordered list
+     * toggle unordered client-list
      */
 
   }, {
@@ -3977,7 +3977,7 @@ var Bullet = /*#__PURE__*/function () {
       rng.select();
     }
     /**
-     * toggle list
+     * toggle client-list
      *
      * @param {String} listName - OL or UL
      */
@@ -3992,14 +3992,14 @@ var Bullet = /*#__PURE__*/function () {
         includeAncestor: true
       });
       var bookmark = rng.paraBookmark(paras);
-      var clustereds = lists.clusterBy(paras, func.peq2('parentNode')); // paragraph to list
+      var clustereds = lists.clusterBy(paras, func.peq2('parentNode')); // paragraph to client-list
 
       if (lists.find(paras, dom.isPurePara)) {
         var wrappedParas = [];
         external_jQuery_default().each(clustereds, function (idx, paras) {
           wrappedParas = wrappedParas.concat(_this3.wrapList(paras, listName));
         });
-        paras = wrappedParas; // list to paragraph or change list style
+        paras = wrappedParas; // client-list to paragraph or change client-list style
       } else {
         var diffLists = rng.nodes(dom.isList, {
           includeAncestor: true
@@ -4035,7 +4035,7 @@ var Bullet = /*#__PURE__*/function () {
 
       paras = paras.map(function (para) {
         return dom.isPurePara(para) ? dom.replace(para, 'LI') : para;
-      }); // append to list(<ul>, <ol>)
+      }); // append to client-list(<ul>, <ol>)
 
       dom.appendChildNodes(listNode, paras);
 
@@ -4133,8 +4133,8 @@ var Bullet = /*#__PURE__*/function () {
     /**
      * @method appendToPrevious
      *
-     * Appends list to previous list item, if
-     * none exist it wraps the list in a new list item.
+     * Appends client-list to previous client-list item, if
+     * none exist it wraps the client-list in a new client-list item.
      *
      * @param {HTMLNode} ListItem
      * @return {HTMLNode}
@@ -4148,7 +4148,7 @@ var Bullet = /*#__PURE__*/function () {
     /**
      * @method findList
      *
-     * Finds an existing list in list item
+     * Finds an existing client-list in client-list item
      *
      * @param {HTMLNode} ListItem
      * @return {Array[]}
@@ -4164,7 +4164,7 @@ var Bullet = /*#__PURE__*/function () {
     /**
      * @method findNextSiblings
      *
-     * Finds all list item siblings that follow it
+     * Finds all client-list item siblings that follow it
      *
      * @param {HTMLNode} ListItem
      * @return {HTMLNode}
@@ -4239,7 +4239,7 @@ var Typing = /*#__PURE__*/function () {
      *
      * blockquoteBreakingLevel
      *   0 - No break, the new paragraph remains inside the quote
-     *   1 - Break the first blockquote in the ancestors list
+     *   1 - Break the first blockquote in the ancestors client-list
      *   2 - Break all blockquotes, so that the new paragraph is not quoted (this is the default)
      */
 
@@ -5570,9 +5570,9 @@ var Editor = /*#__PURE__*/function () {
       return this.getLastRange();
     }
     /**
-     * create a new range from the list of elements
+     * create a new range from the client-list of elements
      *
-     * @param {list} dom element list
+     * @param {list} dom element client-list
      * @return {WrappedRange}
      */
 
@@ -7639,7 +7639,7 @@ var Buttons = /*#__PURE__*/function () {
           className: 'note-align',
           children: [justifyLeft, justifyCenter, justifyRight, justifyFull]
         }), _this2.ui.buttonGroup({
-          className: 'note-list',
+          className: 'note-client-list',
           children: [outdent, indent]
         })])]).render();
       });
@@ -9167,7 +9167,7 @@ var HelpDialog = /*#__PURE__*/function () {
       var keyMap = this.options.keyMap[env.isMac ? 'mac' : 'pc'];
       return Object.keys(keyMap).map(function (key) {
         var command = keyMap[key];
-        var $row = external_jQuery_default()('<div><div class="help-list-item"></div></div>');
+        var $row = external_jQuery_default()('<div><div class="help-client-list-item"></div></div>');
         $row.append(external_jQuery_default()('<label><kbd>' + key + '</kdb></label>').css({
           'width': 180,
           'margin-right': 10

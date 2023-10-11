@@ -3,18 +3,18 @@ import {HttpService} from './http.service';
 import {Reserve} from "../model/reserve";
 
 @Injectable()
-export class ReservasApi {
-  private readonly apiController: string = 'reservas';
+export class ReservesApi {
+  private readonly apiController: string = 'reserves';
 
   constructor(private api: HttpService) {
   }
 
-  getAllReservas() {
+  getAllReserves() {
     return this.api.get(`${this.apiController}`);
   }
 
-  crearReserva(reserva: Reserve) {
-    return this.api.post(`${this.apiController}`, reserva);
+  createReserve(reserve: Reserve) {
+    return this.api.post(`${this.apiController}`, reserve);
   }
 
 

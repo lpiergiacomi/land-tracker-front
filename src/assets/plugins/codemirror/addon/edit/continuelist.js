@@ -62,8 +62,8 @@
     cm.replaceSelections(replacements);
   };
 
-  // Auto-updating Markdown list numbers when a new item is added to the
-  // middle of a list
+  // Auto-updating Markdown client-list numbers when a new item is added to the
+  // middle of a client-list
   function incrementRemainingMarkdownListNumbers(cm, pos) {
     var startLine = pos.line, lookAhead = 0, skipCount = 0;
     var startItem = listRE.exec(cm.getLine(startLine)), startIndent = startItem[1];

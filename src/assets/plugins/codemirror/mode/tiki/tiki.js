@@ -114,9 +114,9 @@ CodeMirror.defineMode('tiki', function(config) {
           return chain(inLine("header string"));
         }
         break;
-      case "*": //unordered list line item, or <li /> at start of line
-      case "#": //ordered list line item, or <li /> at start of line
-      case "+": //ordered list line item, or <li /> at start of line
+      case "*": //unordered client-list line item, or <li /> at start of line
+      case "#": //ordered client-list line item, or <li /> at start of line
+      case "+": //ordered client-list line item, or <li /> at start of line
         return chain(inLine("tw-listitem bracket"));
         break;
       }

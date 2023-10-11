@@ -3,12 +3,12 @@ import {HttpService} from './http.service';
 import {LotParams} from "../model/lot";
 
 @Injectable()
-export class LotesApi {
-  private readonly apiController: string = 'lotes';
+export class LotsApi {
+  private readonly apiController: string = 'lots';
 
   constructor(private api: HttpService) {}
 
-  getAllLotes() {
+  getAllLots() {
     return this.api.get(`${this.apiController}`);
   }
 
@@ -16,7 +16,7 @@ export class LotesApi {
     return this.api.get(`${this.apiController}/${id}`);
   }
 
-  getLotesFiltrados(params: LotParams) {
+  getFilteredLots(params: LotParams) {
     return this.api.post(`${this.apiController}/filter`, params);
   }
 }

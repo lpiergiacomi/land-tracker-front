@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable} from "rxjs";
 import {AuthApi} from "../api/auth.api";
-import {Usuario} from "../model/usuario";
+import {User} from "../model/user";
 import {HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -23,18 +23,18 @@ export class AuthService {
     }
   }
 
-  getLoggedUser(): Usuario | null {
-    const user = new Usuario();
+  getLoggedUser(): User | null {
+    const user = new User();
     user.username = JSON.parse(localStorage.getItem('token_decoded')).sub;
     return user;
   }
 
-  login(usuario: Usuario): Observable<HttpResponse<void>> {
-    return this.api.login(usuario);
+  login(user: User): Observable<HttpResponse<void>> {
+    return this.api.login(user);
   }
 
-  registrarUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.api.registrar(usuario);
+  registerUser(user: User): Observable<User> {
+    return this.api.register(user);
   }
 
   logout() {

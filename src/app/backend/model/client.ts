@@ -1,20 +1,20 @@
-export class Cliente {
+export class Client {
 
   id: number;
-  nombre: string;
-  documento: number;
+  name: string;
+  document: number;
   email: string;
-  telefono: string;
-  direccion: string;
+  phone: string;
+  address: string;
 
   constructor() {
   }
 }
 
-export class ClienteParams {
-  nombre: string;
+export class ClientParams {
+  name: string;
 
-  constructor(nombre: string) {
-    this.nombre = nombre;
+  constructor(name: string) {
+    this.name = name;
   }
 }

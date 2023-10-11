@@ -1,22 +1,22 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {ReservasApi} from "../api/reservas.api";
+import {ReservesApi} from "../api/reserves-api.service";
 import {Reserve} from "../model/reserve";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReservaService {
+export class ReserveService {
 
-  constructor(private api: ReservasApi) {
+  constructor(private api: ReservesApi) {
   }
 
-  getAllReservas(): Observable<Reserve[]> {
-    return this.api.getAllReservas();
+  getAllReserves(): Observable<Reserve[]> {
+    return this.api.getAllReserves();
   }
 
-  crearReserva(reserva: Reserve): Observable<Reserve> {
-    return this.api.crearReserva(reserva);
+  createReserve(reserve: Reserve): Observable<Reserve> {
+    return this.api.createReserve(reserve);
   }
 
 }
