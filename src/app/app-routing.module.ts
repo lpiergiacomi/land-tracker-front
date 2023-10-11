@@ -1,24 +1,25 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {AppComponent} from './app.component';
-import {MapRenderComponent} from './map-render/map-render.component';
-import {DetalleLoteComponent} from "./detalle-lote/detalle-lote.component";
-
+import { RouterModule, Routes} from '@angular/router';
+import {isAuthGuard} from "./auth/auth-guard";
+import {isLoggedGuard} from "./auth/logged-guard";
+import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
 const routes: Routes = [
-
   {
-    path: "",
-    component: AppComponent
+    path: 'pages',
+    loadChildren: () => import('./pages/pages.module')
+      .then(m => m.PagesModule),
+    canActivate: [isAuthGuard]
   },
   {
-    path: "mapa-de-lotes",
-    component: MapRenderComponent
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module')
+      .then(m => m.AuthModule),
+    canActivate: [isLoggedGuard]
   },
-  {
-    path: "detalle-lote/:id",
-    component: DetalleLoteComponent
-  }
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

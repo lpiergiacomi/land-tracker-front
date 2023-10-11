@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Reserva {{lote.nombre}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="nuevaReservaForm" class="divForm">
+    <mat-form-field>
+      <mat-label>Precio</mat-label>
+      <input matInput disabled [value]="lote.precio.toString()" type="number">
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Cliente</mat-label>
+      <input matInput
+             aria-label="Cliente"
+             [matAutocomplete]="auto"
+             formControlName="cliente"
+             required>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option (click)="abrirDialogCreacionCliente()">
+          Nuevo cliente
+        </mat-option>
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente">
+          <span>{{cliente.nombre}}</span> |
+          <small>DNI: {{cliente.documento}}</small>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="cliente.errors">{{getErrorMessage()}}</mat-error>
+      <mat-hint *ngIf="cliente.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" [disabled]="nuevaReservaForm.invalid" (click)="reservar()">Reservar</button>
+</div>

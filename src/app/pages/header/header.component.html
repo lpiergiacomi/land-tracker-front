@@ -1,0 +1,25 @@
+<div class="head">
+  <div class="head-content">
+    <div class="head-content-right">
+      {{userInfo?.username}}
+      <div class="head-user-avatar-container">
+        <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
+          <img src="../../../assets/img/User-avatar.svg.png" alt="user" class="user-avatar">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #userOverlay>
+  <div class="overlay overlay-user overlay-fall" cdkMenu>
+    <ul>
+      <li cdkMenuItem>
+        <a (click)="logout()">
+          <i class="fal fa-sign-out icon"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</ng-template>

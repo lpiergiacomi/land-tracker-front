@@ -1,0 +1,29 @@
+<form [formGroup]="formBuscadorLotes">
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false"
+                       [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <i class="fal fa-filter" style="padding-right: 5px;"></i>
+        Filtros
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="content-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select multiple formControlName="filtroEstadosLote">
+            <mat-option *ngFor="let estado of estadosLote" [value]="estado">{{estado}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="filtroTextoLote"  matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="filtrarLotes()">Buscar</button>
+        <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar</button>
+    </div>
+  </mat-expansion-panel>
+</form>
+

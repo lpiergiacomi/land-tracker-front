@@ -1,0 +1,62 @@
+.mat-card-green {
+  border: #7bb95dab 3px dashed;
+  border-radius: 2%;
+}
+
+.mat-card-yellow {
+  border: #ffed48 3px dashed;
+  border-radius: 2%;
+}
+
+.mat-card-red {
+  border: #ff0000db 3px dashed;
+  border-radius: 2%;
+}
+
+.card-header {
+  display: flex;
+}
+
+.chips-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.chip-item {
+  margin-right: 8px;
+}
+
+.example-header-image {
+    background-image: url('https://terraz.com.ar/Content/img/prototipos.jpg');
+    background-size: cover;
+}
+
+.mat-list {
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.mat-list-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.mat-list-item i {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.highlighted {
+    background-color: #f0f8ff;
+}
+
+.mat-list-item:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}

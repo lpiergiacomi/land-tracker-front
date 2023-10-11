@@ -1,0 +1,49 @@
+<div class="sidenav">
+    <div class="logo-container" style="cursor: pointer;">
+        <img class="logo-img" src="../../../assets/dist/img/logo-map.png"
+             alt="Land Tracker logo" style="height: 33px">
+        <div class="logo-text">
+            <div style="display: flex; flex-direction: column">
+                <span style="color: white;">LAND</span>
+                <span style="color: #7BB95D; padding-top: 4px;">TRACKER</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ul class="sidenav-nav">
+            <li class="sidenav-nav-item" *ngFor="let data of navData">
+                <a class="sidenav-nav-link" (click)="handleClick(data)"
+                   *ngIf="data.items && data.items.length > 0"
+                >
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text">
+          {{data.label}}
+        </span>
+                    <i *ngIf="data.items" class="menu-collapse-icon"
+                       [ngClass]="!data.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'"
+                    ></i>
+                </a>
+
+                <a class="sidenav-nav-link"
+                   *ngIf="!data.items || (data.items && data.items.length === 0)"
+                   [routerLink]="[data.routeLink]"
+                   routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}"
+                >
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text">
+          {{data.label}}
+        </span>
+                </a>
+                <div *ngIf="data.items && data.items.length > 0">
+                    <app-sublevel-menu
+                            [data]="data"
+                            [multiple]="multiple"
+                            [expanded]="data.expanded"
+                    ></app-sublevel-menu>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

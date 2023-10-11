@@ -17,6 +17,20 @@ export class Lote {
   }
 }
 
+export class LoteParams {
+  nombre: string;
+  precioMin: number;
+  precioMax: number;
+  estados: string[];
+
+  constructor(nombre: string, precioMin: number, precioMax: number, estados: string[]) {
+    this.nombre = nombre;
+    this.precioMin = precioMin;
+    this.precioMax = precioMax;
+    this.estados = estados;
+  }
+}
+
 export class PosicionLote {
 
   x: number;

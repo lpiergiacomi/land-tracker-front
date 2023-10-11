@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LotesApi } from '../api/lotes.api';
-import { Observable } from 'rxjs';
-import { Lote } from '../model/lote';
+import {lastValueFrom, Observable} from 'rxjs';
+import {Lote, LoteParams} from '../model/lote';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,16 @@ export class LoteService {
 
   constructor(private api: LotesApi) { }
 
-  getLotes(): Observable<Lote[]> {
-    return this.api.getAllLotes();
+  async getLotes(): Promise<Lote[]> {
+    const lotesPromise = this.api.getAllLotes();
+    return await lastValueFrom(lotesPromise);
   }
 
   getLoteById(id: number): Observable<Lote> {
     return this.api.getAllById(id);
+  }
+
+  getLotesFiltrados(params: LoteParams) {
+    return this.api.getLotesFiltrados(params);
   }
 }
