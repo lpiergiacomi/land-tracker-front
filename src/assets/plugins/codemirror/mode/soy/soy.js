@@ -119,7 +119,7 @@
       state.context = state.context.previousContext;
     }
 
-    // Reference a variable `name` in `list`.
+    // Reference a variable `name` in `client-list`.
     // Let `loose` be truthy to ignore missing identifiers.
     function ref(list, name, loose) {
       return contains(list, name) ? "variable-2" : (loose ? "variable" : "variable-2 error");
@@ -136,8 +136,8 @@
     function expression(stream, state) {
       var match;
       if (stream.match(/[[]/)) {
-        state.soyState.push("list-literal");
-        state.context = new Context(state.context, "list-literal", state.variables);
+        state.soyState.push("client-list-literal");
+        state.context = new Context(state.context, "client-list-literal", state.variables);
         state.lookupVariables = false;
         return null;
       } else if (stream.match(/\bmap(?=\()/)) {
@@ -416,7 +416,7 @@
             stream.next()
             return null;
 
-          case "list-literal":
+          case "client-list-literal":
             if (stream.match(']')) {
               state.soyState.pop();
               state.lookupVariables = true;

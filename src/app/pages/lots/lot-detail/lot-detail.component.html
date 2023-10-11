@@ -1,0 +1,40 @@
+<mat-card [ngStyle]="{'border-radius': '2%', 'border': getColorState() + ' 3px dashed' }">
+  <mat-card-header class="card-header">
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{selectedLot?.name}}</mat-card-title>
+    <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
+    <div class="chips-container">
+      <mat-chip class="chip-item" [ngStyle]="{'background-color': getColorState()}">
+        {{selectedLot?.state}}
+      </mat-chip>
+      <mat-chip *ngIf="selectedLot?.hasWater" class="chip-item" style="background-color:#00ffff75">
+        <i class='fal fa-tint'></i>
+        Agua
+      </mat-chip>
+      <mat-chip *ngIf="selectedLot?.hasLight" class="chip-item" style="background-color:#f6db5ad1">
+        <i class='fal fa-lightbulb'></i>
+        Luz
+      </mat-chip>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list role="list">
+      <mat-list-item role="listitem"><b>Superficie:</b> {{selectedLot?.area | squareMeters }}</mat-list-item>
+      <mat-list-item role="listitem"><b>Metros frente:</b> {{selectedLot?.metersFront | meters}}</mat-list-item>
+      <mat-list-item role="listitem"><b>Metros fondo:</b> {{selectedLot?.metersBack | meters}}</mat-list-item>
+      <mat-list-item role="listitem"><b>Nro cuenta
+        catastral:</b> {{selectedLot?.cadastralAccNumber}}</mat-list-item>
+      <mat-list-item role="listitem"><b>Nro cuenta
+        municipal:</b> {{selectedLot?.municipalAccNumber}}</mat-list-item>
+      <mat-list-item role="listitem"><b>Precio:</b> {{selectedLot?.price | currency}}</mat-list-item>
+
+    </mat-list>
+
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button *ngIf="selectedLot.state == 'DISPONIBLE'" mat-raised-button color="primary"
+            (click)="reserve()">Reservar
+    </button>
+  </mat-card-actions>
+</mat-card>
+

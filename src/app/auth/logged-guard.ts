@@ -17,7 +17,7 @@ class LoggedGuard {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const accessToken = localStorage.getItem('access-token');
     if (accessToken && accessToken !== '') {
-      this.router.navigate(['/pages/lotes/mapa']);
+      this.router.navigate(['/pages/lots/map']);
     }
     return !accessToken || accessToken == '';
 

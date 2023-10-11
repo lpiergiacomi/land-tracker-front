@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Crear cliente</h1>
+<div mat-dialog-content class="form-container">
+  <form [formGroup]="newClientForm">
+    <div class="divForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de cliente</mat-label>
+        <input matInput formControlName="clientName" required>
+        <mat-error *ngIf="this.clientName.hasError('required')">Debe ingresar un nombre</mat-error>
+        <mat-error *ngIf="this.clientName.hasError('minlength')">Escriba al menos 3 letras</mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Documento</mat-label>
+        <input matInput inputmode="numeric" formControlName="clientDocument" required >
+        <mat-error *ngIf="this.clientDocument.hasError('required')">Debe ingresar un DNI</mat-error>
+        <mat-error *ngIf="this.clientDocument.hasError('minlength')">Debe tener al menos 7 dígitos</mat-error>
+        <mat-error *ngIf="this.clientDocument.hasError('maxlength')">Debe tener como máximo 8 dígitos</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="clientEmail" required>
+        <mat-error *ngIf="this.clientEmail.hasError('required')">Debe ingresar un email</mat-error>
+        <mat-error *ngIf="this.clientEmail.hasError('email')">Debe ingresar un email válido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="divForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput type="tel" formControlName="clientPhone" required>
+        <mat-error *ngIf="this.clientPhone.hasError('required')">Debe ingresar un teléfono</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="clientAddress" required>
+        <mat-error *ngIf="this.clientAddress.hasError('required')">Debe ingresar una dirección</mat-error>
+      </mat-form-field>
+    </div>
+
+  </form>
+</div>
+<div *ngIf="isLoading" class="loading-spinner">
+  <mat-spinner diameter="32"></mat-spinner>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button color="primary" [disabled]="newClientForm.invalid" (click)="createClient()" [mat-dialog-close]="newClient">Crear</button>
+</mat-dialog-actions>

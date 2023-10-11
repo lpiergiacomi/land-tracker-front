@@ -1338,7 +1338,7 @@ A VERTICAL event
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center; /* vertically aligns fc-list-empty-inner */
+    align-items: center; /* vertically aligns fc-client-list-empty-inner */
   }
 .fc .fc-list-empty-cushion {
     margin: 5em 0;

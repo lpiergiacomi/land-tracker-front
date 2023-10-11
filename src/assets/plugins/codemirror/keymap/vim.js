@@ -3,7 +3,7 @@
 
 /**
  * Supported keybindings:
- *   Too many to list. Refer to defaultKeymap below.
+ *   Too many to client-list. Refer to defaultKeymap below.
  *
  * Supported Ex commands:
  *   Refer to defaultExCommandMap below.
@@ -611,7 +611,7 @@
         };
       }
       return {
-        // Change list
+        // Change client-list
         changes: [],
         // Set to true on change, false on cursorActivity.
         expectCursorActivityForChange: false
@@ -2191,7 +2191,7 @@
       return arr;
     }
     /**
-     * An operator acts on a text selection. It receives the list of selections
+     * An operator acts on a text selection. It receives the client-list of selections
      * as input. The corresponding CodeMirror selection is guaranteed to
     * match the input selection.
      */
@@ -4169,7 +4169,7 @@
         } else {
           if (c === '\\') {
             escapeNextChar = true;
-            // Treat the unescape list as special for removing, but not adding '\'.
+            // Treat the unescape client-list as special for removing, but not adding '\'.
             if (n && unescape.indexOf(n) != -1) {
               specialComesNext = true;
             }
@@ -5073,7 +5073,7 @@
             matchedLines.push(cmd ? line : line.text);
           }
         }
-        // if there is no [cmd], just display the list of matched lines
+        // if there is no [cmd], just display the client-list of matched lines
         if (!cmd) {
           showConfirm(cm, matchedLines.join('\n'));
           return;
@@ -5122,7 +5122,7 @@
           trailing = tokens[2] ? tokens[2].split(' ') : [];
         } else {
           // either the argString is empty or its of the form ' hello/world'
-          // actually splitBySlash returns a list of tokens
+          // actually splitBySlash returns a client-list of tokens
           // only if the string starts with a '/'
           if (argString && argString.length) {
             showConfirm(cm, 'Substitutions should be of the form ' +

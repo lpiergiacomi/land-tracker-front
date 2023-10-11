@@ -90,19 +90,19 @@ CodeMirror.defineMode("tiddlywiki", function () {
         stream.skipToEnd();
         return "header";
       }
-      if (ch == "*") { // tw list
+      if (ch == "*") { // tw client-list
         stream.eatWhile('*');
         return "comment";
       }
-      if (ch == "#") { // tw numbered list
+      if (ch == "#") { // tw numbered client-list
         stream.eatWhile('#');
         return "comment";
       }
-      if (ch == ";") { // definition list, term
+      if (ch == ";") { // definition client-list, term
         stream.eatWhile(';');
         return "comment";
       }
-      if (ch == ":") { // definition list, description
+      if (ch == ":") { // definition client-list, description
         stream.eatWhile(':');
         return "comment";
       }

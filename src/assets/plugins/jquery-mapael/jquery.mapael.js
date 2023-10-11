@@ -93,16 +93,16 @@
         // The paper Raphael object
         self.paper = {};
 
-        // The areas object list
+        // The areas object client-list
         self.areas = {};
 
-        // The plots object list
+        // The plots object client-list
         self.plots = {};
 
-        // The links object list
+        // The links object client-list
         self.links = {};
 
-        // The legends list
+        // The legends client-list
         self.legends = {};
 
         // The map configuration object (taken from map file)
@@ -1005,7 +1005,7 @@
         /*
          * Show some element in range
          * @param ranges: the ranges
-         * @param elems: list of element on which to check against previous range
+         * @param elems: client-list of element on which to check against previous range
          * @hiddenOpacity: the opacity when hidden
          * @animDuration: the animation duration
          */
@@ -1952,7 +1952,7 @@
                 var elemValue;
 
                 // Retreive stored data of element
-                //      'hidden-by' contains the list of legendIndex that is hiding this element
+                //      'hidden-by' contains the client-list of legendIndex that is hiding this element
                 var hiddenBy = mapElems[y].mapElem.data('hidden-by');
                 // Set to empty object if undefined
                 if (hiddenBy === undefined) hiddenBy = {};

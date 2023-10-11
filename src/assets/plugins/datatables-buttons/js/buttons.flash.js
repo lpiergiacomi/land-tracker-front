@@ -460,7 +460,7 @@ ZeroClipboard_TableTools.hasFlash = function ()
 };
 
 // For the Flash binding to work, ZeroClipboard_TableTools must be on the global
-// object list
+// object client-list
 window.ZeroClipboard_TableTools = ZeroClipboard_TableTools;
 
 

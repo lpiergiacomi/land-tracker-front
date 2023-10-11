@@ -1,0 +1,101 @@
+<h1>Lista de clientes</h1>
+
+<div>
+  <button mat-raised-button color="primary" (click)="openDialogNewClient()">Nuevo</button>
+</div>
+
+<div style="margin-top: 15px;">
+  <p-table [value]="clients" dataKey="id" editMode="row" styleClass="p-datatable-sm" >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name" style="width:20%">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="document" style="width:20%">Documento <p-sortIcon field="document"></p-sortIcon></th>
+        <th pSortableColumn="email" style="width:20%">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="phone" style="width:20%">Telefono <p-sortIcon field="phone"></p-sortIcon></th>
+        <th style="width:20%">Acciones</th>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-client let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="client">
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="client.name" required>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{client.name}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" minlength="7" maxlength="8" [(ngModel)]="client.document" required>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{client.document}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="email" [(ngModel)]="client.email" required
+                     [class.custom-invalid]="isInvalidEmail(client.email)">
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{client.email}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="client.phone" required>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{client.phone}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <div style="display:flex; align-items:center;">
+            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
+                    pSaveEditableRow
+                    matTooltip="Guardar cambios" (click)="onRowEditSave(client)"
+                    *ngIf="editing" color="primary">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
+                    pCancelEditableRow
+                    matTooltip="Cancelar" (click)="onRowEditCancel(client, ri)"
+                    *ngIf="editing" color="warn">
+              <mat-icon>cancel</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons app-toolbar-menu save-button"
+                    pInitEditableRow
+                    matTooltip="Editar" (click)="onRowEditInit(client)"
+                    *ngIf="!editing" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="material-icons"
+                    matTooltip="Eliminar" (click)="onRowDelete(client)"
+                    *ngIf="!editing" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <div style="display: flex; flex-direction: column-reverse;">
+              <button (click)="confirmUndoDelete()" mat-raised-button color="primary" *ngIf="rowToDelete === client">
+                Deshacer
+              </button>
+              <mat-progress-bar [color]="undoProgressColor" style="margin-bottom: 3px;" *ngIf="rowToDelete === client" [value]="undoProgress" mode="determinate"></mat-progress-bar>
+            </div>
+            <mat-spinner *ngIf="isLoading && loadingRow === client" diameter="24"></mat-spinner>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+

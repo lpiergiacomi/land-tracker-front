@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 
 export class PagesComponent {
 
-  estaAutenticado: boolean = true;
+  isAuthenticated: boolean = true;
 
   constructor() {
-    this.estaAutenticado = localStorage.getItem('access-token') !== '';
+    this.isAuthenticated = localStorage.getItem('access-token') !== '';
   }
 
 }

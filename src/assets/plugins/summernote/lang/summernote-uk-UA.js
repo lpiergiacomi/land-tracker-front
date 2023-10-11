@@ -1,5 +1,5 @@
 /*!
- * 
+ *
  * Super simple WYSIWYG editor v0.8.20
  * https://summernote.org
  *
@@ -153,8 +153,8 @@ var __webpack_exports__ = {};
         'justifyCenter': 'Set center align',
         'justifyRight': 'Set right align',
         'justifyFull': 'Set full align',
-        'insertUnorderedList': 'Toggle unordered list',
-        'insertOrderedList': 'Toggle ordered list',
+        'insertUnorderedList': 'Toggle unordered client-list',
+        'insertOrderedList': 'Toggle ordered client-list',
         'outdent': 'Outdent on current paragraph',
         'indent': 'Indent on current paragraph',
         'formatPara': 'Change current block\'s format as a paragraph(P tag)',
