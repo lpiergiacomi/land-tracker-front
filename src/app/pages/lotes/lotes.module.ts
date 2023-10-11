@@ -25,6 +25,8 @@ import { ListadoComponent } from './listado/listado.component';
 import {MatChipsModule} from "@angular/material/chips";
 import {MetrosPipe} from "../../pipes/metros.pipe";
 import {MetrosCuadradosPipe} from "../../pipes/metros-cuadrados.pipe";
+import {LotsAssignmentComponent} from "./lots-assignment/lots-assignment.component";
+import {TableModule} from "primeng/table";
 
 
 @NgModule({
@@ -38,7 +40,8 @@ import {MetrosCuadradosPipe} from "../../pipes/metros-cuadrados.pipe";
     TooltipMapComponent,
     ListadoComponent,
     MetrosPipe,
-    MetrosCuadradosPipe
+    MetrosCuadradosPipe,
+    LotsAssignmentComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +59,8 @@ import {MetrosCuadradosPipe} from "../../pipes/metros-cuadrados.pipe";
     MatSelectModule,
     MatListModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    TableModule
   ]
 })
 export class LotesModule { }

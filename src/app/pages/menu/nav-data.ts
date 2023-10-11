@@ -11,8 +11,8 @@ export const navbarData: IMenuData[] = [
         label: 'Mapa de lotes',
       },
       {
-        routeLink: 'lotes/listado',
-        label: 'Lista de lotes',
+        routeLink: 'lotes/asignacion',
+        label: 'Asignación de lotes',
       }
     ]
   },
