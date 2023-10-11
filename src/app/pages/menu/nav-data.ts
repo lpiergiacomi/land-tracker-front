@@ -2,27 +2,27 @@ import {IMenuData} from "./helper";
 
 export const navbarData: IMenuData[] = [
   {
-    routeLink: 'lotes',
+    routeLink: 'lots',
     icon: 'fal fa-home',
     label: 'Lotes',
     items: [
       {
-        routeLink: 'lotes/mapa',
+        routeLink: 'lots/map',
         label: 'Mapa de lotes',
       },
       {
-        routeLink: 'lotes/asignacion',
+        routeLink: 'lots/assignment',
         label: 'Asignación de lotes',
       }
     ]
   },
   {
-    routeLink: 'clientes',
+    routeLink: 'clients',
     icon: 'fal fa-users',
     label: 'Clientes',
     items: [
       {
-        routeLink: 'clientes/listado',
+        routeLink: 'clients/list',
         label: 'Lista de clientes',
       }
     ]

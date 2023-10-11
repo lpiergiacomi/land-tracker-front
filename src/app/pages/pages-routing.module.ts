@@ -7,16 +7,16 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: "lotes",
-      loadChildren: () => import('../pages/lotes/lotes.module').then(m => m.LotesModule)
+      path: "lots",
+      loadChildren: () => import('./lots/lots.module').then(m => m.LotsModule)
     },
     {
-      path: "clientes",
-      loadChildren: () => import('../pages/clientes/clientes.module').then(m => m.ClientesModule)
+      path: "clients",
+      loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule)
     },
     {
-      path: "reservas",
-      loadChildren: () => import('../pages/reservas/reservas.module').then(m => m.ReservasModule)
+      path: "reserves",
+      loadChildren: () => import('./reserves/reserves.module').then(m => m.ReservesModule)
     }
   ]
 }

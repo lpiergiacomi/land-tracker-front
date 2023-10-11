@@ -13,7 +13,6 @@ import {MatIconModule} from "@angular/material/icon";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {OverlayModule} from "@angular/cdk/overlay";
 import {CdkMenuModule} from "@angular/cdk/menu";
-import { LotsAssignmentComponent } from './lotes/lots-assignment/lots-assignment.component';
 
 @NgModule({
   declarations: [

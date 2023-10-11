@@ -1,0 +1,36 @@
+<div>
+  <app-map-lot-searcher (changeLotsEventEmitter)="showFilteredLots($event)"></app-map-lot-searcher>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false"
+                       [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <i class="fal fa-map" style="padding-right: 5px;"></i>
+        Mapa de lotes
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="container">
+      <div class="col-md-8 divRendererContainer">
+        <div #rendererContainer>
+          <div>
+            <app-label-lot-number
+              id="{{lot.id}}"
+              #childElement
+              *ngFor="let lot of lots; let i = index"
+              [lot]="lot"
+              [selectedLot]="selectedLot"
+              [tooltipLot]="tooltipLot">
+            </app-label-lot-number>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="selectedLot">
+        <app-lot-detail (reservedLotEvent)="changeStateLotToReserved()"
+                          [selectedLot]="selectedLot"></app-lot-detail>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+</div>
