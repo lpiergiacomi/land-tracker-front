@@ -3,6 +3,8 @@ export class Lot {
   id: number;
   name: string;
   area: number;
+  block: string;
+  zone: string;
   state: string;
   position: LotPosition;
   metersFront: number;

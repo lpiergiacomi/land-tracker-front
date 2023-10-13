@@ -1,46 +1,60 @@
 <form [formGroup]="searchForm">
   <div class="content-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Usuario</mat-label>
-      <mat-select formControlName="userFilter">
-        <mat-option>Usuario 1</mat-option>
-        <mat-option>Usuario 2</mat-option>
-        <!--<mat-option *ngFor="let user of users" [value]="user">{{user.name}}</mat-option>-->
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Manzana</mat-label>
-      <input formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
-             class="form-control">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Zona</mat-label>
-      <input formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
-             class="form-control">
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="filterLots()">Buscar</button>
-    <button mat-raised-button color="warn" (click)="cleanFilter()">Limpiar</button>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="userFilter" (selectionChange)="onSelectUser($event.value)" [disabled]="userFilter.value !== ''">
+          <mat-option *ngFor="let user of users" [value]="user">{{user.username}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-icon *ngIf="userFilter.value" style="color: #ff5252; cursor: pointer" (click)="searchForm.reset()">cancel</mat-icon>
+    </div>
+
+    <div *ngIf="userFilter.value">
+      <mat-form-field appearance="outline">
+        <mat-label>Manzana</mat-label>
+        <input formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
+               class="form-control">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Zona</mat-label>
+        <input formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
+               class="form-control">
+      </mat-form-field>
+    </div>
+
+    <!--<button mat-raised-button color="primary" (click)="filterLots()">Buscar</button>-->
     <button mat-raised-button color="primary" class="confirmBtn" (click)="confirm()">Confirmar</button>
   </div>
 </form>
 
-<p-table [value]="lots" [(selection)]="selectedLots" dataKey="id" styleClass="p-datatable-sm">
-  <ng-template pTemplate="header">
-    <tr>
-      <th style="width: 4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-      <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-      <th pSortableColumn="area">Superficie <p-sortIcon field="area"></p-sortIcon></th>
-      <th pSortableColumn="state">Estado <p-sortIcon field="state"></p-sortIcon></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-lot>
-    <tr>
-      <td>
-        <p-tableCheckbox [value]="lot"></p-tableCheckbox>
-      </td>
-      <td>{{lot.name}}</td>
-      <td>{{lot.area}}</td>
-      <td>{{lot.state}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+<div *ngIf="userFilter.value; else withoutUser">
+  <p-table [value]="filteredLots" [(selection)]="selectedLots" dataKey="id" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+        <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="area">Superficie <p-sortIcon field="area"></p-sortIcon></th>
+        <th pSortableColumn="area">Manzana <p-sortIcon field="block"></p-sortIcon></th>
+        <th pSortableColumn="area">Zona <p-sortIcon field="zone"></p-sortIcon></th>
+        <th pSortableColumn="state">Estado <p-sortIcon field="state"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lot>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="lot"></p-tableCheckbox>
+        </td>
+        <td>{{lot.name}}</td>
+        <td>{{lot.area}}</td>
+        <td>{{lot.block}}</td>
+        <td>{{lot.zone}}</td>
+        <td>{{lot.state}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<ng-template #withoutUser>
+  Debe seleccionar un usuario
+</ng-template>
