@@ -1,8 +1,8 @@
-export class User {
+export class UserWithLot {
 
   id: number;
   username: string;
-  password: string;
+  assignedLotsIds: any[];
 
   constructor() {
   }

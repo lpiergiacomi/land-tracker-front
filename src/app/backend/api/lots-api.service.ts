@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {LotParams} from "../model/lot";
+import {UserWithLot} from "../model/user-with-lot";
 
 @Injectable()
 export class LotsApi {
@@ -18,5 +19,9 @@ export class LotsApi {
 
   getFilteredLots(params: LotParams) {
     return this.api.post(`${this.apiController}/filter`, params);
+  }
+
+  updateAssignedLotsToUser(selectedUser: UserWithLot) {
+    return this.api.post(`${this.apiController}/update-assigned-lots-to-user`, selectedUser);
   }
 }

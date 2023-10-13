@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {Lot} from "../../../backend/model/lot";
+import {Lot, LotParams} from "../../../backend/model/lot";
 import {LotService} from "../../../backend/services/lot.service";
-import {User} from "../../../backend/model/user";
 import {debounceTime, distinctUntilChanged} from "rxjs";
 import {UserService} from "../../../backend/services/user.service";
+import {ToastrService} from "ngx-toastr";
+import {UserWithLot} from "../../../backend/model/user-with-lot";
 
 @Component({
   selector: 'app-lots-assignment',
@@ -15,12 +16,12 @@ export class LotsAssignmentComponent implements OnInit {
 
   searchForm: FormGroup;
   lots!: Lot[];
-  users!: User[];
+  users!: UserWithLot[];
   selectedLots!: Lot[];
   filteredLots!: Lot[];
-  selectedUser!: User;
+  selectedUser!: UserWithLot;
 
-  constructor(private lotService: LotService, private userService: UserService) {
+  constructor(private lotService: LotService, private userService: UserService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -36,16 +37,24 @@ export class LotsAssignmentComponent implements OnInit {
 
   }
 
-  private async getLots() {
-    this.lots = await this.lotService.getAllLots();
-    this.filteredLots = this.lots;
+  public getLots() {
+    const params = new LotParams(null,null,null, ["DISPONIBLE"]);
+    this.lotService.getFilteredLots(params).subscribe({
+      next: (response) => {
+        this.lots = response.content;
+        this.filteredLots = this.lots;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   private getUsers() {
     this.userService.getAllUsersWithAssignedLots().subscribe({
       next: (response) => {
         console.log(response);
-        this.users = response as User[];
+        this.users = response as UserWithLot[];
       },
       error: (error) => {
         console.error(error);
@@ -91,6 +100,17 @@ export class LotsAssignmentComponent implements OnInit {
   confirm() {
     this.selectedUser.assignedLotsIds = this.selectedLots.map(lot => lot.id);
     console.log(this.selectedUser);
+
+    this.lotService.updateAssignedLotsToUser(this.selectedUser)
+      .subscribe({
+        next: (response) => {
+          this.toastr.success(`Cambios realizados correctamente`);
+
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
   }
 
 
