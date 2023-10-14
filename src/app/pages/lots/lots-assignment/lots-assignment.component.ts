@@ -53,7 +53,6 @@ export class LotsAssignmentComponent implements OnInit {
   private getUsers() {
     this.userService.getAllUsersWithAssignedLots().subscribe({
       next: (response) => {
-        console.log(response);
         this.users = response as UserWithLot[];
       },
       error: (error) => {
@@ -122,8 +121,8 @@ export class LotsAssignmentComponent implements OnInit {
 
   setupFilters() {
     this.searchForm.get('blockFilter')!.valueChanges.pipe(
-      debounceTime(300), // Espera 300ms de inactividad antes de aplicar el filtro
-      distinctUntilChanged(), // Ignora cambios repetidos
+      debounceTime(300),
+      distinctUntilChanged(),
     ).subscribe((blockFilterValue: string) => {
       this.filterLots();
     });
