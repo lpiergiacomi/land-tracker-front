@@ -61,29 +61,6 @@ export class LotsAssignmentComponent implements OnInit {
     });
   }
 
-  /*
-  filterLots() {
-    this.getFilteredLots().subscribe({
-      next: (response) => {
-        this.lots = response.content;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-  }
-
-
-  getFilteredLots() {
-    const params = new LotParams(
-      this.blockFilter.value,
-      null,
-      null,
-      []);
-    return this.lotService.getFilteredLots(params);
-  }
-*/
-
   get userFilter() {
     return this.searchForm.get('userFilter');
   }
@@ -98,8 +75,6 @@ export class LotsAssignmentComponent implements OnInit {
 
   confirm() {
     this.selectedUser.assignedLotsIds = this.selectedLots.map(lot => lot.id);
-    console.log(this.selectedUser);
-
     this.lotService.updateAssignedLotsToUser(this.selectedUser)
       .subscribe({
         next: (response) => {

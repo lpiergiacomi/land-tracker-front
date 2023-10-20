@@ -5,7 +5,7 @@ import {AuthService} from "../../backend/services/auth.service";
 import {take} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {UserService} from "../../backend/services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit{
   hideRepasswordRegister: boolean = true;
   activeTabIndex: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -80,11 +82,14 @@ export class LoginComponent implements OnInit{
       .pipe(take(1))
       .subscribe({
         next: (response) => {
+          localStorage.setItem('user_id', response.body['user-id']);
           this.authService.setLoggedUser(response.body['access-token'] || '');
-          this.router.navigate(['/pages/lots/map']);
         },
         error: (error) => {
           this.toastr.error(error?.error?.message ?? 'Ocurrió un error');
+        },
+        complete: async () => {
+          this.router.navigate(['/pages/lots/map']);
         }
       });
   }

@@ -32,9 +32,13 @@
 
   </mat-card-content>
   <mat-card-actions align="end">
-    <button *ngIf="selectedLot.state == 'DISPONIBLE'" mat-raised-button color="primary"
+    <button *ngIf="canReserve()" mat-raised-button color="primary"
             (click)="reserve()">Reservar
     </button>
+    <div *ngIf="!hasAssigned() && isAvailable()">
+      <i class="fal fa-exclamation-circle" style="color: #ff5252; font-size: 18px;"></i>
+      No tenés permisos para gestionar este lote
+    </div>
   </mat-card-actions>
 </mat-card>
 

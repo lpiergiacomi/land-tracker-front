@@ -10,4 +10,8 @@ export class UsersApi {
   getAllUsersWithAssignedLots() {
     return this.api.get(`${this.apiController}/with-assigned-lots`);
   }
+
+  getUserWithAssignedLots(idUser: number) {
+    return this.api.get(`${this.apiController}/${idUser}/with-assigned-lots`);
+  }
 }

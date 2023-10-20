@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {UsersApi} from "../api/users.api";
 import {UserWithLot} from "../model/user-with-lot";
 
@@ -12,5 +12,9 @@ export class UserService {
 
   getAllUsersWithAssignedLots(): Observable<UserWithLot[]> {
     return this.api.getAllUsersWithAssignedLots();
+  }
+  async getUserWithAssignedLots(idUser: number): Promise<UserWithLot> {
+    const userWithLot = this.api.getUserWithAssignedLots(idUser);
+    return await lastValueFrom(userWithLot);
   }
 }
