@@ -10,21 +10,20 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedUser: any;
 
   constructor(private api: AuthApi, private router: Router, private jwtHelper: JwtHelperService) { }
 
-  setLoggedUser(user: any) {
-    localStorage.setItem('access-token', user);
-    if (user != '') {
-      const decodedToken = this.jwtHelper.decodeToken(user);
+  setLoggedUser(accessToken: any) {
+    localStorage.setItem('access-token', accessToken);
+    if (accessToken != '') {
+      const decodedToken = this.jwtHelper.decodeToken(accessToken);
       localStorage.setItem('token_decoded', JSON.stringify(decodedToken));
-      this.loggedUser = decodedToken;
     }
   }
 
   getLoggedUser(): User | null {
     const user = new User();
+    user.id = parseInt(localStorage.getItem('user_id'));
     user.username = JSON.parse(localStorage.getItem('token_decoded')).sub;
     return user;
   }
@@ -40,6 +39,7 @@ export class AuthService {
   logout() {
     localStorage.setItem('access-token', '');
     localStorage.setItem('token_decoded', '');
+    localStorage.setItem('user_id', '');
     this.router.navigate(['/auth/login']);
   }
 }

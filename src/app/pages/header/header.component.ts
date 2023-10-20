@@ -9,10 +9,10 @@ import {AuthService} from "../../backend/services/auth.service";
 })
 export class HeaderComponent {
 
-  userInfo: any;
+  loggedUser: any;
 
   constructor(private authService: AuthService) {
-    this.userInfo = this.authService.getLoggedUser();
+    this.loggedUser = this.authService.getLoggedUser();
   }
 
   logout() {

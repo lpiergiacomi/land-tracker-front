@@ -27,6 +27,8 @@ import {MetersPipe} from "../../pipes/meters.pipe";
 import {SquareMetersPipe} from "../../pipes/metros-cuadrados.pipe";
 import {LotsAssignmentComponent} from "./lots-assignment/lots-assignment.component";
 import {TableModule} from "primeng/table";
+import {InputTextModule} from "primeng/inputtext";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import {TableModule} from "primeng/table";
     MatListModule,
     MatCardModule,
     MatChipsModule,
-    TableModule
+    TableModule,
+    InputTextModule,
+    MatIconModule
   ]
 })
 export class LotsModule { }

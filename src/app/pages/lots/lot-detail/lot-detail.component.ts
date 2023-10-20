@@ -1,20 +1,31 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Lot} from "../../../backend/model/lot";
 import {MatDialog} from "@angular/material/dialog";
 import {ReserveDialogComponent} from "../reserve-dialog/reserve-dialog.component";
+import {AuthService} from "../../../backend/services/auth.service";
+import {UserService} from "../../../backend/services/user.service";
 
 @Component({
   selector: 'app-lot-detail',
   templateUrl: './lot-detail.component.html',
   styleUrls: ['./lot-detail.component.css']
 })
-export class LotDetailComponent {
+export class LotDetailComponent implements OnInit{
 
   @Input() selectedLot: Lot;
   @Output() reservedLotEvent = new EventEmitter();
+  loggedUser: any;
+  assignedLots: any[];
 
-  constructor(public dialogReserve: MatDialog) {
+  constructor(private authService: AuthService,
+              private userService: UserService,
+              public dialogReserve: MatDialog) {
+    this.loggedUser = this.authService.getLoggedUser();
+  }
 
+  async ngOnInit(): Promise<void> {
+    const userWithLot = await this.userService.getUserWithAssignedLots(this.loggedUser.id);
+    this.assignedLots = userWithLot.assignedLotsIds;
   }
 
   reserve() {
@@ -37,5 +48,17 @@ export class LotDetailComponent {
     if (this.selectedLot.state == 'VENDIDO')
       color = '#ff000096';
     return color;
+  }
+
+  canReserve() {
+    return this.isAvailable() && this.hasAssigned();
+  }
+
+  hasAssigned() {
+    return this.assignedLots?.includes(this.selectedLot.id);
+  }
+
+  isAvailable() {
+    return this.selectedLot.state == 'DISPONIBLE';
   }
 }

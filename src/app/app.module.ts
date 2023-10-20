@@ -21,6 +21,8 @@ import {AuthService} from "./backend/services/auth.service";
 import {AuthModule} from "./auth/auth.module";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import {JwtModule} from "@auth0/angular-jwt";
+import {UserService} from "./backend/services/user.service";
+import {UsersApi} from "./backend/api/users.api";
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import {JwtModule} from "@auth0/angular-jwt";
     ReservesApi,
     AuthService,
     AuthApi,
+    UserService,
+    UsersApi,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   exports: [
