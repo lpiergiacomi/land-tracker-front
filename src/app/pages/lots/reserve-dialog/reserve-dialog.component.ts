@@ -10,6 +10,7 @@ import {Client, ClientParams} from "../../../backend/model/client";
 import {Reserve} from "../../../backend/model/reserve";
 import {ReserveService} from "../../../backend/services/reserve.service";
 import {ToastrService} from "ngx-toastr";
+import {AuthService} from "../../../backend/services/auth.service";
 
 @Component({
   selector: 'app-reserve-dialog',
@@ -29,6 +30,7 @@ export class ReserveDialogComponent implements OnInit {
     private createClientDialog: MatDialog,
     private clientService: ClientService,
     private reserveService: ReserveService,
+    private authService: AuthService,
     private toastr: ToastrService
   ) {
   }
@@ -112,6 +114,7 @@ export class ReserveDialogComponent implements OnInit {
 
   reserve() {
     const reserve = new Reserve(this.lot.id, this.client.value.id);
+    reserve.user = this.authService.getLoggedUser();
     this.createReserve(reserve)
 
   }
@@ -122,6 +125,8 @@ export class ReserveDialogComponent implements OnInit {
       .subscribe({
         error: (error) => {
           console.error(error);
+          this.toastr.error(error?.error?.message);
+          this.isLoading = false;
         },
         complete: () => {
           this.toastr.success(`Se reservó el lote correctamente`);
