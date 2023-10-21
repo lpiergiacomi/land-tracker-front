@@ -20,28 +20,11 @@ export class Lot {
 }
 
 export class LotParams {
-  name: string;
-  minPrice: number;
-  maxPrice: number;
-  states: string[];
-
-  constructor(name: string, minPrice: number, maxPrice: number, states: string[]) {
-    this.name = name;
-    this.minPrice = minPrice;
-    this.maxPrice = maxPrice;
-    this.states = states;
+  constructor(public name: string, public minPrice: number, public maxPrice: number, public states: string[]) {
   }
 }
 
 export class LotPosition {
-
-  x: number;
-  y: number;
-  z: number;
-
-  constructor(x, y, z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
+  constructor(public x, public y, public z) {
   }
 }
