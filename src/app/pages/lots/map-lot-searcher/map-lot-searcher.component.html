@@ -12,17 +12,17 @@
     <div class="content-container">
         <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
-          <mat-select multiple formControlName="filterStates">
+          <mat-select data-testid="filterStates" multiple formControlName="filterStates">
             <mat-option *ngFor="let estado of lotStates" [value]="estado">{{estado}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
-          <input formControlName="filterText"  matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
+          <input data-testid="filterText" formControlName="filterText"  matInput placeholder="Búsqueda de lote" name="filter" class="form-control">
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="filterLots()">Buscar</button>
-        <button mat-raised-button color="warn" (click)="cleanFilters()">Limpiar</button>
+        <button data-testid="btnCleanFilters" mat-raised-button color="warn" (click)="cleanFilters()">Limpiar</button>
     </div>
   </mat-expansion-panel>
 </form>
