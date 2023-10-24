@@ -24,7 +24,7 @@ export class AuthService {
   getLoggedUser(): User | null {
     const user = new User();
     user.id = parseInt(localStorage.getItem('user_id'));
-    user.username = JSON.parse(localStorage.getItem('token_decoded')).sub;
+    user.username = JSON.parse(localStorage.getItem('token_decoded'))?.sub;
     return user;
   }
 
