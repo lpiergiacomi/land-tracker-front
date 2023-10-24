@@ -43,22 +43,22 @@ export class LotDetailComponent implements OnInit{
 
   getColorState() {
     let color = '#7bb95dab';
-    if (this.selectedLot.state == 'RESERVADO')
+    if (this.selectedLot?.state == 'RESERVADO')
       color = '#ffed4887';
-    if (this.selectedLot.state == 'VENDIDO')
+    if (this.selectedLot?.state == 'VENDIDO')
       color = '#ff000096';
     return color;
   }
 
   canReserve() {
-    return this.isAvailable() && this.hasAssigned();
+    return this.selectedLot?.canReserve(this.assignedLots);
   }
 
   hasAssigned() {
-    return this.assignedLots?.includes(this.selectedLot.id);
+    return this.selectedLot?.hasAssigned(this.assignedLots);
   }
 
   isAvailable() {
-    return this.selectedLot.state == 'DISPONIBLE';
+    return this.selectedLot?.isAvailable();
   }
 }
