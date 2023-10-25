@@ -78,9 +78,8 @@ describe('LotsAssignmentComponent', () => {
 
   it('assignment should catch error', fakeAsync(() => {
     const toastrErrorSpy = spyOn(component.toastr, 'error');
-    const error = new Error('Fake Error');
     spyOn(component.lotService, 'updateAssignedLotsToUser').and.returnValue(
-      throwError(() => error.toString())
+      throwError(() => 'Fake Error')
     )
     component.userFilter.setValue(user1)
     component.onSelectUser(user1);
@@ -88,7 +87,7 @@ describe('LotsAssignmentComponent', () => {
 
     getByTestId('btnConfirm').click()
     fixture.detectChanges()
-    expect(toastrErrorSpy).toHaveBeenCalledWith(error.toString());
+    expect(toastrErrorSpy).toHaveBeenCalledWith('Fake Error');
 
     flush()
   }))
