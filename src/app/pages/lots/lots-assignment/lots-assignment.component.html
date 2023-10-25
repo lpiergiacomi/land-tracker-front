@@ -4,7 +4,7 @@
   <div class="content-container">
     <mat-form-field appearance="outline" style="width: 20%;">
       <mat-label>Seleccione un usuario</mat-label>
-      <mat-select formControlName="userFilter" (selectionChange)="onSelectUser($event.value)" placeholder="Usuario">
+      <mat-select data-testid="userFilter" formControlName="userFilter" (selectionChange)="onSelectUser($event.value)" placeholder="Usuario">
         <mat-option *ngFor="let user of users" [value]="user">{{user.username}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -12,24 +12,24 @@
     <div *ngIf="userFilter.value">
       <mat-form-field appearance="outline">
         <mat-label>Manzana</mat-label>
-        <input formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
+        <input data-testid="blockFilter" formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
                class="form-control">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Zona</mat-label>
-        <input formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
+        <input data-testid="zoneFilter" formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
                class="form-control">
       </mat-form-field>
     </div>
 
-    <button *ngIf="userFilter.value !== ''" mat-raised-button color="primary" class="confirmBtn" (click)="confirm()">
+    <button data-testid="btnConfirm" *ngIf="userFilter.value !== ''" mat-raised-button color="primary" class="confirmBtn" (click)="confirm()">
       Confirmar
     </button>
   </div>
 </form>
 
 <div *ngIf="userFilter.value">
-  <p-table [value]="filteredLots" [(selection)]="selectedLots" dataKey="id" styleClass="p-datatable-sm">
+  <p-table data-testid="tableLots" [value]="filteredLots" [(selection)]="selectedLots" dataKey="id" styleClass="p-datatable-sm">
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 4rem">
@@ -52,7 +52,7 @@
     <ng-template pTemplate="body" let-lot>
       <tr>
         <td>
-          <p-tableCheckbox [value]="lot"></p-tableCheckbox>
+          <p-tableCheckbox [attr.data-testid]="'checkbox_' + lot.id" [value]="lot"></p-tableCheckbox>
         </td>
         <td>{{lot.name}}</td>
         <td>{{lot.area}}</td>

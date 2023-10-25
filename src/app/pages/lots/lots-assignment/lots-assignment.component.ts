@@ -21,7 +21,7 @@ export class LotsAssignmentComponent implements OnInit {
   filteredLots!: Lot[];
   selectedUser!: UserWithLot;
 
-  constructor(private lotService: LotService, private userService: UserService, private toastr: ToastrService) {
+  constructor(public lotService: LotService, private userService: UserService, public toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -82,6 +82,7 @@ export class LotsAssignmentComponent implements OnInit {
 
         },
         error: (error) => {
+          this.toastr.error(error);
           console.error(error);
         }
       });
