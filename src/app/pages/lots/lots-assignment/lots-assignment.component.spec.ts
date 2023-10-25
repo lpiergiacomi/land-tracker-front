@@ -80,7 +80,7 @@ describe('LotsAssignmentComponent', () => {
     const toastrErrorSpy = spyOn(component.toastr, 'error');
     const error = new Error('Fake Error');
     spyOn(component.lotService, 'updateAssignedLotsToUser').and.returnValue(
-      throwError(() => error)
+      throwError(() => error.toString())
     )
     component.userFilter.setValue(user1)
     component.onSelectUser(user1);
@@ -88,8 +88,7 @@ describe('LotsAssignmentComponent', () => {
 
     getByTestId('btnConfirm').click()
     fixture.detectChanges()
-    // @ts-ignore
-    expect(toastrErrorSpy).toHaveBeenCalledWith(error);
+    expect(toastrErrorSpy).toHaveBeenCalledWith(error.toString());
 
     flush()
   }))
