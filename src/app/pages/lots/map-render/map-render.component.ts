@@ -312,7 +312,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   changeStateLotToReserved() {
-    console.info('changeStateLotToReserved de map-render.component')
     this.selectedLot.state = 'RESERVADO';
     const marker = this.annotationMarkers.find(marker => marker.userData['id'] == this.selectedLot.id)
     marker.material.color = new Color(0xffc107);
