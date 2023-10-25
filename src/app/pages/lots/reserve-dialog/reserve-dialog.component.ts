@@ -30,7 +30,7 @@ export class ReserveDialogComponent implements OnInit {
     private createClientDialog: MatDialog,
     private clientService: ClientService,
     private reserveService: ReserveService,
-    private authService: AuthService,
+    public authService: AuthService,
     private toastr: ToastrService
   ) {
   }
