@@ -64,4 +64,26 @@ describe('ReserveDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('selecting a valid client, the reserve button is enabled', async () => {
+
+    const dialogReserveButton = getByTestId('btnReserveInDialog');
+    expect(component.newReserveForm.valid).toBeFalse();
+    expect(dialogReserveButton.disabled).toBeTrue();
+
+    const client = new Client();
+    client.id = 1;
+    component.client.setValue(client);
+
+    fixture.detectChanges();
+
+    expect(component.newReserveForm.valid).toBeTrue();
+    expect(dialogReserveButton.disabled).toBeFalse();
+
+  });
+
+  function getByTestId(testId: string) {
+    const resultHtml = fixture.debugElement.nativeElement
+    return resultHtml.querySelector(`[data-testid="${testId}"]`)
+  }
 });

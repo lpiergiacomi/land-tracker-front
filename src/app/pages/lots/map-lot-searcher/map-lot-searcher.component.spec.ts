@@ -50,14 +50,15 @@ describe('MapLotSearcherComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display and update input value', () => {
+  it('should display and update input value', async () => {
+    await sendInput('filterText', 'Lote 1')
+    await sendSelect('filterStates', ['DISPONIBLE', 'RESERVADO'])
 
     const filterText = getByTestId('filterText');
     const filterStates = getByTestId('filterStates');
 
-    filterText.value = 'Lote 1';
-    filterStates.value = ['DISPONIBLE', 'RESERVADO'];
     fixture.detectChanges();
+    await fixture.whenStable()
 
     expect(filterText.value).toBe('Lote 1');
     expect(filterStates.value).toEqual(['DISPONIBLE', 'RESERVADO']);
@@ -76,6 +77,22 @@ describe('MapLotSearcherComponent', () => {
   function getByTestId(testId: string) {
     const resultHtml = fixture.debugElement.nativeElement
     return resultHtml.querySelector(`[data-testid="${testId}"`)
+  }
+
+  async function sendInput(testId: string, text: string) {
+    const inputElement = getByTestId(testId)
+    inputElement.value = text
+    inputElement.dispatchEvent(new Event('input'))
+    fixture.detectChanges()
+    return fixture.whenStable()
+  }
+
+  async function sendSelect(testId: string, options: any[]) {
+    const inputElement = getByTestId(testId)
+    inputElement.value = options
+    inputElement.dispatchEvent(new Event('change'))
+    fixture.detectChanges()
+    return fixture.whenStable()
   }
 
 });

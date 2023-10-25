@@ -64,7 +64,6 @@ describe('LotsAssignmentComponent', () => {
   it('assignment should take effect', async () => {
     // Los users del componente se llenan haciendo /with-assigned-lots, que el httpClientSpy me devuelve dos usuarios (primero el user1)
     const user = component.users[0];
-    component.selectedUser = user;
     component.userFilter.setValue(user)
     component.onSelectUser(user);
     fixture.detectChanges();
