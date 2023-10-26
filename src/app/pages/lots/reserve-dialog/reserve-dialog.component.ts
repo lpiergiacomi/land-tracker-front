@@ -35,7 +35,7 @@ export class ReserveDialogComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.newReserveForm = new FormGroup({
       client: new FormControl('', [
         Validators.required,
@@ -43,7 +43,7 @@ export class ReserveDialogComponent implements OnInit {
         this.clientValidator.bind(this)
       ])
     })
-    this.getClients();
+    await this.getClients();
   }
 
   get client() {
@@ -59,7 +59,7 @@ export class ReserveDialogComponent implements OnInit {
     return client?.name;
   }
 
-  getClients() {
+  async getClients() {
     this.client.valueChanges
       .pipe(
         startWith(''),
@@ -68,16 +68,16 @@ export class ReserveDialogComponent implements OnInit {
           return value?.length > 2;
         }),
         tap(() => this.isLoading = true),
-        switchMap((value) => {
-          return this.clientService.getFilteredClients(new ClientParams(value)).pipe(
-            delay(500),
-            finalize(() => this.isLoading = false)
-          );
-        })
       )
-      .subscribe((data) => {
-        this.clients = data.content || [];
-        this.isLoading = false;
+      .subscribe(async (value) => {
+        try {
+          const data = await this.clientService.getFilteredClients(new ClientParams(value));
+          this.clients = data.content || [];
+        } catch (error) {
+          console.error(error);
+        } finally {
+          this.isLoading = false;
+        }
       });
   }
 
@@ -119,20 +119,17 @@ export class ReserveDialogComponent implements OnInit {
 
   }
 
-  createReserve(reserve: Reserve) {
+  async createReserve(reserve: Reserve) {
     this.isLoading = true;
-    this.reserveService.createReserve(reserve)
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-          this.toastr.error(error?.error?.message);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.toastr.success(`Se reservó el lote correctamente`);
-          this.isLoading = false;
-          this.dialogReserve.close(reserve);
-        },
-      });
+    try {
+      await this.reserveService.createReserve(reserve);
+      this.toastr.success(`Se reservó el lote correctamente`);
+      this.isLoading = false;
+      this.dialogReserve.close(reserve);
+    } catch (error) {
+      console.error(error);
+      this.toastr.error(error?.error?.message);
+      this.isLoading = false;
+    }
   }
 }

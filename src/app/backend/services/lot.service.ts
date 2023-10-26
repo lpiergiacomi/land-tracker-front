@@ -16,15 +16,15 @@ export class LotService {
     return await lastValueFrom(lotsPromise);
   }
 
-  getLotById(id: number): Observable<Lot> {
-    return this.api.getAllById(id);
+  async getLotById(id: number): Promise<Lot> {
+    return await lastValueFrom(this.api.getAllById(id));
   }
 
-  getFilteredLots(params: LotParams) {
-    return this.api.getFilteredLots(params);
+  async getFilteredLots(params: LotParams) {
+    return await lastValueFrom(this.api.getFilteredLots(params));
   }
 
-  updateAssignedLotsToUser(selectedUser: UserWithLot) {
-    return this.api.updateAssignedLotsToUser(selectedUser);
+  async updateAssignedLotsToUser(selectedUser: UserWithLot) {
+    return await lastValueFrom(this.api.updateAssignedLotsToUser(selectedUser));
   }
 }

@@ -69,7 +69,7 @@ export class CreateClientDialogComponent implements OnInit {
     return this.newClientForm.get('clientAddress');
   }
 
-  createClient(): void {
+  async createClient() {
     this.newClient.name = this.clientName.value;
     this.newClient.document = this.clientDocument.value;
     this.newClient.email = this.clientEmail.value;
@@ -77,21 +77,10 @@ export class CreateClientDialogComponent implements OnInit {
     this.newClient.address = this.clientAddress.value;
 
     this.isLoading = true;
-    this.clientService.createClient(this.newClient)
-      .subscribe({
-        next: (response) => {
-          this.newClient = response;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          this.toastr.success(`El cliente ${this.newClient.name} fue creado con éxito`);
-          this.isLoading = false;
-          this.dialogRef.close(this.newClient);
-
-        },
-      });
+    this.newClient = await this.clientService.createClient(this.newClient);
+    this.toastr.success(`El cliente ${this.newClient.name} fue creado con éxito`);
+    this.isLoading = false;
+    this.dialogRef.close(this.newClient);
   }
 
 }

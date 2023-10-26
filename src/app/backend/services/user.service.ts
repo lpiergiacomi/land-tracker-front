@@ -10,11 +10,10 @@ export class UserService {
 
   constructor(private api: UsersApi) { }
 
-  getAllUsersWithAssignedLots(): Observable<UserWithLot[]> {
-    return this.api.getAllUsersWithAssignedLots();
+  async getAllUsersWithAssignedLots() {
+    return await lastValueFrom(this.api.getAllUsersWithAssignedLots());
   }
-  async getUserWithAssignedLots(idUser: number): Promise<UserWithLot> {
-    const userWithLot = this.api.getUserWithAssignedLots(idUser);
-    return await lastValueFrom(userWithLot);
+  async getUserWithAssignedLots(idUser: number) {
+    return await lastValueFrom(this.api.getUserWithAssignedLots(idUser));
   }
 }

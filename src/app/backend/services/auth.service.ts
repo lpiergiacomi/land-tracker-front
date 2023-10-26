@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {AuthApi} from "../api/auth.api";
 import {User} from "../model/user";
 import {HttpResponse} from "@angular/common/http";
@@ -28,12 +28,12 @@ export class AuthService {
     return user;
   }
 
-  login(user: User): Observable<HttpResponse<void>> {
-    return this.api.login(user);
+  async login(user: User) {
+    return lastValueFrom(this.api.login(user));
   }
 
-  registerUser(user: User): Observable<User> {
-    return this.api.register(user);
+  async registerUser(user: User) {
+    return lastValueFrom(this.api.register(user));
   }
 
   logout() {

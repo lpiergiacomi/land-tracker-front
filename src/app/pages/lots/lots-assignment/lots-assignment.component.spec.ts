@@ -13,14 +13,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {httpClientSpy, user1} from "../../../backend/services/httpClientSpy";
 import {TableModule} from "primeng/table";
 import {environment} from "../../../../environments/environment";
-import {throwError} from "rxjs";
+import {of, throwError} from "rxjs";
 
 describe('LotsAssignmentComponent', () => {
   let component: LotsAssignmentComponent;
   let fixture: ComponentFixture<LotsAssignmentComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
         ToastrModule.forRoot(),
@@ -39,9 +39,10 @@ describe('LotsAssignmentComponent', () => {
         UsersApi,
         { provide: HttpClient, useValue: httpClientSpy, }
       ]
-    });
+    }).compileComponents();
     fixture = TestBed.createComponent(LotsAssignmentComponent);
     component = fixture.componentInstance;
+    await component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -77,14 +78,15 @@ describe('LotsAssignmentComponent', () => {
 
   it('assignment should catch error', fakeAsync(() => {
     const toastrErrorSpy = spyOn(component.toastr, 'error');
-    spyOn(component.lotService, 'updateAssignedLotsToUser').and.returnValue(
-      throwError(() => 'Fake Error')
-    )
+    spyOn(component.lotService, 'updateAssignedLotsToUser').and.callFake(() => Promise.reject('Fake Error'));
+
     component.userFilter.setValue(user1)
     component.onSelectUser(user1);
     fixture.detectChanges();
 
     getByTestId('btnConfirm').click()
+    tick(0)
+
     fixture.detectChanges()
     expect(toastrErrorSpy).toHaveBeenCalledWith('Fake Error');
 
@@ -97,8 +99,9 @@ describe('LotsAssignmentComponent', () => {
     component.userFilter.setValue(user1)
     component.onSelectUser(user1);
     fixture.detectChanges();
-
     getByTestId('btnConfirm').click()
+    tick(0)
+
     fixture.detectChanges()
     expect(toastrSuccessSpy).toHaveBeenCalledWith('Cambios realizados correctamente');
 

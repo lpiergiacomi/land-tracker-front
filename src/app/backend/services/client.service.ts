@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {ClientsApi} from "../api/clients-api.service";
 import {Client, ClientParams} from "../model/client";
 
@@ -11,18 +11,19 @@ export class ClientService {
   constructor(private api: ClientsApi) {
   }
 
-  getClients(): Observable<Client[]> {
-    return this.api.getAllClients();
+  async getClients(){
+    return await lastValueFrom(this.api.getAllClients());
   }
 
-  createClient(client: Client): Observable<Client> {
-    return this.api.createClient(client);
+  async createClient(client: Client){
+    return await lastValueFrom(this.api.createClient(client));
   }
 
-  deleteClient(idClient: number): any {
-    return this.api.deleteClient(idClient);
+  async deleteClient(idClient: number) {
+    return await lastValueFrom(this.api.deleteClient(idClient));
   }
-  getFilteredClients(params: ClientParams): Observable<any> {
-    return this.api.getFilteredClients(params);
+
+  async getFilteredClients(params: ClientParams) {
+    return await lastValueFrom(this.api.getFilteredClients(params));
   }
 }
