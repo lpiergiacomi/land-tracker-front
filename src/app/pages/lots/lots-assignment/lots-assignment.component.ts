@@ -62,7 +62,7 @@ export class LotsAssignmentComponent implements OnInit {
   async confirm() {
     this.selectedUser.assignedLotsIds = this.selectedLots.map(lot => lot.id);
     try {
-      const test = await this.lotService.updateAssignedLotsToUser(this.selectedUser);
+      await this.lotService.updateAssignedLotsToUser(this.selectedUser);
       this.toastr.success(`Cambios realizados correctamente`);
     } catch (error) {
       this.toastr.error(error);

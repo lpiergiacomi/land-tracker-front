@@ -54,8 +54,8 @@ export class MapLotSearcherComponent implements OnInit {
   }
 
 
-  cleanFilters() {
+  async cleanFilters() {
     this.formSearcherLots.reset();
-    this.filterLots();
+    await this.filterLots();
   }
 }

@@ -13,7 +13,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {httpClientSpy, user1} from "../../../backend/services/httpClientSpy";
 import {TableModule} from "primeng/table";
 import {environment} from "../../../../environments/environment";
-import {of, throwError} from "rxjs";
 
 describe('LotsAssignmentComponent', () => {
   let component: LotsAssignmentComponent;

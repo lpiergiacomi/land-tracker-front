@@ -18,16 +18,15 @@ export class Lot {
   constructor() {
   }
 
-
-  canReserve(assignedLots: any[]): boolean {
+  public canReserve(assignedLots: any[]): boolean {
     return this.isAvailable() && this.hasAssigned(assignedLots);
   }
 
-  hasAssigned(assignedLots: any[]) {
+  public hasAssigned(assignedLots: any[]) {
     return assignedLots?.includes(this.id);
   }
 
-  isAvailable() {
+  public isAvailable() {
     return this.state == 'DISPONIBLE';
   }
 

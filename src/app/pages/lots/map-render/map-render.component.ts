@@ -57,7 +57,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.createScene();
     this.createCamera();
     this.createLights();
@@ -65,7 +65,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.createLabelRenderer();
     this.createControls();
     this.loadMeshFloor();
-    this.loadLots();
+    await this.loadLots();
     this.animate();
 
     this.renderer.domElement.addEventListener('click', this.onClick, false);
@@ -86,7 +86,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   private async loadLots() {
     const response = await this.getLots();
     this.originalLots = response;
-    this.lots = response.map(x => Object.assign(new Lot(), x));
+    this.lots = response;
     this.lots.forEach((lot) => {
       this.loadMeshLot(lot);
     })

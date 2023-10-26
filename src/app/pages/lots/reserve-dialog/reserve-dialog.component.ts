@@ -112,10 +112,10 @@ export class ReserveDialogComponent implements OnInit {
     return null;
   }
 
-  reserve() {
+  async reserve() {
     const reserve = new Reserve(this.lot.id, this.client.value.id);
     reserve.user = this.authService.getLoggedUser();
-    this.createReserve(reserve)
+    await this.createReserve(reserve)
 
   }
 

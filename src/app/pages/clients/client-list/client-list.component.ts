@@ -106,7 +106,7 @@ export class ClientListComponent implements OnInit {
         await this.clientService.deleteClient(client.id);
         delete this.clonedClients[client.id.toString()];
         this.clients = this.clients.filter(c => c.id != client.id);
-        this.toastr.success(`El cliente ${client.nombre} fue eliminado correctamente`);
+        this.toastr.success(`El cliente ${client.name} fue eliminado correctamente`);
         this.isLoading = false;
       } catch (error) {
         console.error(error);
@@ -142,7 +142,7 @@ export class ClientListComponent implements OnInit {
   }
 
   isInvalidEmail(email: string): boolean {
-    var validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return email.length == 0 || !email.match(validRegexEmail)
   }
 }
