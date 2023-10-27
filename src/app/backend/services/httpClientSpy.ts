@@ -4,7 +4,7 @@ import {UserWithLot} from "../model/user-with-lot";
 
 export const user1 = new UserWithLot(1, 'Usuario 1', [1,2]);
 const usersStub = [user1, new UserWithLot(2, 'Usuario 2', [3,4,5])];
-const lotsStub = {content: [{id: 1, state: 'DISPONIBLE'}, {id: 2, state: 'DISPONIBLE'}]}
+const lotsStub = [{id: 1, state: 'DISPONIBLE'}, {id: 2, state: 'DISPONIBLE'}]
 
 export const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'delete']);
 

@@ -31,8 +31,7 @@ export class MapLotSearcherComponent implements OnInit {
   }
 
   public async filterLots() {
-    const filteredLots = await this.getFilteredLots();
-    this.lots = filteredLots.content;
+    this.lots = await this.getFilteredLots();
     this.changeLotsEventEmitter.emit(this.lots);
   }
 
