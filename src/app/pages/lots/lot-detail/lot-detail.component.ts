@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ReserveDialogComponent} from "../reserve-dialog/reserve-dialog.component";
 import {AuthService} from "../../../backend/services/auth.service";
 import {UserService} from "../../../backend/services/user.service";
+import {LotService} from "../../../backend/services/lot.service";
 
 @Component({
   selector: 'app-lot-detail',
@@ -13,12 +14,13 @@ import {UserService} from "../../../backend/services/user.service";
 export class LotDetailComponent implements OnInit{
 
   @Input() selectedLot: Lot;
-  @Output() reservedLotEvent = new EventEmitter();
+  @Output() reservedLotEvent = new EventEmitter<Lot>();
   loggedUser: any;
   assignedLots: any[];
 
   constructor(private authService: AuthService,
               private userService: UserService,
+              private lotService: LotService,
               public dialogReserve: MatDialog) {
     this.loggedUser = this.authService.getLoggedUser();
   }
@@ -33,10 +35,9 @@ export class LotDetailComponent implements OnInit{
       data: this.selectedLot,
     });
 
-    dialogReserve.afterClosed().subscribe(reserve => {
+    dialogReserve.afterClosed().subscribe(async reserve => {
       if (reserve) {
-        this.selectedLot.state = 'RESERVADO';
-        this.reservedLotEvent.emit();
+        this.reservedLotEvent.emit(await this.lotService.getLotById(this.selectedLot.id));
       }
     });
   }

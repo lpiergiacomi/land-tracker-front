@@ -6,6 +6,9 @@ export class Reserve {
   lotId: number;
   clientId: number;
   user: User;
+  clientName: string;
+  creationDate: string;
+  dueDate: string;
 
   constructor(idLot: number, idClient: number) {
     this.lotId = idLot;
