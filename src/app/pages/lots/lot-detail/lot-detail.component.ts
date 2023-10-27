@@ -20,7 +20,7 @@ export class LotDetailComponent implements OnInit{
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private lotService: LotService,
+              public lotService: LotService,
               public dialogReserve: MatDialog) {
     this.loggedUser = this.authService.getLoggedUser();
   }
