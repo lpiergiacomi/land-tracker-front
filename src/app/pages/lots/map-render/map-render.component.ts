@@ -57,7 +57,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.createScene();
     this.createCamera();
     this.createLights();
@@ -65,7 +65,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.createLabelRenderer();
     this.createControls();
     this.loadMeshFloor();
-    this.loadLots();
+    await this.loadLots();
     this.animate();
 
     this.renderer.domElement.addEventListener('click', this.onClick, false);
@@ -309,6 +309,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.annotationMarkers.forEach(marker => {
       marker.visible = idsLots.includes(marker.userData['id']);
     })
+
+    if (!idsLots.includes(this.selectedLot.id)){
+      this.selectedLot = null;
+    }
   }
 
   changeStateLotToReserved() {

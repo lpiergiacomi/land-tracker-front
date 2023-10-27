@@ -73,43 +73,32 @@ export class LoginComponent implements OnInit{
   }
 
 
-  login() {
-    const usuario = new User();
-    usuario.username = this.usernameLogin.value;
-    usuario.password = this.passwordLogin.value;
-    this.authService
-      .login(usuario)
-      .pipe(take(1))
-      .subscribe({
-        next: (response) => {
-          localStorage.setItem('user_id', response.body['user-id']);
-          this.authService.setLoggedUser(response.body['access-token'] || '');
-        },
-        error: (error) => {
-          this.toastr.error(error?.error?.message ?? 'Ocurrió un error');
-        },
-        complete: async () => {
-          this.router.navigate(['/pages/lots/map']);
-        }
-      });
+  async login() {
+    try {
+      const usuario = new User();
+      usuario.username = this.usernameLogin.value;
+      usuario.password = this.passwordLogin.value;
+      const response = await this.authService.login(usuario);
+      localStorage.setItem('user_id', response.body['user-id']);
+      this.authService.setLoggedUser(response.body['access-token'] || '');
+      await this.router.navigate(['/pages/lots/map']);
+    } catch (error) {
+      this.toastr.error(error?.error?.message ?? 'Ocurrió un error');
+    }
   }
 
-  registerUser() {
-    const user = new User();
-    user.username = this.usernameRegister.value;
-    user.password = this.passwordRegister.value;
-    this.authService
-      .registerUser(user)
-      .pipe(take(1))
-      .subscribe({
-        next: (response) => {
-          this.toastr.success(`Usuario registrado con éxito`);
-          this.resetRegisterForm();
-        },
-        error: (error) => {
-          this.toastr.error(error.error.message);
-        }
-      });
+  async registerUser() {
+    try {
+      const user = new User();
+      user.username = this.usernameRegister.value;
+      user.password = this.passwordRegister.value;
+      await this.authService.registerUser(user);
+      this.toastr.success(`Usuario registrado con éxito`);
+      this.resetRegisterForm();
+    } catch (error) {
+      this.toastr.error(error.error.message);
+
+    }
   }
 
   repasswordValidator(control: FormControl) {

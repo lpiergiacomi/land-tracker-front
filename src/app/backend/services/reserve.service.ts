@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {ReservesApi} from "../api/reserves-api.service";
 import {Reserve} from "../model/reserve";
 
@@ -11,12 +11,12 @@ export class ReserveService {
   constructor(private api: ReservesApi) {
   }
 
-  getAllReserves(): Observable<Reserve[]> {
-    return this.api.getAllReserves();
+  async getAllReserves() {
+    return await lastValueFrom(this.api.getAllReserves());
   }
 
-  createReserve(reserve: Reserve): Observable<Reserve> {
-    return this.api.createReserve(reserve);
+  async createReserve(reserve: Reserve){
+    return await lastValueFrom(this.api.createReserve(reserve));
   }
 
 }

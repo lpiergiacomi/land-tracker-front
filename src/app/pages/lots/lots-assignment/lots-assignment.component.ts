@@ -21,44 +21,29 @@ export class LotsAssignmentComponent implements OnInit {
   filteredLots!: Lot[];
   selectedUser!: UserWithLot;
 
-  constructor(private lotService: LotService, private userService: UserService, private toastr: ToastrService) {
+  constructor(public lotService: LotService, private userService: UserService, public toastr: ToastrService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.searchForm = new FormGroup<any>({
       userFilter: new FormControl('', {nonNullable: true}),
       blockFilter: new FormControl('', {nonNullable: true}),
       zoneFilter: new FormControl('', {nonNullable: true})
     })
-
-    this.getLots();
-    this.getUsers();
+    await this.getLots();
+    await this.getUsers();
     this.setupFilters();
 
   }
 
-  public getLots() {
-    const params = new LotParams(null,null,null, ["DISPONIBLE"]);
-    this.lotService.getFilteredLots(params).subscribe({
-      next: (response) => {
-        this.lots = response.content;
-        this.filteredLots = this.lots;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+  public async getLots() {
+    const params = new LotParams(null, null, null, ["DISPONIBLE"]);
+    this.lots = await this.lotService.getFilteredLots(params);
+    this.filteredLots = this.lots;
   }
 
-  private getUsers() {
-    this.userService.getAllUsersWithAssignedLots().subscribe({
-      next: (response) => {
-        this.users = response as UserWithLot[];
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+  private async getUsers() {
+    this.users = await this.userService.getAllUsersWithAssignedLots();
   }
 
   get userFilter() {
@@ -73,18 +58,15 @@ export class LotsAssignmentComponent implements OnInit {
     return this.searchForm.get('zoneFilter');
   }
 
-  confirm() {
+  async confirm() {
     this.selectedUser.assignedLotsIds = this.selectedLots.map(lot => lot.id);
-    this.lotService.updateAssignedLotsToUser(this.selectedUser)
-      .subscribe({
-        next: (response) => {
-          this.toastr.success(`Cambios realizados correctamente`);
-
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
+    try {
+      await this.lotService.updateAssignedLotsToUser(this.selectedUser);
+      this.toastr.success(`Cambios realizados correctamente`);
+    } catch (error) {
+      this.toastr.error(error);
+      console.error(error);
+    }
   }
 
 

@@ -4,7 +4,7 @@
     <mat-card-title>{{selectedLot?.name}}</mat-card-title>
     <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
     <div class="chips-container">
-      <mat-chip class="chip-item" [ngStyle]="{'background-color': getColorState()}">
+      <mat-chip data-testid="chipStateLot" class="chip-item" [ngStyle]="{'background-color': getColorState()}">
         {{selectedLot?.state}}
       </mat-chip>
       <mat-chip *ngIf="selectedLot?.hasWater" class="chip-item" style="background-color:#00ffff75">
@@ -32,7 +32,7 @@
 
   </mat-card-content>
   <mat-card-actions align="end">
-    <button *ngIf="canReserve()" mat-raised-button color="primary"
+    <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
             (click)="reserve()">Reservar
     </button>
     <div *ngIf="!hasAssigned() && isAvailable()">

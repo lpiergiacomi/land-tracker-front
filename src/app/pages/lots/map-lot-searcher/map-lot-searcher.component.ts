@@ -30,25 +30,18 @@ export class MapLotSearcherComponent implements OnInit {
     })
   }
 
-  public filterLots() {
-    this.getFilteredLots().subscribe({
-      next: (response) => {
-        this.lots = response.content;
-        this.changeLotsEventEmitter.emit(this.lots);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+  public async filterLots() {
+    this.lots = await this.getFilteredLots();
+    this.changeLotsEventEmitter.emit(this.lots);
   }
 
-  public getFilteredLots() {
+  public async getFilteredLots() {
     const params = new LotParams(
       this.filterText.value,
       null,
       null,
       this.filterStates.value.map(state => state.toUpperCase()));
-    return this.lotService.getFilteredLots(params);
+    return await this.lotService.getFilteredLots(params);
   }
 
   get filterText() {
@@ -60,8 +53,8 @@ export class MapLotSearcherComponent implements OnInit {
   }
 
 
-  cleanFilters() {
+  async cleanFilters() {
     this.formSearcherLots.reset();
-    this.filterLots();
+    await this.filterLots();
   }
 }

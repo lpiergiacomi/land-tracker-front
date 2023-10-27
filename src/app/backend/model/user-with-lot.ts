@@ -1,9 +1,7 @@
 export class UserWithLot {
 
-  id: number;
-  username: string;
-  assignedLotsIds: any[];
-
-  constructor() {
+  constructor(public id: number, public username: string, public assignedLotsIds: any[]) {
   }
+
 }
+

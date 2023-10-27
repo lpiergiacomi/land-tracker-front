@@ -28,27 +28,19 @@ export class ClientListComponent implements OnInit {
               private createClientDialog: MatDialog,
               private toastr: ToastrService) {  }
 
-  ngOnInit(): void {
-    this.getClients();
+  async ngOnInit() {
+    await this.getClients();
   }
 
-  getClients() {
-    this.clientService.getClients().subscribe({
-      next: (response) => {
-        this.clients = response as Client[];
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+  async getClients() {
+    this.clients = await this.clientService.getClients();
   }
-
 
   onRowEditInit(client: Client) {
     this.clonedClients[client.id.toString()] = { ...client };
   }
 
-  onRowEditSave(client: Client) {
+  async onRowEditSave(client: Client) {
     this.loadingRow = client;
     let error = this.validateClient(client);
     if (error !== ''){
@@ -56,7 +48,7 @@ export class ClientListComponent implements OnInit {
       this.loadingRow = null;
       return this.toastr.error(error);
     }
-    this.createClient(client);
+    await this.createClient(client);
     delete this.clonedClients[client.id.toString()];
     return this.toastr.success(`El cliente ${client.name} fue editado correctamente`);
   }
@@ -75,18 +67,11 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  createClient(client: Client) {
+  async createClient(client: Client) {
     this.isLoading = true;
-    this.clientService.createClient(client)
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          this.isLoading = false;
-          this.loadingRow = null;
-        },
-      });
+    await this.clientService.createClient(client);
+    this.isLoading = false;
+    this.loadingRow = null;
   }
 
   onRowDelete(client: any) {
@@ -96,12 +81,12 @@ export class ClientListComponent implements OnInit {
     const intervalUpdateTime = 50;
     const progress = 100 / (totalTime / intervalUpdateTime);
 
-    this.undoInterval = setInterval(() => {
+    this.undoInterval = setInterval(async () => {
       this.undoProgress += progress;
 
       if (this.undoProgress >= 100) {
         clearInterval(this.undoInterval);
-        this.confirmDelete(client);
+        await this.confirmDelete(client);
       }
 
       if (this.undoProgress <= 25) {
@@ -115,24 +100,20 @@ export class ClientListComponent implements OnInit {
   }
 
 
-  confirmDelete(client: any) {
+  async confirmDelete(client: any) {
     if (this.rowToDelete === client) {
-      this.clientService.deleteClient(client.id).subscribe({
-        next: () => {
-          delete this.clonedClients[client.id.toString()];
-          this.clients = this.clients.filter(c => c.id != client.id);
-          this.toastr.success(`El cliente ${client.nombre} fue eliminado correctamente`);
-        },
-        error: (error) => {
-          console.error(error);
-          this.toastr.error(error.error.message);
-          this.rowToDelete = null;
-          this.undoProgress = 0;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      try {
+        await this.clientService.deleteClient(client.id);
+        delete this.clonedClients[client.id.toString()];
+        this.clients = this.clients.filter(c => c.id != client.id);
+        this.toastr.success(`El cliente ${client.name} fue eliminado correctamente`);
+        this.isLoading = false;
+      } catch (error) {
+        console.error(error);
+        this.toastr.error(error.error.message);
+        this.rowToDelete = null;
+        this.undoProgress = 0;
+      }
     }
   }
 
@@ -161,7 +142,7 @@ export class ClientListComponent implements OnInit {
   }
 
   isInvalidEmail(email: string): boolean {
-    var validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validRegexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return email.length == 0 || !email.match(validRegexEmail)
   }
 }

@@ -30,12 +30,12 @@ export class ReserveDialogComponent implements OnInit {
     private createClientDialog: MatDialog,
     private clientService: ClientService,
     private reserveService: ReserveService,
-    private authService: AuthService,
+    public authService: AuthService,
     private toastr: ToastrService
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.newReserveForm = new FormGroup({
       client: new FormControl('', [
         Validators.required,
@@ -43,7 +43,7 @@ export class ReserveDialogComponent implements OnInit {
         this.clientValidator.bind(this)
       ])
     })
-    this.getClients();
+    await this.getClients();
   }
 
   get client() {
@@ -59,7 +59,7 @@ export class ReserveDialogComponent implements OnInit {
     return client?.name;
   }
 
-  getClients() {
+  async getClients() {
     this.client.valueChanges
       .pipe(
         startWith(''),
@@ -68,16 +68,16 @@ export class ReserveDialogComponent implements OnInit {
           return value?.length > 2;
         }),
         tap(() => this.isLoading = true),
-        switchMap((value) => {
-          return this.clientService.getFilteredClients(new ClientParams(value)).pipe(
-            delay(500),
-            finalize(() => this.isLoading = false)
-          );
-        })
       )
-      .subscribe((data) => {
-        this.clients = data.content || [];
-        this.isLoading = false;
+      .subscribe(async (value) => {
+        try {
+          const data = await this.clientService.getFilteredClients(new ClientParams(value));
+          this.clients = data.content || [];
+        } catch (error) {
+          console.error(error);
+        } finally {
+          this.isLoading = false;
+        }
       });
   }
 
@@ -112,27 +112,24 @@ export class ReserveDialogComponent implements OnInit {
     return null;
   }
 
-  reserve() {
+  async reserve() {
     const reserve = new Reserve(this.lot.id, this.client.value.id);
     reserve.user = this.authService.getLoggedUser();
-    this.createReserve(reserve)
+    await this.createReserve(reserve)
 
   }
 
-  createReserve(reserve: Reserve) {
+  async createReserve(reserve: Reserve) {
     this.isLoading = true;
-    this.reserveService.createReserve(reserve)
-      .subscribe({
-        error: (error) => {
-          console.error(error);
-          this.toastr.error(error?.error?.message);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.toastr.success(`Se reservó el lote correctamente`);
-          this.isLoading = false;
-          this.dialogReserve.close(reserve);
-        },
-      });
+    try {
+      await this.reserveService.createReserve(reserve);
+      this.toastr.success(`Se reservó el lote correctamente`);
+      this.isLoading = false;
+      this.dialogReserve.close(reserve);
+    } catch (error) {
+      console.error(error);
+      this.toastr.error(error?.error?.message);
+      this.isLoading = false;
+    }
   }
 }

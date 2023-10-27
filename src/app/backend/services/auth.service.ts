@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable} from "rxjs";
+import {lastValueFrom, Observable} from "rxjs";
 import {AuthApi} from "../api/auth.api";
 import {User} from "../model/user";
 import {HttpResponse} from "@angular/common/http";
@@ -24,16 +24,16 @@ export class AuthService {
   getLoggedUser(): User | null {
     const user = new User();
     user.id = parseInt(localStorage.getItem('user_id'));
-    user.username = JSON.parse(localStorage.getItem('token_decoded')).sub;
+    user.username = JSON.parse(localStorage.getItem('token_decoded'))?.sub;
     return user;
   }
 
-  login(user: User): Observable<HttpResponse<void>> {
-    return this.api.login(user);
+  async login(user: User) {
+    return lastValueFrom(this.api.login(user));
   }
 
-  registerUser(user: User): Observable<User> {
-    return this.api.register(user);
+  async registerUser(user: User) {
+    return lastValueFrom(this.api.register(user));
   }
 
   logout() {

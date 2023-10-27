@@ -15,7 +15,6 @@ import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatSliderModule} from "@angular/material/slider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatSelectModule} from "@angular/material/select";
@@ -55,7 +54,6 @@ import {MatIconModule} from "@angular/material/icon";
     MatAutocompleteModule,
     ReactiveFormsModule,
     FormsModule,
-    MatSliderModule,
     MatButtonModule,
     MatExpansionModule,
     MatSelectModule,

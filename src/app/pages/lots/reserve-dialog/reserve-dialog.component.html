@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Reserva {{lot.name}}</h1>
+<h1 mat-dialog-title>Reserva {{lot?.name}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="newReserveForm" class="divForm">
     <mat-form-field>
       <mat-label>Precio</mat-label>
-      <input matInput disabled [value]="lot.price.toString()" type="number">
+      <input matInput disabled [value]="lot?.price?.toString()" type="number">
       <span matTextPrefix>$&nbsp;</span>
     </mat-form-field>
     <mat-form-field appearance="outline" style="width: 100%">
@@ -32,5 +32,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button color="primary" [disabled]="newReserveForm.invalid" (click)="reserve()">Reservar</button>
+  <button data-testid="btnReserveInDialog" mat-button color="primary" [disabled]="newReserveForm.invalid" (click)="reserve()">Reservar</button>
 </div>
