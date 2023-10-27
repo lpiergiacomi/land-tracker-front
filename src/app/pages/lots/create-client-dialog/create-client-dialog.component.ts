@@ -77,10 +77,16 @@ export class CreateClientDialogComponent implements OnInit {
     this.newClient.address = this.clientAddress.value;
 
     this.isLoading = true;
-    this.newClient = await this.clientService.createClient(this.newClient);
-    this.toastr.success(`El cliente ${this.newClient.name} fue creado con éxito`);
-    this.isLoading = false;
-    this.dialogRef.close(this.newClient);
+    try {
+      this.newClient = await this.clientService.createClient(this.newClient);
+      this.toastr.success(`El cliente ${this.newClient.name} fue creado con éxito`);
+      this.isLoading = false;
+      this.dialogRef.close(this.newClient);
+    } catch (error) {
+      this.toastr.error(error?.error?.message);
+      this.isLoading = false;
+    }
+
   }
 
 }

@@ -309,6 +309,10 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.annotationMarkers.forEach(marker => {
       marker.visible = idsLots.includes(marker.userData['id']);
     })
+
+    if (!idsLots.includes(this.selectedLot.id)){
+      this.selectedLot = null;
+    }
   }
 
   changeStateLotToReserved() {
