@@ -7,7 +7,7 @@ export class Reserve {
   clientId: number;
   user: User;
   clientName: string;
-  creationDate: string;
+  createdDate: string;
   dueDate: string;
 
   constructor(idLot: number, idClient: number) {

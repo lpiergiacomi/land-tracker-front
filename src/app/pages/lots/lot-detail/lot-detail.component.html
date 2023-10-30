@@ -63,7 +63,7 @@
         <div class="detail-row">
           <div class="detail-row-text">
             <label>Fecha creación: </label>
-            {{selectedLot?.reserve?.creationDate | date: 'dd/MM/yyyy'}}
+            {{selectedLot?.reserve?.createdDate | date: 'dd/MM/yyyy'}}
           </div>
           <div class="detail-row-text">
             <label>Fecha vto: </label>
@@ -74,7 +74,7 @@
     </mat-card>
   </mat-card-content>
 
-  <mat-card-actions align="end">
+  <mat-card-actions align="end" *ngIf="canReserve() || !hasAssigned() && isAvailable()">
     <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
             (click)="reserve()">Reservar
     </button>
