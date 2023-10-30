@@ -155,7 +155,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.annotationMarkers.push(annotationSprite);
     this.circleGroup.add(annotationSprite);
 
-
     this.childElements.changes.subscribe((changes: QueryList<ElementRef>) => {
       const changedRefs = changes.toArray();
       let annotationDiv = changedRefs.find(x => x.nativeElement.id == lot.id)?.nativeElement.children[0]
@@ -237,14 +236,14 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     this.rendererContainer.nativeElement.appendChild(this.labelRenderer.domElement)
   }
 
-  onClick = (event: MouseEvent) => {
+  onClick = async (event: MouseEvent) => {
     event.preventDefault();
     this.selectedLot = null;
     const intersects = this.createRaycaster(event);
     if (intersects.length > 0) {
       const intersection = intersects[0];
       const idSelectedLot = intersection.object.userData['id']
-      this.selectedLot = this.lots.find(lot => lot.id == idSelectedLot);
+      this.selectedLot = await this.lotService.getLotById(idSelectedLot);
       this.tween(intersection.object.position);
     }
   };
@@ -315,9 +314,11 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeStateLotToReserved() {
-    this.selectedLot.state = 'RESERVADO';
-    const marker = this.annotationMarkers.find(marker => marker.userData['id'] == this.selectedLot.id)
+  changeStateLotToReserved(lot: Lot) {
+    this.selectedLot = lot;
+    this.lots.find(l => l.id == lot.id).state = 'RESERVADO';
+    this.originalLots.find(l => l.id == lot.id).state = 'RESERVADO';
+    const marker = this.annotationMarkers.find(marker => marker.userData['id'] == lot.id)
     marker.material.color = new Color(0xffc107);
   }
 }

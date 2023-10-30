@@ -1,3 +1,5 @@
+import {Reserve} from "./reserve";
+
 export class Lot {
 
   id: number;
@@ -14,6 +16,7 @@ export class Lot {
   hasLight: boolean;
   hasWater: boolean;
   price: number;
+  reserve: Reserve;
 
   constructor() {
   }

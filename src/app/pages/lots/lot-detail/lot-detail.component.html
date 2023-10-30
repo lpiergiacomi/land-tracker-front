@@ -4,34 +4,77 @@
     <mat-card-title>{{selectedLot?.name}}</mat-card-title>
     <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
     <div class="chips-container">
+      <span class="chip-item" style="font-size: 20px;">{{selectedLot?.price | currency}}</span>
       <mat-chip data-testid="chipStateLot" class="chip-item" [ngStyle]="{'background-color': getColorState()}">
         {{selectedLot?.state}}
-      </mat-chip>
-      <mat-chip *ngIf="selectedLot?.hasWater" class="chip-item" style="background-color:#00ffff75">
-        <i class='fal fa-tint'></i>
-        Agua
-      </mat-chip>
-      <mat-chip *ngIf="selectedLot?.hasLight" class="chip-item" style="background-color:#f6db5ad1">
-        <i class='fal fa-lightbulb'></i>
-        Luz
       </mat-chip>
     </div>
   </mat-card-header>
   <mat-card-content>
-    <mat-list role="list">
-      <mat-list-item role="listitem"><b>Superficie:</b> {{selectedLot?.area | squareMeters }}</mat-list-item>
-      <mat-list-item role="listitem"><b>Metros frente:</b> {{selectedLot?.metersFront | meters}}</mat-list-item>
-      <mat-list-item role="listitem"><b>Metros fondo:</b> {{selectedLot?.metersBack | meters}}</mat-list-item>
-      <mat-list-item role="listitem"><b>Nro cuenta
-        catastral:</b> {{selectedLot?.cadastralAccNumber}}</mat-list-item>
-      <mat-list-item role="listitem"><b>Nro cuenta
-        municipal:</b> {{selectedLot?.municipalAccNumber}}</mat-list-item>
-      <mat-list-item role="listitem"><b>Precio:</b> {{selectedLot?.price | currency}}</mat-list-item>
-
-    </mat-list>
-
+    <div class="lot-details">
+      <div class="lot-detail-icon">
+        <i class="icon fal fa-ruler-combined"></i>
+        <span class="text-icon">{{selectedLot?.area | squareMeters }}</span>
+      </div>
+      <div class="lot-detail-icon">
+        <i class="icon fal fa-ruler-vertical"></i>
+        <span class="text-icon">{{selectedLot?.metersBack | meters}}</span>
+      </div>
+      <div class="lot-detail-icon">
+        <i class="icon fal fa-ruler-horizontal"></i>
+        <span class="text-icon">{{selectedLot?.metersFront | meters}}</span>
+      </div>
+      <div class="lot-detail-icon">
+        <i [ngClass]="selectedLot?.hasLight ? 'icon fal fa-lightbulb' : 'icon fal fa-lightbulb-slash'"
+        ></i>
+        <span class="text-icon">Luz</span>
+      </div>
+      <div class="lot-detail-icon">
+        <i [ngClass]="selectedLot?.hasWater ? 'icon fal fa-tint' : 'icon fal fa-tint-slash'"
+        ></i>
+        <span class="text-icon">Agua</span>
+      </div>
+    </div>
+    <div class="detail-row" style="margin-top: 1.2rem">
+      <div class="detail-row-text">
+        <label>Cta catastral: </label>
+        {{selectedLot?.cadastralAccNumber}}
+      </div>
+      <div class="detail-row-text">
+        <label>Cta municipal: </label>
+        {{selectedLot?.municipalAccNumber}}
+      </div>
+    </div>
+    <mat-card style="margin-top: 1.2rem" *ngIf="selectedLot?.reserve">
+      <mat-card-header>
+        <mat-card-title>Detalle de reserva</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="detail">
+        <div class="detail-row">
+          <div class="detail-row-text">
+            <label>Cliente: </label>
+            {{selectedLot?.reserve?.clientName}}
+          </div>
+          <div class="detail-row-text">
+            <label>Usuario: </label>
+            {{selectedLot?.reserve?.user?.username}}
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-row-text">
+            <label>Fecha creación: </label>
+            {{selectedLot?.reserve?.createdDate | date: 'dd/MM/yyyy'}}
+          </div>
+          <div class="detail-row-text">
+            <label>Fecha vto: </label>
+            {{selectedLot?.reserve?.dueDate | date: 'dd/MM/yyyy'}}
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </mat-card-content>
-  <mat-card-actions align="end">
+
+  <mat-card-actions align="end" *ngIf="canReserve() || !hasAssigned() && isAvailable()">
     <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
             (click)="reserve()">Reservar
     </button>

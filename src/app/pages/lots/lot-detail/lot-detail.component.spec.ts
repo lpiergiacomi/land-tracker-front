@@ -23,6 +23,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
+import {LotsApi} from "../../../backend/api/lots-api.service";
 
 describe('LotDetailComponent', () => {
   let component: LotDetailComponent;
@@ -66,8 +67,8 @@ describe('LotDetailComponent', () => {
         JwtHelperService,
         UsersApi,
         ClientsApi,
-        ReservesApi
-
+        ReservesApi,
+        LotsApi
       ]
     }).compileComponents();
   });
@@ -97,6 +98,9 @@ describe('LotDetailComponent', () => {
     // Mockeo que el hasAssigned de lot me devuelva true
     spyOn(lot, 'hasAssigned').and.returnValue(true)
     fixture.detectChanges();
+
+    lot.state = 'RESERVADO';
+    spyOn(component.lotService, 'getLotById').withArgs(1).and.returnValue(Promise.resolve(lot))
 
     // Clickeo el botón "Reservar" del detalle del lote
     const reserveInLotDetailButton: HTMLElement = getByTestId('btnReserveInLotDetail');
