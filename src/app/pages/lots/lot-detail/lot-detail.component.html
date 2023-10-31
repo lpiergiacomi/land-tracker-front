@@ -45,42 +45,18 @@
         {{selectedLot?.municipalAccNumber}}
       </div>
     </div>
-    <mat-card style="margin-top: 1.2rem" *ngIf="selectedLot?.reserve">
-      <mat-card-header>
-        <mat-card-title>Detalle de reserva</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="detail">
-        <div class="detail-row">
-          <div class="detail-row-text">
-            <label>Cliente: </label>
-            {{selectedLot?.reserve?.clientName}}
-          </div>
-          <div class="detail-row-text">
-            <label>Usuario: </label>
-            {{selectedLot?.reserve?.user?.username}}
-          </div>
-        </div>
-        <div class="detail-row">
-          <div class="detail-row-text">
-            <label>Fecha creación: </label>
-            {{selectedLot?.reserve?.createdDate | date: 'dd/MM/yyyy'}}
-          </div>
-          <div class="detail-row-text">
-            <label>Fecha vto: </label>
-            {{selectedLot?.reserve?.dueDate | date: 'dd/MM/yyyy'}}
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
   </mat-card-content>
 
-  <mat-card-actions align="end" *ngIf="canReserve() || !hasAssigned() && isAvailable()">
-    <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
-            (click)="reserve()">Reservar
-    </button>
-    <div *ngIf="!hasAssigned() && isAvailable()">
-      <i class="fal fa-exclamation-circle" style="color: #ff5252; font-size: 18px;"></i>
-      No tenés permisos para gestionar este lote
+  <mat-card-actions align="end" style="margin-top: 1.2rem">
+    <div style="display:flex">
+      <button mat-stroked-button color="accent" (click)="openDialogMoreInfo()" style="margin-right: 1rem;">Información adicional</button>
+      <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
+              (click)="reserve()">Reservar
+      </button>
+      <div *ngIf="!hasAssigned() && isAvailable()">
+        <i class="fal fa-exclamation-circle" style="color: #ff5252; font-size: 18px;"></i>
+        No tenés permisos para gestionar este lote
+      </div>
     </div>
   </mat-card-actions>
 </mat-card>

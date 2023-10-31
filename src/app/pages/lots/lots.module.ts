@@ -29,6 +29,9 @@ import {TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { AdditionalInfoLotDialogComponent } from './additional-info-lot-dialog/additional-info-lot-dialog.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
 
 
 @NgModule({
@@ -43,7 +46,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     LotListComponent,
     MetersPipe,
     SquareMetersPipe,
-    LotsAssignmentComponent
+    ReserveStatePipe,
+    LotsAssignmentComponent,
+    AdditionalInfoLotDialogComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +70,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     InputTextModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
