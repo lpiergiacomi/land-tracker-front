@@ -1,11 +1,6 @@
 <h1 mat-dialog-title>Reserva {{lot?.name}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="newReserveForm" class="divForm">
-    <mat-form-field>
-      <mat-label>Precio</mat-label>
-      <input matInput disabled [value]="lot?.price?.toString()" type="number">
-      <span matTextPrefix>$&nbsp;</span>
-    </mat-form-field>
     <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Cliente</mat-label>
       <input matInput
@@ -22,11 +17,18 @@
           <small>DNI: {{client.document}}</small>
         </mat-option>
       </mat-autocomplete>
-      <mat-error *ngIf="client.errors">{{getErrorMessage()}}</mat-error>
+      <mat-error *ngIf="client.errors">{{getClientErrorMessage()}}</mat-error>
       <mat-hint *ngIf="client.value?.length < 3" align="start">Escriba al menos 3 letras para buscar</mat-hint>
       <div *ngIf="isLoading" class="loading-spinner">
         <mat-spinner diameter="32"></mat-spinner>
       </div>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 75%">
+      <mat-label>Vencimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dueDate">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="dueDate.errors">{{getDueDateErrorMessage()}}</mat-error>
     </mat-form-field>
   </form>
 </div>

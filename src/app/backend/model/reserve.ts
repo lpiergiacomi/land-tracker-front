@@ -10,8 +10,9 @@ export class Reserve {
   createdDate: string;
   dueDate: string;
 
-  constructor(idLot: number, idClient: number) {
+  constructor(idLot: number, idClient: number, dueDate: string) {
     this.lotId = idLot;
     this.clientId = idClient;
+    this.dueDate = dueDate;
   }
 }

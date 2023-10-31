@@ -41,6 +41,10 @@ export class ReserveDialogComponent implements OnInit {
         Validators.required,
         Validators.minLength(3),
         this.clientValidator.bind(this)
+      ]),
+      dueDate: new FormControl(new Date(), [
+        Validators.required,
+        this.dueDateValidator.bind(this)
       ])
     })
     await this.getClients();
@@ -50,7 +54,9 @@ export class ReserveDialogComponent implements OnInit {
     return this.newReserveForm.get('client');
   }
 
-
+  get dueDate() {
+    return this.newReserveForm.get('dueDate');
+  }
   onNoClick(): void {
     this.dialogReserve.close();
   }
@@ -94,7 +100,7 @@ export class ReserveDialogComponent implements OnInit {
     });
   }
 
-  getErrorMessage() {
+  getClientErrorMessage() {
     if (this.client.hasError('required')) {
       return 'Debe ingresar un cliente';
     }
@@ -102,6 +108,13 @@ export class ReserveDialogComponent implements OnInit {
       return 'Debe seleccionar un cliente válido';
     }
     return this.client.hasError('minlength') ? 'Escriba al menos 3 letras' : '';
+  }
+
+  getDueDateErrorMessage() {
+    if (this.dueDate.hasError('required')) {
+      return 'Debe ingresar un vencimiento';
+    }
+    return this.dueDate.hasError('invalidDueDate') ? 'El vencimiento no puede ser anterior a hoy' : '';
   }
 
   clientValidator(control: FormControl) {
@@ -112,8 +125,16 @@ export class ReserveDialogComponent implements OnInit {
     return null;
   }
 
+  dueDateValidator(control: FormControl) {
+    const dueDate = control.value;
+    if (dueDate < new Date().setHours(0,0,0, 0)) {
+      return {invalidDueDate: true};
+    }
+    return null;
+  }
+
   async reserve() {
-    const reserve = new Reserve(this.lot.id, this.client.value.id);
+    const reserve = new Reserve(this.lot.id, this.client.value.id, this.dueDate.value);
     reserve.user = this.authService.getLoggedUser();
     await this.createReserve(reserve)
 

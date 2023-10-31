@@ -24,6 +24,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {LotsApi} from "../../../backend/api/lots-api.service";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 describe('LotDetailComponent', () => {
   let component: LotDetailComponent;
@@ -49,7 +51,9 @@ describe('LotDetailComponent', () => {
         MatAutocompleteModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule
 
       ],
       providers: [

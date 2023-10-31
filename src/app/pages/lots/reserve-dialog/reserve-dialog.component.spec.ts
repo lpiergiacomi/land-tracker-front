@@ -18,6 +18,8 @@ import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {User} from "../../../backend/model/user";
 import {Lot} from "../../../backend/model/lot";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 describe('ReserveDialogComponent', () => {
   let component: ReserveDialogComponent;
@@ -36,7 +38,9 @@ describe('ReserveDialogComponent', () => {
         MatAutocompleteModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule
       ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
