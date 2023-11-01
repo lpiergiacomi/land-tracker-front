@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FileUploadService} from "../../backend/services/file-upload.service";
 import {ToastrService} from "ngx-toastr";
 import {FileInfo} from "../../backend/model/FileInfo";
+import {Lot} from "../../backend/model/lot";
 
 @Component({
   selector: 'app-upload-images',
   templateUrl: './upload-images.component.html',
   styleUrls: ['./upload-images.component.css']
 })
-export class UploadImagesComponent implements OnInit{
-  currentFile?: File;
+export class UploadImagesComponent implements OnInit {
+  @Input() lot: Lot;
 
+  currentFile?: File;
   fileName = 'Seleccione archivo';
   fileInfos?: FileInfo[];
 
@@ -36,7 +38,7 @@ export class UploadImagesComponent implements OnInit{
   async upload() {
     if (this.currentFile) {
       try {
-        await this.fileUploadService.upload(this.currentFile);
+        await this.fileUploadService.upload(this.currentFile, this.lot.id);
         this.fileInfos = await this.fileUploadService.getFiles()
         this.toastr.success(`Archivo subido correctamente`);
       } catch (error) {

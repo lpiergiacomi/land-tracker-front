@@ -9,9 +9,11 @@ export class FileUploadService {
 
   constructor(private api: FileUploadApi) { }
 
-  async upload(file: File) {
+  async upload(file: File, lotId: number) {
     const formData: FormData = new FormData();
     formData.append('file', file);
+    formData.append('lotId', lotId.toString());
+
     return await lastValueFrom(this.api.upload(formData));
   }
 
