@@ -32,7 +32,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { AdditionalInfoLotDialogComponent } from './additional-info-lot-dialog/additional-info-lot-dialog.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
-import { UploadImagesComponent } from '../upload-images/upload-images.component';
+import { UploadFilesComponent } from '../upload-files/upload-files.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatToolbarModule} from "@angular/material/toolbar";
 
@@ -52,7 +52,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     ReserveStatePipe,
     LotsAssignmentComponent,
     AdditionalInfoLotDialogComponent,
-    UploadImagesComponent
+    UploadFilesComponent
   ],
   imports: [
     CommonModule,

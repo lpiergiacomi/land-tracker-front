@@ -5,11 +5,11 @@ import {FileInfo} from "../../backend/model/FileInfo";
 import {Lot} from "../../backend/model/lot";
 
 @Component({
-  selector: 'app-upload-images',
-  templateUrl: './upload-images.component.html',
-  styleUrls: ['./upload-images.component.css']
+  selector: 'app-upload-files',
+  templateUrl: './upload-files.component.html',
+  styleUrls: ['./upload-files.component.css']
 })
-export class UploadImagesComponent implements OnInit {
+export class UploadFilesComponent implements OnInit {
   @Input() lot: Lot;
 
   currentFile?: File;
