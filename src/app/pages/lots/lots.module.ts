@@ -23,7 +23,7 @@ import {MatCardModule} from "@angular/material/card";
 import {LotListComponent} from './lot-list/lot-list.component';
 import {MatChipsModule} from "@angular/material/chips";
 import {MetersPipe} from "../../pipes/meters.pipe";
-import {SquareMetersPipe} from "../../pipes/metros-cuadrados.pipe";
+import {SquareMetersPipe} from "../../pipes/squate-meters.pipe";
 import {LotsAssignmentComponent} from "./lots-assignment/lots-assignment.component";
 import {TableModule} from "primeng/table";
 import {InputTextModule} from "primeng/inputtext";
@@ -35,6 +35,8 @@ import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
 import { UploadFilesComponent } from '../upload-files/upload-files.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {FormatFilleSizePipe} from "../../pipes/format-fille-size.pipe";
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     ReserveStatePipe,
     LotsAssignmentComponent,
     AdditionalInfoLotDialogComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    FormatFilleSizePipe
   ],
   imports: [
     CommonModule,
@@ -77,7 +80,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatNativeDateModule,
     MatTabsModule,
     MatGridListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-AR'},

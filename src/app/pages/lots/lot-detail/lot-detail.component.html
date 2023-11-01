@@ -49,7 +49,7 @@
 
   <mat-card-actions align="end" style="margin-top: 1.2rem">
     <div style="display:flex">
-      <button mat-stroked-button color="accent" (click)="openDialogMoreInfo()" style="margin-right: 1rem;">Información adicional</button>
+      <button *ngIf="hasAssigned()" mat-stroked-button color="accent" (click)="openDialogMoreInfo()" style="margin-right: 1rem;">Información adicional</button>
       <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
               (click)="reserve()">Reservar
       </button>

@@ -1,40 +1,82 @@
-<div>
-  <mat-form-field>
-    <div>
-      <mat-toolbar>
-        <input matInput [value]="selectedFileNames.length ? selectedFileNames.join(', ') : 'Seleccionar'" />
+<mat-card class="example-card" style="margin-top: 1rem">
+  <mat-card-header>
+    <mat-card-title>Subir archivos</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="selectedFileNames.length ? selectedFileNames.join(', ') : 'Seleccionar'"/>
+          <button
+            mat-flat-button
+            color="primary"
+            [disabled]="!selectedFiles"
+            (click)="uploadFiles()"
+          >
+            Subir
+          </button>
+        </mat-toolbar>
 
-        <button
-          mat-flat-button
-          color="primary"
-          [disabled]="!selectedFiles"
-          (click)="uploadFiles()"
-        >
-          Subir
-        </button>
-      </mat-toolbar>
-
-      <input
-        type="file"
-        id="fileInput"
-        multiple
-        (change)="selectFiles($event)"
-        name="fileInput"
-      />
-    </div>
-  </mat-form-field>
-</div>
-
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          (change)="selectFiles($event)"
+          name="fileInput"
+        />
+      </div>
+      <mat-hint>Máximo 2MB</mat-hint>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
 
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title>Lista de archivos</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let file of fileInfos">
-        <a (click)="downloadFile(file.id, file.type)">{{ file.name }}</a>
-      </mat-list-item>
-    </mat-list>
+    <p-table
+      [value]="fileInfos"
+      [paginator]="fileInfos?.length > 0"
+      [rows]="5"
+      styleClass="p-datatable-sm">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Tamaño</th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-fileInfo>
+        <tr>
+          <td>{{ fileInfo.name }}</td>
+          <td>{{ fileInfo.size | formatFileSize:false }}</td>
+          <td>
+            <div style="display:flex; align-items:center;">
+              <button mat-icon-button
+                      matTooltip="Descargar" (click)="downloadFile(fileInfo.id, fileInfo.type)"
+                      color="primary">
+                <mat-icon>download</mat-icon>
+              </button>
+              <button mat-icon-button
+                      matTooltip="Eliminar" (click)="deleteFile(fileInfo.id)"
+                      color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td style="text-align: center;" colspan="3">No hay archivos cargados.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </mat-card-content>
 </mat-card>
+
+<div *ngIf="isLoading" class="loading-spinner">
+  <mat-spinner diameter="32"></mat-spinner>
+</div>

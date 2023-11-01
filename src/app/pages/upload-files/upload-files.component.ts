@@ -12,10 +12,12 @@ import {Lot} from "../../backend/model/lot";
 export class UploadFilesComponent implements OnInit {
   @Input() lot: Lot;
 
-  fileName = 'Seleccione archivo';
+  fileName = 'Seleccionar';
   fileInfos?: FileInfo[];
   selectedFiles?: FileList;
   selectedFileNames: string[] = [];
+  isLoading = false;
+
   constructor(private fileUploadService: FileUploadService, public toastr: ToastrService) {
   }
 
@@ -41,19 +43,24 @@ export class UploadFilesComponent implements OnInit {
   uploadFiles(): void {
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
+        this.upload(this.selectedFiles[i]);
       }
     }
   }
 
-  async upload(idx: number, file: File) {
+  async upload(file: File) {
     if (file) {
       try {
+        this.isLoading = true;
         await this.fileUploadService.upload(file, this.lot.id);
         this.fileInfos = await this.fileUploadService.getFiles()
-        this.toastr.success(`Archivo subido correctamente`);
+        this.toastr.success(`Archivo ${file.name} subido correctamente`);
+        this.selectedFiles = null;
+        this.selectedFileNames = [];
+        this.isLoading = false;
       } catch (error) {
-        this.toastr.error(error?.error?.message);
+        this.toastr.error(error?.error?.message ?? `Ocurrió un error con el archivo ${file.name}`);
+        this.isLoading = false;
       }
     }
 
@@ -67,5 +74,9 @@ export class UploadFilesComponent implements OnInit {
     } catch (error) {
       this.toastr.error(error);
     }
+  }
+
+  deleteFile(id: string) {
+    console.log('delete', id);
   }
 }
