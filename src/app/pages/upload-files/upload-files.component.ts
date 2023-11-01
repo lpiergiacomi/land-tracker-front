@@ -12,10 +12,10 @@ import {Lot} from "../../backend/model/lot";
 export class UploadFilesComponent implements OnInit {
   @Input() lot: Lot;
 
-  currentFile?: File;
   fileName = 'Seleccione archivo';
   fileInfos?: FileInfo[];
-
+  selectedFiles?: FileList;
+  selectedFileNames: string[] = [];
   constructor(private fileUploadService: FileUploadService, public toastr: ToastrService) {
   }
 
@@ -23,27 +23,37 @@ export class UploadFilesComponent implements OnInit {
     this.fileInfos = await this.fileUploadService.getFiles();
   }
 
-  selectFile(event: any): void {
-    if (event.target.files && event.target.files[0]) {
-      const file: File = event.target.files[0];
-      this.currentFile = file;
-      this.fileName = this.currentFile.name;
-    } else {
-      this.fileName = 'Seleccione archivo';
+  selectFiles(event: any): void {
+    this.selectedFileNames = [];
+    this.selectedFiles = event.target.files;
+
+    if (this.selectedFiles && this.selectedFiles[0]) {
+      const numberOfFiles = this.selectedFiles.length;
+      for (let i = 0; i < numberOfFiles; i++) {
+        const reader = new FileReader();
+        reader.readAsDataURL(this.selectedFiles[i]);
+
+        this.selectedFileNames.push(this.selectedFiles[i].name);
+      }
     }
   }
 
+  uploadFiles(): void {
+    if (this.selectedFiles) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.upload(i, this.selectedFiles[i]);
+      }
+    }
+  }
 
-
-  async upload() {
-    if (this.currentFile) {
+  async upload(idx: number, file: File) {
+    if (file) {
       try {
-        await this.fileUploadService.upload(this.currentFile, this.lot.id);
+        await this.fileUploadService.upload(file, this.lot.id);
         this.fileInfos = await this.fileUploadService.getFiles()
         this.toastr.success(`Archivo subido correctamente`);
       } catch (error) {
-        this.currentFile = undefined;
-        this.toastr.error(error);
+        this.toastr.error(error?.error?.message);
       }
     }
 

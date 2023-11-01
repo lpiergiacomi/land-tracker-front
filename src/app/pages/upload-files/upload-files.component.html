@@ -2,13 +2,13 @@
   <mat-form-field>
     <div>
       <mat-toolbar>
-        <input matInput [value]="fileName" />
+        <input matInput [value]="selectedFileNames.length ? selectedFileNames.join(', ') : 'Seleccionar'" />
 
         <button
           mat-flat-button
           color="primary"
-          [disabled]="!currentFile"
-          (click)="upload()"
+          [disabled]="!selectedFiles"
+          (click)="uploadFiles()"
         >
           Subir
         </button>
@@ -17,7 +17,8 @@
       <input
         type="file"
         id="fileInput"
-        (change)="selectFile($event)"
+        multiple
+        (change)="selectFiles($event)"
         name="fileInput"
       />
     </div>
