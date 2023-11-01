@@ -32,6 +32,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { AdditionalInfoLotDialogComponent } from './additional-info-lot-dialog/additional-info-lot-dialog.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
+import { UploadImagesComponent } from '../upload-images/upload-images.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
     SquareMetersPipe,
     ReserveStatePipe,
     LotsAssignmentComponent,
-    AdditionalInfoLotDialogComponent
+    AdditionalInfoLotDialogComponent,
+    UploadImagesComponent
   ],
   imports: [
     CommonModule,
@@ -71,7 +75,9 @@ import {ReserveStatePipe} from "../../pipes/reserve-state.pipe";
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule,
+    MatToolbarModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
