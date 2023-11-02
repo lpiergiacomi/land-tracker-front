@@ -22,7 +22,7 @@ export class UploadFilesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.fileInfos = await this.fileUploadService.getFiles();
+    this.fileInfos = await this.fileUploadService.getFilesByLotId(this.lot.id);
   }
 
   selectFiles(event: any): void {
@@ -52,8 +52,8 @@ export class UploadFilesComponent implements OnInit {
     if (file) {
       try {
         this.isLoading = true;
-        await this.fileUploadService.upload(file, this.lot.id);
-        this.fileInfos = await this.fileUploadService.getFiles()
+        const fileInfo = await this.fileUploadService.upload(file, this.lot.id);
+        this.fileInfos.push(fileInfo);
         this.toastr.success(`Archivo ${file.name} subido correctamente`);
         this.selectedFiles = null;
         this.selectedFileNames = [];

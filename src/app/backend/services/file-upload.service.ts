@@ -25,4 +25,7 @@ export class FileUploadService {
     return await lastValueFrom(this.api.getFileById(id));
   }
 
+  async getFilesByLotId(lotId: number) {
+    return await lastValueFrom(this.api.getFilesByLotId(lotId));
+  }
 }

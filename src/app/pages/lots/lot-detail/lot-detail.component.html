@@ -53,7 +53,7 @@
       <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
               (click)="reserve()">Reservar
       </button>
-      <div *ngIf="!hasAssigned() && isAvailable()">
+      <div *ngIf="!hasAssigned()">
         <i class="fal fa-exclamation-circle" style="color: #ff5252; font-size: 18px;"></i>
         No tenés permisos para gestionar este lote
       </div>

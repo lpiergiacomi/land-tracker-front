@@ -20,4 +20,7 @@ export class FileUploadApi {
     return this.api.get(`${this.apiController}/${id}`, { responseType: 'blob'});
   }
 
+  getFilesByLotId(lotId: number) {
+    return this.api.get(`${this.apiController}/list/${lotId}`);
+  }
 }

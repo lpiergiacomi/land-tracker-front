@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>Información adicional de {{lot?.name}}</h1>
 <div mat-dialog-content>
+  <h1 mat-dialog-title>Información adicional de {{lot?.name}}</h1>
   <mat-tab-group>
     <mat-tab *ngIf="!lot.isAvailable()" label="Detalles reserva">
       <mat-card *ngIf="lot?.reserve">
