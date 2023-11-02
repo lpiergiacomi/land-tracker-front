@@ -60,10 +60,6 @@ export class LotDetailComponent implements OnInit{
     return this.selectedLot?.hasAssigned(this.assignedLots);
   }
 
-  isAvailable() {
-    return this.selectedLot?.isAvailable();
-  }
-
   openDialogMoreInfo() {
     this.matDialog.open(AdditionalInfoLotDialogComponent, {
       data: this.selectedLot,
