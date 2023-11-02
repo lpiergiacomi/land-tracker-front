@@ -5,6 +5,7 @@ import {ReserveDialogComponent} from "../reserve-dialog/reserve-dialog.component
 import {AuthService} from "../../../backend/services/auth.service";
 import {UserService} from "../../../backend/services/user.service";
 import {LotService} from "../../../backend/services/lot.service";
+import {AdditionalInfoLotDialogComponent} from "../additional-info-lot-dialog/additional-info-lot-dialog.component";
 
 @Component({
   selector: 'app-lot-detail',
@@ -21,7 +22,7 @@ export class LotDetailComponent implements OnInit{
   constructor(private authService: AuthService,
               private userService: UserService,
               public lotService: LotService,
-              public dialogReserve: MatDialog) {
+              public matDialog: MatDialog) {
     this.loggedUser = this.authService.getLoggedUser();
   }
 
@@ -31,7 +32,7 @@ export class LotDetailComponent implements OnInit{
   }
 
   reserve() {
-    const dialogReserve = this.dialogReserve.open(ReserveDialogComponent, {
+    const dialogReserve = this.matDialog.open(ReserveDialogComponent, {
       data: this.selectedLot,
     });
 
@@ -59,7 +60,10 @@ export class LotDetailComponent implements OnInit{
     return this.selectedLot?.hasAssigned(this.assignedLots);
   }
 
-  isAvailable() {
-    return this.selectedLot?.isAvailable();
+  openDialogMoreInfo() {
+    this.matDialog.open(AdditionalInfoLotDialogComponent, {
+      data: this.selectedLot,
+      width: '40rem'
+    });
   }
 }

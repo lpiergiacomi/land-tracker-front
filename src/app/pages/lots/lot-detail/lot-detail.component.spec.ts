@@ -13,7 +13,7 @@ import {UsersApi} from "../../../backend/api/users.api";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
 import {MetersPipe} from "../../../pipes/meters.pipe";
-import {SquareMetersPipe} from "../../../pipes/metros-cuadrados.pipe";
+import {SquareMetersPipe} from "../../../pipes/squate-meters.pipe";
 import {Lot} from "../../../backend/model/lot";
 import {ClientsApi} from "../../../backend/api/clients-api.service";
 import {ReservesApi} from "../../../backend/api/reserves-api.service";
@@ -24,6 +24,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {LotsApi} from "../../../backend/api/lots-api.service";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 describe('LotDetailComponent', () => {
   let component: LotDetailComponent;
@@ -49,7 +51,9 @@ describe('LotDetailComponent', () => {
         MatAutocompleteModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule
 
       ],
       providers: [
