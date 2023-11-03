@@ -23,4 +23,8 @@ export class FileUploadApi {
   getFilesByLotId(lotId: number) {
     return this.api.get(`${this.apiController}/list/${lotId}`);
   }
+
+  deleteFile(idFile: string) {
+    return this.api.delete(`${this.apiController}/${idFile}`);
+  }
 }

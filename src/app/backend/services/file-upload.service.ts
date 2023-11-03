@@ -28,4 +28,8 @@ export class FileUploadService {
   async getFilesByLotId(lotId: number) {
     return await lastValueFrom(this.api.getFilesByLotId(lotId));
   }
+
+  async deleteFile(fileId: string) {
+    return await lastValueFrom(this.api.deleteFile(fileId))
+  }
 }

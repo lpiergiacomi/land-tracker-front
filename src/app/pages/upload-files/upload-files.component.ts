@@ -3,6 +3,7 @@ import {FileUploadService} from "../../backend/services/file-upload.service";
 import {ToastrService} from "ngx-toastr";
 import {FileInfo} from "../../backend/model/FileInfo";
 import {Lot} from "../../backend/model/lot";
+import {Client} from "../../backend/model/client";
 
 @Component({
   selector: 'app-upload-files',
@@ -49,7 +50,7 @@ export class UploadFilesComponent implements OnInit {
   }
 
   async upload(file: File) {
-    if (file) {
+    if (file && file.size <= 2000000) {
       try {
         this.isLoading = true;
         const fileInfo = await this.fileUploadService.upload(file, this.lot.id);
@@ -59,11 +60,13 @@ export class UploadFilesComponent implements OnInit {
         this.selectedFileNames = [];
         this.isLoading = false;
       } catch (error) {
+        console.log(error)
         this.toastr.error(error?.error?.message ?? `Ocurrió un error con el archivo ${file.name}`);
         this.isLoading = false;
       }
+    } else {
+      this.toastr.error(`El archivo supera los 2MB`);
     }
-
   }
 
   async downloadFile(id: string, type: string) {
@@ -76,7 +79,15 @@ export class UploadFilesComponent implements OnInit {
     }
   }
 
-  deleteFile(id: string) {
-    console.log('delete', id);
+  async deleteFile(fileInfo: FileInfo) {
+    try {
+      await this.fileUploadService.deleteFile(fileInfo.id);
+      this.fileInfos = this.fileInfos.filter(c => c.id != fileInfo.id);
+      this.toastr.success(`El archivo ${fileInfo.name} fue eliminado correctamente`);
+      this.isLoading = false;
+    } catch (error) {
+      console.error(error);
+      this.toastr.error(error.error.message ?? `Ocurrió un error al intentar eliminar el archivo ${fileInfo.name}`);
+    }
   }
 }
