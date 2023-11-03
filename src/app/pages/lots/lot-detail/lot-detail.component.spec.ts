@@ -26,6 +26,7 @@ import {MatInputModule} from "@angular/material/input";
 import {LotsApi} from "../../../backend/api/lots-api.service";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {lot1} from "../../../backend/services/httpClientSpy";
 
 describe('LotDetailComponent', () => {
   let component: LotDetailComponent;
@@ -93,18 +94,13 @@ describe('LotDetailComponent', () => {
     const dialogReserveButton = fixtureReserve.debugElement.nativeElement.querySelector(`[data-testid="btnReserveInDialog"]`);
     const chipStateLot = getByTestId('chipStateLot');
 
-    // Creo el lote
-    const lot = new Lot();
-    lot.id = 1;
-    lot.state = 'DISPONIBLE';
-    component.selectedLot = lot;
+    component.selectedLot = lot1;
 
     // Mockeo que el hasAssigned de lot me devuelva true
-    spyOn(lot, 'hasAssigned').and.returnValue(true)
+    spyOn(lot1, 'hasAssigned').and.returnValue(true)
     fixture.detectChanges();
 
-    lot.state = 'RESERVADO';
-    spyOn(component.lotService, 'getLotById').withArgs(1).and.returnValue(Promise.resolve(lot))
+    lot1.state = 'RESERVADO';
 
     // Clickeo el botón "Reservar" del detalle del lote
     const reserveInLotDetailButton: HTMLElement = getByTestId('btnReserveInLotDetail');

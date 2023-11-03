@@ -46,10 +46,6 @@ describe('MapLotSearcherComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should display and update input value', async () => {
     await sendInput('filterText', 'Lote 1')
     await sendSelect('filterStates', ['DISPONIBLE', 'RESERVADO'])

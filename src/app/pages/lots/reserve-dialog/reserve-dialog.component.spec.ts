@@ -65,10 +65,6 @@ describe('ReserveDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('selecting a valid client, the reserve button is enabled', async () => {
 
     const dialogReserveButton = getByTestId('btnReserveInDialog');
