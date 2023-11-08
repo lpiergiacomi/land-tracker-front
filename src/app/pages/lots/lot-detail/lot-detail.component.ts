@@ -6,6 +6,7 @@ import {AuthService} from "../../../backend/services/auth.service";
 import {UserService} from "../../../backend/services/user.service";
 import {LotService} from "../../../backend/services/lot.service";
 import {AdditionalInfoLotDialogComponent} from "../additional-info-lot-dialog/additional-info-lot-dialog.component";
+import {NewPaymentDialogComponent} from "../new-payment-dialog/new-payment-dialog.component";
 
 @Component({
   selector: 'app-lot-detail',
@@ -64,6 +65,25 @@ export class LotDetailComponent implements OnInit{
     this.matDialog.open(AdditionalInfoLotDialogComponent, {
       data: this.selectedLot,
       width: '40rem'
+    });
+  }
+
+  canAddPayment() {
+    return this.selectedLot?.canAddPayment(this.assignedLots);
+  }
+
+  addPayment() {
+    const dialogNewPayment = this.matDialog.open(NewPaymentDialogComponent, {
+      data: this.selectedLot,
+      width: '30rem'
+    });
+
+    dialogNewPayment.afterClosed().subscribe(async payment => {
+      if (payment) {
+        console.log(payment);
+        // TODO: Ver que hacer, quizas haya que cambiar el estado a Vendido
+        //this.reservedLotEvent.emit(await this.lotService.getLotById(this.selectedLot.id));
+      }
     });
   }
 }

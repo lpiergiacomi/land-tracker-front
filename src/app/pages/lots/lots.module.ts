@@ -37,6 +37,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {FormatFilleSizePipe} from "../../pipes/format-fille-size.pipe";
+import { NewPaymentDialogComponent } from './new-payment-dialog/new-payment-dialog.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {FormatFilleSizePipe} from "../../pipes/format-fille-size.pipe";
     LotsAssignmentComponent,
     AdditionalInfoLotDialogComponent,
     UploadFilesComponent,
-    FormatFilleSizePipe
+    FormatFilleSizePipe,
+    NewPaymentDialogComponent
   ],
   imports: [
     CommonModule,

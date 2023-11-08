@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Añadir pago a {{lot?.name}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="newPaymentForm" class="divForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Monto</mat-label>
+      <input matInput type="number" min="1" formControlName="amount">
+      <mat-error *ngIf="this.amount.hasError('required')">Debe ingresar un monto</mat-error>
+      <mat-error *ngIf="this.amount.hasError('min')">Debe ingresar un monto válido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Comprobante</mat-label>
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="fileName"/>
+        </mat-toolbar>
+
+        <input
+          type="file"
+          id="fileInput"
+          (change)="selectFile($event)"
+          name="fileInput"
+        />
+      </div>
+      <mat-hint>Máximo 2MB</mat-hint>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button data-testid="btnReserveInDialog" mat-button color="primary" [disabled]="newPaymentForm.invalid" (click)="addPayment()">Añadir pago</button>
+</div>
