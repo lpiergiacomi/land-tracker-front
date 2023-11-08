@@ -33,6 +33,13 @@ export class Lot {
     return this.state == 'DISPONIBLE';
   }
 
+  public isReserved() {
+    return this.state == 'RESERVADO';
+  }
+
+  canAddPayment(assignedLots: any[]) {
+    return this.isReserved() && this.hasAssigned(assignedLots);
+  }
 }
 
 export class LotParams {

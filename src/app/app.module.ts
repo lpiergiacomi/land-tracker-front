@@ -25,6 +25,8 @@ import {UserService} from "./backend/services/user.service";
 import {UsersApi} from "./backend/api/users.api";
 import {FileUploadService} from "./backend/services/file-upload.service";
 import {FileUploadApi} from "./backend/api/file-upload-api.service";
+import {PaymentService} from "./backend/services/payment.service";
+import {PaymentsApi} from "./backend/api/payments-api.service";
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import {FileUploadApi} from "./backend/api/file-upload-api.service";
     UsersApi,
     FileUploadService,
     FileUploadApi,
+    PaymentService,
+    PaymentsApi,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   exports: [
