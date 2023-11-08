@@ -40,6 +40,15 @@ export class Lot {
   canAddPayment(assignedLots: any[]) {
     return this.isReserved() && this.hasAssigned(assignedLots);
   }
+
+  public getStateColor() {
+    let color = 0x28a745;
+    if (this?.state == 'RESERVADO')
+      color = 0xffc107;
+    if (this?.state == 'VENDIDO')
+      color = 0xdc3545;
+    return color;
+  }
 }
 
 export class LotParams {

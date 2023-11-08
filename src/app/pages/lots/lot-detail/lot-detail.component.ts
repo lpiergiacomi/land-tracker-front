@@ -80,9 +80,7 @@ export class LotDetailComponent implements OnInit{
 
     dialogNewPayment.afterClosed().subscribe(async payment => {
       if (payment) {
-        console.log(payment);
-        // TODO: Ver que hacer, quizas haya que cambiar el estado a Vendido
-        //this.reservedLotEvent.emit(await this.lotService.getLotById(this.selectedLot.id));
+        this.reservedLotEvent.emit(await this.lotService.getLotById(this.selectedLot.id));
       }
     });
   }

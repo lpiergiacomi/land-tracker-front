@@ -145,7 +145,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       depthTest: false,
       depthWrite: false,
       sizeAttenuation: false,
-      color: this.setColorObject(lot)
+      color: lot.getStateColor()
     })
     const annotationSprite = new THREE.Sprite(annotationSpriteMaterial)
     annotationSprite.scale.set(0.0115, 0.0115, 0.0115)
@@ -271,16 +271,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     return raycaster.intersectObjects(this.annotationMarkers.filter(marker => marker.visible));
   }
 
-  private setColorObject(lot) {
-    let color = 0x28a745;
-    if (lot.state == 'RESERVADO')
-      color = 0xffc107;
-    if (lot.state == 'VENDIDO')
-      color = 0xdc3545;
-    return color;
-  }
-
-
   onWindowResize = () => {
     this.width = this.cardContainer.offsetWidth - 15;
     this.camera.aspect = this.getAspectRatio();
@@ -314,12 +304,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeStateLotToReserved(lot: Lot) {
+  changeStateLot(lot: Lot) {
+    console.log(lot)
     this.selectedLot = lot;
-    this.lots.find(l => l.id == lot.id).state = 'RESERVADO';
-    this.originalLots.find(l => l.id == lot.id).state = 'RESERVADO';
+    this.lots.find(l => l.id == lot.id).state = lot.state;
+    this.originalLots.find(l => l.id == lot.id).state = lot.state;
     const marker = this.annotationMarkers.find(marker => marker.userData['id'] == lot.id)
-    marker.material.color = new Color(0xffc107);
+    marker.material.color = new Color(lot.getStateColor());
   }
 }
 
