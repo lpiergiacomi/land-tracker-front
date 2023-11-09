@@ -7,6 +7,8 @@
         <input matInput type="number" min="1" formControlName="amount">
         <mat-error *ngIf="this.amount.hasError('required')">Debe ingresar un monto</mat-error>
         <mat-error *ngIf="this.amount.hasError('min')">Debe ingresar un monto válido</mat-error>
+        <mat-error *ngIf="this.amount.hasError('max')">Estás superando el saldo pendiente</mat-error>
+        <mat-hint>Saldo pendiente: {{ this.getBalance() | currency }}</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -19,7 +21,7 @@
     </div>
 
 
-    <mat-form-field>
+    <mat-form-field style="margin-top: 1.5rem;">
       <mat-label>Comprobante</mat-label>
       <div>
         <mat-toolbar>

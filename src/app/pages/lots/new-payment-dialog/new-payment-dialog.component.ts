@@ -33,8 +33,8 @@ export class NewPaymentDialogComponent implements OnInit {
     this.newPaymentForm = new FormGroup({
       amount: new FormControl(0, [
         Validators.required,
-        Validators.min(1)
-        //TODO: El maximo deberia ser lo que resta pagar
+        Validators.min(1),
+        Validators.max(this.getBalance())
       ]),
       reason: new FormControl('', [
         Validators.required
@@ -88,5 +88,13 @@ export class NewPaymentDialogComponent implements OnInit {
     } else {
       this.fileName = 'Seleccionar';
     }
+  }
+
+  getBalance() {
+    return this.lot.price - this.getTotalPaymentsAmount();
+  }
+
+  getTotalPaymentsAmount() {
+    return this.lot.payments.reduce((total, payment) => total + payment.amount, 0);
   }
 }

@@ -1,4 +1,5 @@
 import {Reserve} from "./reserve";
+import {Payment} from "./payment";
 
 export class Lot {
 
@@ -17,6 +18,7 @@ export class Lot {
   hasWater: boolean;
   price: number;
   reserve: Reserve;
+  payments: Payment[];
 
   constructor() {
   }

@@ -1,0 +1,23 @@
+.linkToDownload {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #9898ff;
+}
+
+.card-header {
+  display: flex;
+}
+
+.card-title-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+
+.card-title-item {
+  margin-right: 8px;
+}
+
+

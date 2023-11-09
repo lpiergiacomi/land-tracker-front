@@ -9,17 +9,11 @@ import {PaymentService} from "../../../backend/services/payment.service";
   templateUrl: './additional-info-lot-dialog.component.html',
   styleUrls: ['./additional-info-lot-dialog.component.css']
 })
-export class AdditionalInfoLotDialogComponent implements OnInit{
-  payments?: Payment[];
+export class AdditionalInfoLotDialogComponent {
 
   constructor(
     public dialog: MatDialogRef<AdditionalInfoLotDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public lot: Lot,
-    private paymentService: PaymentService) {  }
-
-  async ngOnInit() {
-    this.payments = await this.paymentService.getPaymentsByLotId(this.lot.id);
-  }
+    @Inject(MAT_DIALOG_DATA) public lot: Lot) {  }
 
   closeDialog() {
     this.dialog.close();

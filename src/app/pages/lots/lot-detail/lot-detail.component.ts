@@ -64,7 +64,7 @@ export class LotDetailComponent implements OnInit{
   openDialogMoreInfo() {
     this.matDialog.open(AdditionalInfoLotDialogComponent, {
       data: this.selectedLot,
-      width: '40rem'
+      width: '60rem'
     });
   }
 

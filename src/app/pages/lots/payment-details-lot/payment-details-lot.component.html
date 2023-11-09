@@ -1,21 +1,42 @@
-<mat-card style="border: solid; border-radius: 1rem; background-color: #69696961; margin-top:1rem;">
-  <mat-card-header>
-    <mat-card-title>
-      <span style="font-size: 20px;font-weight: 500;">
-        {{ payment.createdDate | date: 'dd/MM/yyyy' }}
-      </span>
-    </mat-card-title>
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>Cliente: {{lot?.reserve?.clientName}}</mat-card-title>
+    <div class="card-title-container">
+      <span class="card-title-item" style="font-size: 20px;">Saldo pendiente: {{this.getBalance() | currency}}</span>
+    </div>
   </mat-card-header>
 
-  <mat-card-content>
-    <div style="display:flex; flex-direction: column">
-      <span>Cliente: {{payment.clientName}}</span>
-      <span>Usuario: {{payment.username}}</span>
-      <span>Motivo: {{payment.reason}}</span>
-      <span style="font-size: 20px;font-weight: 500;">{{ payment.amount | currency}}</span>
-    </div>
+
+  <mat-card-content style="padding-top: 1.5rem;">
+    <p-table
+      [value]="lot.payments"
+      [paginator]="lot.payments?.length > 0"
+      [rows]="5"
+      styleClass="p-datatable-sm">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="date">Fecha<p-sortIcon field="date"></p-sortIcon></th>
+          <th pSortableColumn="username">Usuario<p-sortIcon field="username"></p-sortIcon></th>
+          <th pSortableColumn="reason">Motivo<p-sortIcon field="reason"></p-sortIcon></th>
+          <th pSortableColumn="amount">Monto<p-sortIcon field="amount"></p-sortIcon></th>
+          <th>Comprobante</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-payment>
+        <tr>
+          <td>{{ payment.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ payment.username }}</td>
+          <td>{{ payment.reason }}</td>
+          <td>{{ payment.amount | currency }}</td>
+          <td><a *ngIf="payment.file" matTooltip="Descargar" class="linkToDownload" (click)="downloadFile(payment)">{{payment.file['name']}}</a></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td style="text-align: center;" colspan="5">No existen pagos.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </mat-card-content>
-  <mat-card-actions align="end">
-    <button *ngIf="payment.file" mat-stroked-button color="accent" (click)="downloadFile()">Comprobante</button>
-  </mat-card-actions>
 </mat-card>
