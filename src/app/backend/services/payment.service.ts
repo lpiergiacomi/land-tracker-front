@@ -15,10 +15,14 @@ export class PaymentService {
     const formData: FormData = new FormData();
     formData.append('file', payment.file);
     formData.append('lotId', payment.lotId.toString());
-    formData.append('userId', payment.user.id.toString());
+    formData.append('userId', payment.userId.toString());
     formData.append('amount', payment.amount.toString());
+    formData.append('reason', payment.reason.toString());
 
     return await lastValueFrom(this.api.createPayment(formData));
   }
 
+  async getPaymentsByLotId(lotId: number) {
+    return await lastValueFrom(this.api.getPaymentsByLotId(lotId));
+  }
 }

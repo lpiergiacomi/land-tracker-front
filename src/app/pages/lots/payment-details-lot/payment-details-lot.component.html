@@ -1,0 +1,21 @@
+<mat-card style="border: solid; border-radius: 1rem; background-color: #69696961; margin-top:1rem;">
+  <mat-card-header>
+    <mat-card-title>
+      <span style="font-size: 20px;font-weight: 500;">
+        {{ payment.createdDate | date: 'dd/MM/yyyy' }}
+      </span>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div style="display:flex; flex-direction: column">
+      <span>Cliente: {{payment.clientName}}</span>
+      <span>Usuario: {{payment.username}}</span>
+      <span>Motivo: {{payment.reason}}</span>
+      <span style="font-size: 20px;font-weight: 500;">{{ payment.amount | currency}}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button *ngIf="payment.file" mat-stroked-button color="accent" (click)="downloadFile()">Comprobante</button>
+  </mat-card-actions>
+</mat-card>

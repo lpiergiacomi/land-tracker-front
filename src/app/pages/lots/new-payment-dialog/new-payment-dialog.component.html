@@ -1,12 +1,23 @@
 <h1 mat-dialog-title>Añadir pago a {{lot?.name}}</h1>
 <div mat-dialog-content>
   <form [formGroup]="newPaymentForm" class="divForm">
-    <mat-form-field appearance="outline">
-      <mat-label>Monto</mat-label>
-      <input matInput type="number" min="1" formControlName="amount">
-      <mat-error *ngIf="this.amount.hasError('required')">Debe ingresar un monto</mat-error>
-      <mat-error *ngIf="this.amount.hasError('min')">Debe ingresar un monto válido</mat-error>
-    </mat-form-field>
+    <div style="display: flex; gap:10px">
+      <mat-form-field appearance="outline">
+        <mat-label>Monto</mat-label>
+        <input matInput type="number" min="1" formControlName="amount">
+        <mat-error *ngIf="this.amount.hasError('required')">Debe ingresar un monto</mat-error>
+        <mat-error *ngIf="this.amount.hasError('min')">Debe ingresar un monto válido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Motivo</mat-label>
+        <mat-select formControlName="reason" placeholder="Motivo">
+          <mat-option *ngFor="let reason of reasons" [value]="reason">{{reason}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.reason.hasError('required')">Debe indicar un motivo</mat-error>
+      </mat-form-field>
+    </div>
+
 
     <mat-form-field>
       <mat-label>Comprobante</mat-label>

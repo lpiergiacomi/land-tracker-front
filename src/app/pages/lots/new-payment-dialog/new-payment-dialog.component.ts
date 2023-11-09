@@ -17,7 +17,8 @@ export class NewPaymentDialogComponent implements OnInit {
   newPaymentForm!: FormGroup;
 
   currentFile?: File;
-  fileName = 'Seleccionar';
+  fileName: string = 'Seleccionar';
+  reasons: string[] = ['Adelanto', 'Reserva', 'Cuota', 'Otro'];
 
   constructor(
     public dialogNewPayment: MatDialogRef<NewPaymentDialogComponent>,
@@ -34,12 +35,19 @@ export class NewPaymentDialogComponent implements OnInit {
         Validators.required,
         Validators.min(1)
         //TODO: El maximo deberia ser lo que resta pagar
+      ]),
+      reason: new FormControl('', [
+        Validators.required
       ])
     })
   }
 
   get amount() {
     return this.newPaymentForm.get('amount');
+  }
+
+  get reason() {
+    return this.newPaymentForm.get('reason');
   }
 
   onNoClick(): void {
@@ -50,7 +58,7 @@ export class NewPaymentDialogComponent implements OnInit {
   async addPayment() {
     if (!this.currentFile || this.currentFile?.size <= 2000000) {
       const user = this.authService.getLoggedUser();
-      const payment = new Payment(this.lot.id, this.amount.value, this.currentFile, user);
+      const payment = new Payment(this.lot.id, this.amount.value, this.currentFile, user.id, this.reason.value);
       await this.createPayment(payment)
     }
     else {

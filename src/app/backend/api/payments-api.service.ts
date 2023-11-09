@@ -11,4 +11,8 @@ export class PaymentsApi {
   createPayment(formData: FormData) {
     return this.api.post(`${this.apiController}`, formData);
   }
+
+  getPaymentsByLotId(lotId: number) {
+    return this.api.get(`${this.apiController}/lot/${lotId}`)
+  }
 }
