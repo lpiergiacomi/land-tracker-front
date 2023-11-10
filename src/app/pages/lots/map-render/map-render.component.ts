@@ -15,7 +15,6 @@ import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping, Color} from "three";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
 
 @Component({
   selector: 'app-map-render',
@@ -180,13 +179,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         this.scene.add(gltf.scene);
       }
     );
-
-    new RGBELoader()
-      .load("assets/env.hdr", (texture) => {
-        texture.mapping = EquirectangularReflectionMapping;
-        this.scene.background = texture;
-        this.scene.environment = texture;
-      })
+    this.scene.background = new THREE.Color('#000000')
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 0.6;
   }
