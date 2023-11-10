@@ -118,7 +118,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       this.nearClippingPane,
       this.farClippingPane
     );
-    this.camera.position.set(25, 896, 858);
+    this.camera.position.set(25, 896, 1858);
   }
 
   private createScene() {
