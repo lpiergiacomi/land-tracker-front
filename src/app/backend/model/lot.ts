@@ -1,4 +1,5 @@
 import {Reserve} from "./reserve";
+import {Payment} from "./payment";
 
 export class Lot {
 
@@ -17,6 +18,7 @@ export class Lot {
   hasWater: boolean;
   price: number;
   reserve: Reserve;
+  payments: Payment[];
 
   constructor() {
   }
@@ -33,6 +35,22 @@ export class Lot {
     return this.state == 'DISPONIBLE';
   }
 
+  public isReserved() {
+    return this.state == 'RESERVADO';
+  }
+
+  canAddPayment(assignedLots: any[]) {
+    return this.isReserved() && this.hasAssigned(assignedLots);
+  }
+
+  public getStateColor() {
+    let color = 0x28a745;
+    if (this?.state == 'RESERVADO')
+      color = 0xffc107;
+    if (this?.state == 'VENDIDO')
+      color = 0xdc3545;
+    return color;
+  }
 }
 
 export class LotParams {

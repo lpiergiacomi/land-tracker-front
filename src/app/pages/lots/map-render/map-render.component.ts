@@ -15,7 +15,6 @@ import TWEEN from '@tweenjs/tween.js'
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
 import {Vector3, ACESFilmicToneMapping, EquirectangularReflectionMapping, Color} from "three";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader';
 
 @Component({
   selector: 'app-map-render',
@@ -119,7 +118,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       this.nearClippingPane,
       this.farClippingPane
     );
-    this.camera.position.set(25, 896, 858);
+    this.camera.position.set(25, 896, 1858);
   }
 
   private createScene() {
@@ -145,7 +144,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
       depthTest: false,
       depthWrite: false,
       sizeAttenuation: false,
-      color: this.setColorObject(lot)
+      color: lot.getStateColor()
     })
     const annotationSprite = new THREE.Sprite(annotationSpriteMaterial)
     annotationSprite.scale.set(0.0115, 0.0115, 0.0115)
@@ -180,13 +179,7 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
         this.scene.add(gltf.scene);
       }
     );
-
-    new RGBELoader()
-      .load("assets/env.hdr", (texture) => {
-        texture.mapping = EquirectangularReflectionMapping;
-        this.scene.background = texture;
-        this.scene.environment = texture;
-      })
+    this.scene.background = new THREE.Color('#000000')
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 0.6;
   }
@@ -271,16 +264,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     return raycaster.intersectObjects(this.annotationMarkers.filter(marker => marker.visible));
   }
 
-  private setColorObject(lot) {
-    let color = 0x28a745;
-    if (lot.state == 'RESERVADO')
-      color = 0xffc107;
-    if (lot.state == 'VENDIDO')
-      color = 0xdc3545;
-    return color;
-  }
-
-
   onWindowResize = () => {
     this.width = this.cardContainer.offsetWidth - 15;
     this.camera.aspect = this.getAspectRatio();
@@ -314,12 +297,13 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeStateLotToReserved(lot: Lot) {
+  changeStateLot(lot: Lot) {
+    console.log(lot)
     this.selectedLot = lot;
-    this.lots.find(l => l.id == lot.id).state = 'RESERVADO';
-    this.originalLots.find(l => l.id == lot.id).state = 'RESERVADO';
+    this.lots.find(l => l.id == lot.id).state = lot.state;
+    this.originalLots.find(l => l.id == lot.id).state = lot.state;
     const marker = this.annotationMarkers.find(marker => marker.userData['id'] == lot.id)
-    marker.material.color = new Color(0xffc107);
+    marker.material.color = new Color(lot.getStateColor());
   }
 }
 

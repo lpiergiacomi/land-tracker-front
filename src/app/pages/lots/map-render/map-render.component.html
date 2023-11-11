@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="col-md-4" *ngIf="selectedLot">
-        <app-lot-detail (reservedLotEvent)="changeStateLotToReserved($event)"
+        <app-lot-detail (reservedLotEvent)="changeStateLot($event)"
                           [selectedLot]="selectedLot"></app-lot-detail>
       </div>
     </div>

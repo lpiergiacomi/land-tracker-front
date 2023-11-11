@@ -1,6 +1,8 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Lot} from "../../../backend/model/lot";
+import {Payment} from "../../../backend/model/payment";
+import {PaymentService} from "../../../backend/services/payment.service";
 
 @Component({
   selector: 'app-additional-info-lot-dialog',

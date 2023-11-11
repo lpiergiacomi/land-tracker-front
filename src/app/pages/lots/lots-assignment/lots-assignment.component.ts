@@ -37,7 +37,7 @@ export class LotsAssignmentComponent implements OnInit {
   }
 
   public async getLots() {
-    const params = new LotParams(null, null, null, ["DISPONIBLE"]);
+    const params = new LotParams(null, null, null, []);
     this.lots = await this.lotService.getFilteredLots(params);
     this.filteredLots = this.lots;
   }
