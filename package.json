@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@auth0/angular-jwt": "^5.1.2",
     "@danielblagy/three-mmi": "^1.0.0",
+    "chart.js": "^4.4.0",
     "ngx-toastr": "^17.0.2",
     "primeng": "^16.4.0",
     "rxjs": "~7.8.0",

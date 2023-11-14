@@ -17,6 +17,10 @@ const routes: Routes = [{
     {
       path: "reserves",
       loadChildren: () => import('./reserves/reserves.module').then(m => m.ReservesModule)
+    },
+    {
+      path: "charts",
+      loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule)
     }
   ]
 }

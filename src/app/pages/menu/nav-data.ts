@@ -27,4 +27,16 @@ export const navbarData: IMenuData[] = [
       }
     ]
   },
+  {
+    routeLink: 'charts',
+
+    icon: 'fal fa-chart-bar',
+    label: 'Gráficos',
+    items: [
+      {
+        routeLink: 'charts/lots',
+        label: 'Gráficos de lotes',
+      }
+    ]
+  },
 ];
