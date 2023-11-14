@@ -1,1 +1,8 @@
-<app-bar-chart></app-bar-chart>
+<mat-expansion-panel style="width: 30rem" [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Estados de lote
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <app-pie-chart [chartId]="'lotStates'" [data]="data"></app-pie-chart>
+</mat-expansion-panel>
