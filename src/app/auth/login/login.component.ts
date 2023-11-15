@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit{
       const response = await this.authService.login(usuario);
       localStorage.setItem('user_id', response.body['user-id']);
       this.authService.setLoggedUser(response.body['access-token'] || '');
-      await this.router.navigate(['/pages/lots/map']);
+      await this.router.navigate(['/pages/home/dashboard']);
     } catch (error) {
       this.toastr.error(error?.error?.message ?? 'Ocurrió un error');
     }
