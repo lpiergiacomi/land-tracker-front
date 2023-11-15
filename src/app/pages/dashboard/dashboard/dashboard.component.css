@@ -1,0 +1,11 @@
+.dashboard-container-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.dashboard-container-charts {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}

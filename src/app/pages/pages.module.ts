@@ -13,7 +13,6 @@ import {MatIconModule} from "@angular/material/icon";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {OverlayModule} from "@angular/cdk/overlay";
 import {CdkMenuModule} from "@angular/cdk/menu";
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +21,9 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
     HeaderComponent,
     MenuComponent,
     SublevelMenuComponent,
-    PageNotFoundComponent,
-    PieChartComponent
+    PageNotFoundComponent
   ],
-  exports: [
-    PieChartComponent
-  ],
+  exports: [],
   imports: [
     CommonModule,
     PagesRoutingModule,

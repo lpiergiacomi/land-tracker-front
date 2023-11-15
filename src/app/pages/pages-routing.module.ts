@@ -7,6 +7,10 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: "home",
+      loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    },
+    {
       path: "lots",
       loadChildren: () => import('./lots/lots.module').then(m => m.LotsModule)
     },
@@ -17,10 +21,6 @@ const routes: Routes = [{
     {
       path: "reserves",
       loadChildren: () => import('./reserves/reserves.module').then(m => m.ReservesModule)
-    },
-    {
-      path: "charts",
-      loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule)
     }
   ]
 }

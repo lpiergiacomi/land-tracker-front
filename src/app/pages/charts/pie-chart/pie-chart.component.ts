@@ -27,7 +27,16 @@ export class PieChartComponent implements OnChanges {
     this.chart = new Chart(this.chartId, {
       type: 'pie',
       data: this.data,
-
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: '#ffffff'
+            }
+          }
+        }
+      }
     });
   }
 }
