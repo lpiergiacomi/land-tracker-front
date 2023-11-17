@@ -11,6 +11,8 @@ export class PieChartComponent implements OnChanges {
 
   @Input()
   public data: any;
+
+  // TODO: Sacar chartId y poner un ViewChild como esta en bar-chart-component
   @Input()
   public chartId: any
 

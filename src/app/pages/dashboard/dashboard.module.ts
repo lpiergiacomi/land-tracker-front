@@ -10,6 +10,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {ChartsModule} from "../charts/charts.module";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 @NgModule({
@@ -17,15 +19,17 @@ import { DashboardCardComponent } from './dashboard-card/dashboard-card.componen
     DashboardComponent,
     DashboardCardComponent
   ],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        MatCardModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        ChartsModule,
-        MatGridListModule,
-    ]
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    ChartsModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatTabsModule,
+  ]
 })
 export class DashboardModule { }

@@ -1,26 +1,35 @@
 <h1>Inicio</h1>
 
+<mat-card>
+  <mat-toolbar class="page-header">
+    <div class="tab-container">
+      <div class="tab" [class.active]="timeScale === 'day'" (click)="setDate('day')">Hoy</div>
+      <div class="tab" [class.active]="timeScale === 'week'" (click)="setDate('week')">Esta semana</div>
+      <div class="tab" [class.active]="timeScale === 'month'" (click)="setDate('month')">Este mes</div>
+      <div class="tab" [class.active]="timeScale === 'year'" (click)="setDate('year')">Este año</div>
+    </div>
+
+    <div>
+      <p>{{getToday() | date: 'dd/MM/yyyy'}}</p>
+    </div>
+  </mat-toolbar>
+</mat-card>
+
 <div class="dashboard-container-cards">
   <app-dashboard-card
-    style="flex: 0 0 calc(25% - 2rem); margin: 1rem"
-    backgroundColor="#17a2b8"
-    title="150"
-    content="Porcentaje vendidos"
-    iconClass="fal fa-filter"
+    *ngFor="let card of cards"
+    class="dashboard-card"
+    backgroundColor="{{card.color}}"
+    title="{{card.title}}"
+    content="{{card.content}}"
+    iconClass="{{card.icon}}"
     iconFontSize="3.5rem"
-  ></app-dashboard-card>
-
-  <app-dashboard-card
-    style="flex: 0 0 calc(25% - 2rem); margin: 1rem"
-    backgroundColor="#3b509b"
-    title="500"
-    content=".........."
-    iconClass="fal fa-home"
   ></app-dashboard-card>
 </div>
 
 
-<div class="dashboard-container-charts">
-  <app-chart-lots></app-chart-lots>
+<div class="dashboard-container-cards">
+  <app-chart-lots class="dashboard-card"></app-chart-lots>
+  <app-chart-payments [timeScale]="timeScale" class="dashboard-card"></app-chart-payments>
 
 </div>
