@@ -41,7 +41,11 @@ export class BarChartComponent implements AfterViewInit {
           },
           y: {
             ticks: {
-              color: '#ffffff'
+              color: '#ffffff',
+              callback: function(value, index, values) {
+                const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+                return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(numericValue)
+              }
             },
             grid: {
               color: 'rgba(255, 255, 255, 0.1)'
@@ -53,6 +57,21 @@ export class BarChartComponent implements AfterViewInit {
             position: 'top',
             labels: {
               color: '#ffffff'
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(context.parsed.y);
+                }
+                return label;
+              }
             }
           }
         }
