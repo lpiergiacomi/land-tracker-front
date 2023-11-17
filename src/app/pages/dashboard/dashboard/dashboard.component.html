@@ -19,6 +19,7 @@
   <app-dashboard-card
     *ngFor="let card of cards"
     class="dashboard-card"
+    [@fadeInOut]
     backgroundColor="{{card.color}}"
     title="{{card.title}}"
     content="{{card.content}}"
@@ -29,7 +30,7 @@
 
 
 <div class="dashboard-container-cards">
-  <app-chart-lots class="dashboard-card"></app-chart-lots>
-  <app-chart-payments [timeScale]="timeScale" class="dashboard-card"></app-chart-payments>
+  <app-chart-lots [@fadeInOut] class="dashboard-card"></app-chart-lots>
+  <app-chart-payments [@fadeInOut] [timeScale]="timeScale" class="dashboard-card2"></app-chart-payments>
 
 </div>

@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class DashboardCardComponent {
   @Input() backgroundColor: string = '#17a2b8';
-  @Input() title: string = '150';
-  @Input() content: string = 'New Orders';
-  @Input() iconClass: string = 'fal fa-filter';
+  @Input() title: string = '';
+  @Input() content: string = '';
+  @Input() iconClass: string = '';
   @Input() iconFontSize: string = '3.5rem';
 }
