@@ -13,7 +13,6 @@ export class BarChartComponent implements AfterViewInit {
 
   @ViewChild('chartCanvas') chartCanvas: ElementRef<HTMLCanvasElement>;
 
-
   public chart: any;
 
   ngAfterViewInit() {

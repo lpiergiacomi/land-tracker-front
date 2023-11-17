@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {LotService} from "../../../backend/services/lot.service";
+import {BarChartComponent} from "../bar-chart/bar-chart.component";
+import {PieChartComponent} from "../pie-chart/pie-chart.component";
 
 @Component({
   selector: 'app-chart-lots',
@@ -7,32 +9,47 @@ import {LotService} from "../../../backend/services/lot.service";
   styleUrls: ['./chart-lots.component.css']
 })
 
-export class ChartLotsComponent implements OnInit {
+export class ChartLotsComponent implements OnInit, OnChanges {
+  data: any;
+
   colorByState = {
     'DISPONIBLE': '#28a745',
     'RESERVADO': '#ffc107',
     'VENDIDO': '#dc3545'
   };
 
-  data: any;
+  @ViewChild(PieChartComponent) pieChart: PieChartComponent;
 
   constructor(private lotService: LotService) {
   }
 
-  async ngOnInit() {
-    const lotsQuantityByState = await this.lotService.getLotsQuantityByState();
-    const colors = lotsQuantityByState.map(lot => this.getLabelColor(lot.label));
+  ngOnInit() {
+    this.updateChartData();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.updateChartData();
+  }
+
+  private async updateChartData() {
+    this.data = await this.lotService.getLotsQuantityByState();
+
+    const colors = this.data.map(lot => this.getLabelColor(lot.label));
     this.data = {
-      labels: lotsQuantityByState.map(lot => lot.label),
+      labels: this.data.map(lot => lot.label),
       datasets: [{
         label: 'Lotes',
-        data: lotsQuantityByState.map(lot => lot.data),
+        data: this.data.map(lot => lot.data),
         backgroundColor: colors,
         hoverOffset: 4
       }]
     }
 
+    if (this.pieChart) {
+      this.pieChart.updateChartWithData(this.data);
+    }
   }
+
   public getLabelColor(state) {
     return this.colorByState[state];
   }

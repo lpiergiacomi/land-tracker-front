@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Chart} from "chart.js/auto";
 
 
@@ -7,26 +7,26 @@ import {Chart} from "chart.js/auto";
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.css']
 })
-export class PieChartComponent implements OnChanges {
+export class PieChartComponent implements AfterViewInit {
 
   @Input()
   public data: any;
 
-  // TODO: Sacar chartId y poner un ViewChild como esta en bar-chart-component
-  @Input()
-  public chartId: any
+  @ViewChild('chartCanvas') chartCanvas: ElementRef<HTMLCanvasElement>;
 
   public chart: any;
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['data'] && this.data) {
-      this.createChart();
-    }
+  ngAfterViewInit() {
+    this.createChart();
   }
 
   createChart(){
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    const ctx = this.chartCanvas?.nativeElement.getContext('2d');
 
-    this.chart = new Chart(this.chartId, {
+    this.chart = new Chart(ctx, {
       type: 'pie',
       data: this.data,
       options: {
@@ -40,5 +40,12 @@ export class PieChartComponent implements OnChanges {
         }
       }
     });
+  }
+
+  updateChartWithData(newData: any) {
+    if (this.chart) {
+      this.chart.data = newData;
+      this.chart.update();
+    }
   }
 }
