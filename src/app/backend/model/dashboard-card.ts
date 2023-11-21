@@ -1,20 +1,25 @@
 export class DashboardCard {
 
   cardsMappingInfo = {
-    lotes_reservados: {
+    reserved_lots: {
       content: "Lotes reservados",
       icon: "fal fa-money-check-edit",
       color: "rgb(225 181 48)",
     },
-    lotes_con_reserva_abonada: {
+    lots_with_reserve_paid: {
       content: "Lotes con reserva abonada",
       icon: "fal fa-check",
       color: "rgb(255 144 45)",
     },
-    lotes_vendidos: {
+    sold_lots: {
       content: "Lotes vendidos",
       icon: "fal fa-check-double",
       color: "rgb(255 64 64)",
+    },
+    expired_reservations: {
+      content: "Reservas vencidas",
+      icon: "fal fa-calendar-times",
+      color: "rgb(250,24,24)",
     }
   }
 
@@ -41,7 +46,7 @@ export class DashboardCard {
       week: 'esta semana',
       month: 'este mes',
       year: 'este año',
-    }[this.guid];
+    }[this.guid] || 'hoy';
 
     this.content = temporalScaleText ? `${defaultContent} ${temporalScaleText}` : defaultContent;
   }
