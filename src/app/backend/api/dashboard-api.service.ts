@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
+import {Observable, of} from "rxjs";
 
 @Injectable()
 export class DashboardApi {
@@ -17,4 +18,20 @@ export class DashboardApi {
   }
 
 
+  getEventsForCalendar(startDate: Date, endDate: Date) {
+    // TODO
+    return of([
+      {
+        title: 'Evento 1',
+        start: '2023-11-01',
+        color: 'rgb(255 64 64)',
+        textColor: 'white'
+      },
+      {
+        title: 'Evento 2',
+        start: '2023-11-10',
+        end: '2023-11-12'
+      }
+    ])
+  }
 }

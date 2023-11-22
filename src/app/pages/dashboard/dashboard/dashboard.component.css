@@ -1,7 +1,7 @@
 .dashboard-container-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .dashboard-card {
@@ -11,9 +11,14 @@
 
 .dashboard-card2 {
   flex: 0 0 calc(50% - 2rem);
-  margin: 1rem
+  margin: 1rem;
 }
-
+@media (min-width: 1400px) {
+  .dashboard-card2 {
+    width: calc(50% - 2rem);
+    margin: 1rem;
+  }
+}
 .page-header {
   display: flex;
   justify-content: space-between;

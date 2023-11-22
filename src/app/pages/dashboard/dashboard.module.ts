@@ -12,6 +12,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTabsModule} from "@angular/material/tabs";
+import {PagesModule} from "../pages.module";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatGridListModule,
     MatToolbarModule,
     MatTabsModule,
+    PagesModule,
   ]
 })
 export class DashboardModule { }
