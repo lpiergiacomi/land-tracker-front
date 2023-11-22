@@ -1,4 +1,4 @@
-.dashboard-container-cards {
+.dashboard-container-cards, .dashboard-container-charts {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -9,16 +9,48 @@
   margin: 1rem
 }
 
-.dashboard-card2 {
-  flex: 0 0 calc(50% - 2rem);
-  margin: 1rem;
-}
-@media (min-width: 1400px) {
-  .dashboard-card2 {
-    width: calc(50% - 2rem);
+
+
+@media all and (min-width: 1405px) {
+
+  .dashboard-chart, .dashboard-calendar {
+    flex: 0 0 calc(50% - 2rem);
     margin: 1rem;
   }
 }
+
+@media all and (min-width: 980px) and (max-width: 1405px) {
+  .dashboard-card {
+    flex: 0 0 calc(50% - 2rem);
+  }
+
+  .dashboard-chart, .dashboard-calendar {
+    flex: 0 0 calc(100% - 2rem);
+    margin: 1rem;
+  }
+}
+
+@media all and (min-width: 479px) and (max-width: 980px) {
+  .page-header {
+    flex-direction: column-reverse;
+  }
+
+  .tab-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-card {
+    flex: 0 0 calc(100% - 2rem);
+  }
+
+  .dashboard-chart, .dashboard-calendar {
+    flex: 0 0 calc(100% - 2rem);
+    margin: 1rem;
+  }
+}
+
+
 .page-header {
   display: flex;
   justify-content: space-between;

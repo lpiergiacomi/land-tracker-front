@@ -1,26 +1,24 @@
 <h1>Asignación de lotes</h1>
 
-<form [formGroup]="searchForm" style="margin-top: 30px;">
+<form [formGroup]="searchForm" class="form-container">
   <div class="content-container">
-    <mat-form-field appearance="outline" style="width: 20%;">
+    <mat-form-field appearance="outline">
       <mat-label>Seleccione un usuario</mat-label>
       <mat-select data-testid="userFilter" formControlName="userFilter" (selectionChange)="onSelectUser($event.value)" placeholder="Usuario">
         <mat-option *ngFor="let user of users" [value]="user">{{user.username}}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="userFilter.value">
-      <mat-form-field appearance="outline">
-        <mat-label>Manzana</mat-label>
-        <input data-testid="blockFilter" formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
-               class="form-control">
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Zona</mat-label>
-        <input data-testid="zoneFilter" formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
-               class="form-control">
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline" *ngIf="userFilter.value">
+      <mat-label>Manzana</mat-label>
+      <input data-testid="blockFilter" formControlName="blockFilter" matInput placeholder="Búsqueda de manzana" name="blockFilter"
+             class="form-control">
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="userFilter.value">
+      <mat-label>Zona</mat-label>
+      <input data-testid="zoneFilter" formControlName="zoneFilter" matInput placeholder="Búsqueda de zona" name="zoneFilter"
+             class="form-control">
+    </mat-form-field>
 
     <button data-testid="btnConfirm" *ngIf="userFilter.value !== ''" mat-raised-button color="primary" class="confirmBtn" (click)="confirm()">
       Confirmar
