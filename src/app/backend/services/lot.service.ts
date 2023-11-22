@@ -27,4 +27,8 @@ export class LotService {
   async updateAssignedLotsToUser(selectedUser: UserWithLot) {
     return await lastValueFrom(this.api.updateAssignedLotsToUser(selectedUser));
   }
+
+  async getLotsQuantityByState() {
+    return await lastValueFrom(this.api.getLotsQuantityByState())
+  }
 }

@@ -7,6 +7,10 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: "home",
+      loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    },
+    {
       path: "lots",
       loadChildren: () => import('./lots/lots.module').then(m => m.LotsModule)
     },

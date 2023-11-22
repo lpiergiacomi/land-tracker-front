@@ -35,4 +35,8 @@ export class LotsApi {
     Object.assign(lot, data);
     return lot;
   }
+
+  getLotsQuantityByState() {
+    return this.api.get(`${this.apiController}/lots-quantity-by-state`);
+  }
 }

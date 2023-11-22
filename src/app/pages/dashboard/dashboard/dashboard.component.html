@@ -1,0 +1,36 @@
+<h1>Inicio</h1>
+
+<mat-card>
+  <mat-toolbar class="page-header">
+    <div class="tab-container">
+      <div class="tab" [class.active]="timeScale === 'day'" (click)="setDate('day')">Hoy</div>
+      <div class="tab" [class.active]="timeScale === 'week'" (click)="setDate('week')">Esta semana</div>
+      <div class="tab" [class.active]="timeScale === 'month'" (click)="setDate('month')">Este mes</div>
+      <div class="tab" [class.active]="timeScale === 'year'" (click)="setDate('year')">Este año</div>
+    </div>
+
+    <div>
+      <p>{{getToday() | date: 'dd/MM/yyyy'}}</p>
+    </div>
+  </mat-toolbar>
+</mat-card>
+
+<div class="dashboard-container-cards">
+  <app-dashboard-card
+    *ngFor="let card of cards"
+    class="dashboard-card"
+    [@fadeInOut]
+    backgroundColor="{{card.color}}"
+    title="{{card.title}}"
+    content="{{card.content}}"
+    iconClass="{{card.icon}}"
+    iconFontSize="3.5rem"
+  ></app-dashboard-card>
+</div>
+
+
+<div class="dashboard-container-cards">
+  <!--<app-chart-lots [@fadeInOut] class="dashboard-card"></app-chart-lots>-->
+  <app-chart-payments [@fadeInOut] [timeScale]="timeScale" class="dashboard-card2"></app-chart-payments>
+
+</div>

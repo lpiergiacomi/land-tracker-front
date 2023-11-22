@@ -23,6 +23,7 @@ import {CdkMenuModule} from "@angular/cdk/menu";
     SublevelMenuComponent,
     PageNotFoundComponent
   ],
+  exports: [],
   imports: [
     CommonModule,
     PagesRoutingModule,
