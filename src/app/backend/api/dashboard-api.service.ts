@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {Observable, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
+import {HttpParams} from "@angular/common/http";
+import {Lot} from "../model/lot";
+import {CalendarEvent} from "../model/calendar-event";
 
 @Injectable()
 export class DashboardApi {
@@ -19,19 +22,15 @@ export class DashboardApi {
 
 
   getEventsForCalendar(startDate: Date, endDate: Date) {
-    // TODO
-    return of([
-      {
-        title: 'Evento 1',
-        start: '2023-11-01',
-        color: 'rgb(255 64 64)',
-        textColor: 'white'
-      },
-      {
-        title: 'Evento 2',
-        start: '2023-11-10',
-        end: '2023-11-12'
-      }
-    ])
+    const params = new HttpParams()
+      .set('startDate', startDate.toString())
+      .set('endDate', endDate.toString());
+    return this.api.get(`${this.apiController}/reserves-for-calendar`, {params}).pipe(
+      map(data => data.map(item => this.convertCalendarEvent(item)))
+    );
+  }
+
+  private convertCalendarEvent(data: any): CalendarEvent {
+    return new CalendarEvent(data.title, data.date, data.reserveId);
   }
 }
