@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {map, Observable, of} from "rxjs";
+import {map} from "rxjs";
 import {HttpParams} from "@angular/common/http";
-import {Lot} from "../model/lot";
 import {CalendarEvent} from "../model/calendar-event";
 
 @Injectable()
