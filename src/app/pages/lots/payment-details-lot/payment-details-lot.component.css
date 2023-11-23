@@ -17,7 +17,23 @@
 }
 
 .card-title-item {
-  margin-right: 8px;
+  font-size: 1.3rem;
 }
 
+.content-payments {
+  padding-top: 1.5rem;
+}
 
+.empty-message {
+  text-align: center !important;
+}
+
+@media screen and (max-width: 720px) {
+  mat-card-header {
+    flex-direction: column;
+  }
+
+  .card-title-container {
+    display: inline;
+  }
+}
