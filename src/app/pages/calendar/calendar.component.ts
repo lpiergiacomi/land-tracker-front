@@ -1,9 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CalendarOptions, EventApi} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {DashboardService} from "../../backend/services/dashboard.service";
 import esLocale from '@fullcalendar/core/locales/es';
+import {ReserveService} from "../../backend/services/reserve.service";
+import {ToastrService} from "ngx-toastr";
+import {FullCalendarComponent} from "@fullcalendar/angular";
 
 @Component({
   selector: 'app-calendar',
@@ -11,10 +14,13 @@ import esLocale from '@fullcalendar/core/locales/es';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
-  constructor(private dashboardService: DashboardService) {}
+  @ViewChild('fullCalendar') fullCalendar!: FullCalendarComponent;
+
+  constructor(private dashboardService: DashboardService,
+              private reserveService: ReserveService,
+              private toastr: ToastrService) {}
 
   handleDatesSet(arg: { start: Date; end: Date; }) {
-    console.log('cambia las fechas visibles')
     this.loadEvents(arg.start, arg.end);
   }
 
@@ -37,15 +43,15 @@ export class CalendarComponent {
   };
 
 
-  handleEventDrop(eventDropInfo: { event: EventApi }) {
-    // TODO
-    const updatedEvent = {
-      id: eventDropInfo.event.id,
-      start: eventDropInfo.event.start,
-      end: eventDropInfo.event.end,
-      allDay: eventDropInfo.event.allDay
-    };
-
-    console.log(updatedEvent)
-  };
+  async handleEventDrop(eventDropInfo: { event: EventApi }) {
+    try {
+      await this.reserveService.updateDueDate(eventDropInfo.event.extendedProps['reserveId'], eventDropInfo.event.start);
+      this.toastr.success(`Fecha de reserva actualizada correctamente`);
+    } catch (error) {
+      this.fullCalendar.getApi().destroy();
+      this.fullCalendar.getApi().render();
+      console.error(error);
+      this.toastr.error(error?.error?.message);
+    }
+  }
 }
