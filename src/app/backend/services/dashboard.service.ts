@@ -17,4 +17,8 @@ export class DashboardService {
   async getDashboardCardsInfo(timeScale: string) {
     return await lastValueFrom(this.api.getDashboardCardsInfo(timeScale))
   }
+
+  async getEventsForCalendar(startDate: Date, endDate: Date) {
+    return await lastValueFrom(this.api.getEventsForCalendar(startDate, endDate))
+  }
 }

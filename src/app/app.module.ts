@@ -29,6 +29,7 @@ import {PaymentService} from "./backend/services/payment.service";
 import {PaymentsApi} from "./backend/api/payments-api.service";
 import {DashboardService} from "./backend/services/dashboard.service";
 import {DashboardApi} from "./backend/api/dashboard-api.service";
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {DashboardApi} from "./backend/api/dashboard-api.service";
     MatInputModule,
     ReactiveFormsModule,
     AuthModule,
+    FullCalendarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

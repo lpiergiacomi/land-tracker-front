@@ -1,7 +1,6 @@
 <h1 mat-dialog-title>Crear cliente</h1>
-<div mat-dialog-content class="form-container">
-  <form [formGroup]="newClientForm">
-    <div class="divForm">
+<div mat-dialog-content class="dialog-container">
+  <form [formGroup]="newClientForm" class="form-container">
       <mat-form-field appearance="outline">
         <mat-label>Nombre de cliente</mat-label>
         <input matInput formControlName="clientName" required>
@@ -24,8 +23,6 @@
         <mat-error *ngIf="this.clientEmail.hasError('required')">Debe ingresar un email</mat-error>
         <mat-error *ngIf="this.clientEmail.hasError('email')">Debe ingresar un email válido</mat-error>
       </mat-form-field>
-    </div>
-    <div class="divForm">
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
         <input matInput type="tel" formControlName="clientPhone" required>
@@ -37,7 +34,6 @@
         <input matInput formControlName="clientAddress" required>
         <mat-error *ngIf="this.clientAddress.hasError('required')">Debe ingresar una dirección</mat-error>
       </mat-form-field>
-    </div>
 
   </form>
 </div>

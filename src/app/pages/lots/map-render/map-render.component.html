@@ -5,13 +5,13 @@
                        [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <i class="fal fa-map" style="padding-right: 5px;"></i>
+        <i class="fal fa-map icon"></i>
         Mapa de lotes
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <div class="container">
-      <div class="col-md-8 divRendererContainer">
+    <div class="content-container">
+      <div class="divRendererContainer">
         <div #rendererContainer>
           <div>
             <app-label-lot-number
@@ -26,7 +26,7 @@
 
         </div>
       </div>
-      <div class="col-md-4" *ngIf="selectedLot">
+      <div class="divLotDetailContainer" *ngIf="selectedLot">
         <app-lot-detail (reservedLotEvent)="changeStateLot($event)"
                           [selectedLot]="selectedLot"></app-lot-detail>
       </div>

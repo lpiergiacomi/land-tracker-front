@@ -4,14 +4,14 @@
     <mat-card-title>{{selectedLot?.name}}</mat-card-title>
     <mat-card-subtitle>Detalle del lote</mat-card-subtitle>
     <div class="chips-container">
-      <span class="chip-item" style="font-size: 20px;">{{selectedLot?.price | currency}}</span>
+      <span class="chip-item">{{selectedLot?.price | currency}}</span>
       <mat-chip data-testid="chipStateLot" class="chip-item" [ngStyle]="{'background-color': getColorState()}">
         {{selectedLot?.state}}
       </mat-chip>
     </div>
   </mat-card-header>
   <mat-card-content>
-    <div class="lot-details">
+    <div class="lot-detail-container">
       <div class="lot-detail-icon">
         <i class="icon fal fa-ruler-combined"></i>
         <span class="text-icon">{{selectedLot?.area | squareMeters }}</span>
@@ -35,29 +35,29 @@
         <span class="text-icon">Agua</span>
       </div>
     </div>
-    <div class="detail-row" style="margin-top: 1.2rem">
+    <div class="detail-row">
       <div class="detail-row-text">
-        <label>Cta catastral: </label>
+        <label>Catastral: </label>
         {{selectedLot?.cadastralAccNumber}}
       </div>
       <div class="detail-row-text">
-        <label>Cta municipal: </label>
+        <label>Municipal: </label>
         {{selectedLot?.municipalAccNumber}}
       </div>
     </div>
   </mat-card-content>
 
-  <mat-card-actions align="end" style="margin-top: 1.2rem">
-    <div style="display:flex">
-      <button *ngIf="hasAssigned()" mat-stroked-button color="accent" (click)="openDialogMoreInfo()" style="margin-right: 1rem;">Información adicional</button>
-      <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary"
+  <mat-card-actions>
+    <div class="actions-container">
+      <button *ngIf="hasAssigned()" mat-stroked-button color="accent" (click)="openDialogMoreInfo()">Información adicional</button>
+        <button data-testid="btnReserveInLotDetail" *ngIf="canReserve()" mat-raised-button color="primary" class="btn-reserve"
               (click)="reserve()">Reservar
       </button>
       <button *ngIf="canAddPayment()" mat-raised-button color="primary"
               (click)="addPayment()">Añadir pago
       </button>
-      <div *ngIf="!hasAssigned()">
-        <i class="fal fa-exclamation-circle" style="color: #ff5252; font-size: 18px;"></i>
+      <div *ngIf="!hasAssigned()" class="label-permissions">
+        <i class="fal fa-exclamation-circle label-permissions-icon"></i>
         No tenés permisos para gestionar este lote
       </div>
     </div>

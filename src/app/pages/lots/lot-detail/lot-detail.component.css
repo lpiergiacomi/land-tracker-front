@@ -15,6 +15,7 @@
 
 .card-header {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .chips-container {
@@ -26,62 +27,102 @@
 }
 
 .chip-item {
-  margin-right: 8px;
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
 }
 
 .example-header-image {
-    background-image: url('https://terraz.com.ar/Content/img/prototipos.jpg');
-    background-size: cover;
+  background-image: url('https://terraz.com.ar/Content/img/prototipos.jpg');
+  background-size: cover;
 }
 
-.mat-list {
-    padding: 0;
-    list-style: none;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.lot-details {
+.lot-detail-container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 1.2rem;
   flex-wrap: wrap;
-
-  .lot-detail-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .icon {
-      font-size: 2.5rem;
-    }
-
-    .text-icon {
-      font-size: 1.5rem;
-      margin-top: 0.5rem;
-    }
-  }
+  justify-content: space-evenly;
 }
 
-.detail {
+.lot-detail-icon {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem;
+  justify-content: center;
+}
+
+.lot-detail-icon * {
+  margin: 0.2rem;
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+.text-icon {
+  font-size: 1.5rem;
+}
+
+mat-card-content {
+  margin: 1rem;
+}
+
+mat-card-actions {
+  display: unset;
+}
+
+.actions-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.actions-container * {
+  flex: 0 0 calc(45% - 0.2rem);
+  margin: 0.2rem;
+}
+
+.btn-reserve {
+  flex: 0 0 calc(25% - 0.2rem) !important;
+}
+
+.label-permissions {
+  flex: 0 0 calc(100% - 0.2rem) !important;
+}
+
+.label-permissions-icon {
+  color: #ff5252;
+  font-size: 1.1rem;
 }
 
 .detail-row {
   display: flex;
-  justify-content: space-between;
   margin-top: 1rem;
-  font-size: 1.1rem;
-  flex-wrap: wrap;
 }
 
 .detail-row-text {
-  display: flex;
-  align-items: center;
+  flex: 0 0 50%;
+  font-size: 1.2rem;
 }
 
-label {
-  margin-right: 0.5rem;
+@media screen and (max-width: 980px) {
+  .actions-container * {
+    flex-direction: column;
+    align-items: normal;
+    flex: 0 0 100%;
+  }
 }
 
+@media screen and (max-width: 1400px) {
+
+  .actions-container * {
+    flex-direction: column;
+    align-items: normal;
+    flex: 0 0 100% !important;
+  }
+}
+
+@media screen and (max-width: 1720px) {
+
+  .chips-container {
+    justify-content: space-around;
+  }
+}
