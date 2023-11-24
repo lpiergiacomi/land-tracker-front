@@ -39,7 +39,8 @@ export class CalendarComponent {
     buttonText: {
       today: 'Hoy',
     },
-    datesSet: this.handleDatesSet.bind(this)
+    datesSet: this.handleDatesSet.bind(this),
+    eventContent: this.customEventContent.bind(this)
   };
 
 
@@ -53,5 +54,11 @@ export class CalendarComponent {
       console.error(error);
       this.toastr.error(error?.error?.message);
     }
+  }
+
+  customEventContent(arg) {
+    const eventTitle = arg.event.title;
+    const titleHtml = eventTitle.split('\n').join('<br>');
+    return { html: `<div>${titleHtml}</div>` };
   }
 }
