@@ -9,24 +9,14 @@
   margin: 1rem
 }
 
-
-
-@media all and (min-width: 1405px) {
-
-  .dashboard-chart, .dashboard-calendar {
-    flex: 0 0 calc(50% - 2rem);
-    margin: 1rem;
-  }
+.dashboard-chart, .dashboard-calendar {
+  flex: 0 0 calc(100% - 2rem);
+  margin: 1rem;
 }
 
 @media all and (min-width: 980px) and (max-width: 1405px) {
   .dashboard-card {
     flex: 0 0 calc(50% - 2rem);
-  }
-
-  .dashboard-chart, .dashboard-calendar {
-    flex: 0 0 calc(100% - 2rem);
-    margin: 1rem;
   }
 }
 
@@ -42,11 +32,6 @@
 
   .dashboard-card {
     flex: 0 0 calc(100% - 2rem);
-  }
-
-  .dashboard-chart, .dashboard-calendar {
-    flex: 0 0 calc(100% - 2rem);
-    margin: 1rem;
   }
 }
 

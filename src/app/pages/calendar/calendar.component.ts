@@ -7,6 +7,9 @@ import esLocale from '@fullcalendar/core/locales/es';
 import {ReserveService} from "../../backend/services/reserve.service";
 import {ToastrService} from "ngx-toastr";
 import {FullCalendarComponent} from "@fullcalendar/angular";
+import {MatDialog} from "@angular/material/dialog";
+import {LotService} from "../../backend/services/lot.service";
+import {ReserveDetailsDialogComponent} from "../lots/reserve-details-dialog/reserve-details-dialog.component";
 
 @Component({
   selector: 'app-calendar',
@@ -18,7 +21,9 @@ export class CalendarComponent {
 
   constructor(private dashboardService: DashboardService,
               private reserveService: ReserveService,
-              private toastr: ToastrService) {}
+              private lotService: LotService,
+              private toastr: ToastrService,
+              public matDialog: MatDialog) {}
 
   handleDatesSet(arg: { start: Date; end: Date; }) {
     this.loadEvents(arg.start, arg.end);
@@ -35,6 +40,7 @@ export class CalendarComponent {
     eventResizableFromStart: false,
     eventDurationEditable: false,
     eventDrop: this.handleEventDrop.bind(this),
+    eventClick: this.handleEventClick.bind(this),
     locale: esLocale,
     buttonText: {
       today: 'Hoy',
@@ -53,5 +59,17 @@ export class CalendarComponent {
       console.error(error);
       this.toastr.error(error?.error?.message);
     }
+  }
+
+  handleEventClick(eventClickInfo: { event: EventApi }) {
+    this.openDialogMoreInfo(eventClickInfo.event.extendedProps['lotId']);
+  }
+
+  async openDialogMoreInfo(lotId) {
+    const lot = await this.lotService.getLotById(lotId);
+    this.matDialog.open(ReserveDetailsDialogComponent, {
+      data: lot,
+      width: '40rem'
+    });
   }
 }

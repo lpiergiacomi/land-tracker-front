@@ -30,6 +30,6 @@ export class DashboardApi {
   }
 
   private convertCalendarEvent(data: any): CalendarEvent {
-    return new CalendarEvent(data.title, data.date, data.reserveId);
+    return new CalendarEvent(data.title, data.date, data.reserveId, data.lotId);
   }
 }

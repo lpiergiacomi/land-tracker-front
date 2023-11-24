@@ -1,0 +1,21 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.detail-row-text {
+  display: flex;
+  align-items: center;
+}
+
+label {
+  margin-right: 0.5rem;
+}

@@ -1,0 +1,30 @@
+<mat-card *ngIf="lot?.reserve">
+  <mat-card-content class="detail">
+    <div class="detail-row">
+      <div class="detail-row-text">
+        <label>Cliente: </label>
+        {{lot?.reserve?.clientName}}
+      </div>
+      <div class="detail-row-text">
+        <label>Usuario: </label>
+        {{lot?.reserve?.user?.username}}
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-text">
+        <label>Fecha creación: </label>
+        {{lot?.reserve?.createdDate | date: 'dd/MM/yyyy'}}
+      </div>
+      <div class="detail-row-text">
+        <label>Fecha vto: </label>
+        {{lot?.reserve?.dueDate | date: 'dd/MM/yyyy'}}
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-row-text">
+        <label>Estado: </label>
+        {{lot?.reserve?.state | reserveState}}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

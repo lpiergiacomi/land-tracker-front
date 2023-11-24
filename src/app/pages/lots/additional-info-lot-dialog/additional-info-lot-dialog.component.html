@@ -2,36 +2,7 @@
   <h1 mat-dialog-title>Información adicional de {{lot?.name}}</h1>
   <mat-tab-group>
     <mat-tab *ngIf="!lot.isAvailable()" label="Detalles reserva">
-      <mat-card *ngIf="lot?.reserve">
-        <mat-card-content class="detail">
-          <div class="detail-row">
-            <div class="detail-row-text">
-              <label>Cliente: </label>
-              {{lot?.reserve?.clientName}}
-            </div>
-            <div class="detail-row-text">
-              <label>Usuario: </label>
-              {{lot?.reserve?.user?.username}}
-            </div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-row-text">
-              <label>Fecha creación: </label>
-              {{lot?.reserve?.createdDate | date: 'dd/MM/yyyy'}}
-            </div>
-            <div class="detail-row-text">
-              <label>Fecha vto: </label>
-              {{lot?.reserve?.dueDate | date: 'dd/MM/yyyy'}}
-            </div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-row-text">
-              <label>Estado: </label>
-              {{lot?.reserve?.state | reserveState}}
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <app-reserve-details [lot]="lot"></app-reserve-details>
     </mat-tab>
     <mat-tab *ngIf="!lot.isAvailable()" label="Detalles pagos">
       <app-payment-details-lot style="padding-top:1rem;" [lot]="lot"></app-payment-details-lot>

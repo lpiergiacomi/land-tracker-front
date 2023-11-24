@@ -39,6 +39,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {FormatFilleSizePipe} from "../../pipes/format-fille-size.pipe";
 import { NewPaymentDialogComponent } from './new-payment-dialog/new-payment-dialog.component';
 import {PaymentDetailsLotComponent} from "./payment-details-lot/payment-details-lot.component";
+import { ReserveDetailsComponent } from './reserve-details/reserve-details.component';
+import { ReserveDetailsDialogComponent } from './reserve-details-dialog/reserve-details-dialog.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import {PaymentDetailsLotComponent} from "./payment-details-lot/payment-details-
     UploadFilesComponent,
     FormatFilleSizePipe,
     NewPaymentDialogComponent,
-    PaymentDetailsLotComponent
+    PaymentDetailsLotComponent,
+    ReserveDetailsComponent,
+    ReserveDetailsDialogComponent
   ],
   imports: [
     CommonModule,
