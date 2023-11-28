@@ -10,6 +10,7 @@ import {FullCalendarComponent} from "@fullcalendar/angular";
 import {MatDialog} from "@angular/material/dialog";
 import {LotService} from "../../backend/services/lot.service";
 import {ReserveDetailsDialogComponent} from "../lots/reserve-details-dialog/reserve-details-dialog.component";
+import {AuthService} from "../../backend/services/auth.service";
 
 @Component({
   selector: 'app-calendar',
@@ -22,6 +23,7 @@ export class CalendarComponent {
   constructor(private dashboardService: DashboardService,
               private reserveService: ReserveService,
               private lotService: LotService,
+              private authService: AuthService,
               private toastr: ToastrService,
               public matDialog: MatDialog) {}
 
@@ -30,7 +32,7 @@ export class CalendarComponent {
   }
 
   async loadEvents(startDate: Date, endDate: Date) {
-    this.calendarOptions.events = await this.dashboardService.getEventsForCalendar(startDate, endDate);
+    this.calendarOptions.events = await this.dashboardService.getEventsForCalendar(startDate, endDate, this.authService.getLoggedUser().id);
   }
 
   calendarOptions: CalendarOptions = {

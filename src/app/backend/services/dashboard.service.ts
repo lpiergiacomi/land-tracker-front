@@ -21,8 +21,8 @@ export class DashboardService {
     ));
   }
 
-  async getEventsForCalendar(startDate: Date, endDate: Date) {
-    return await lastValueFrom(this.api.getEventsForCalendar(startDate, endDate))
+  async getEventsForCalendar(startDate: Date, endDate: Date, userId: number) {
+    return await lastValueFrom(this.api.getEventsForCalendar(startDate, endDate, userId))
   }
 
   private convertToDashboardCard(item: any, timeScale: any): DashboardCard {
