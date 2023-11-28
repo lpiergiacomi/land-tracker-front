@@ -70,9 +70,14 @@ export class CalendarComponent {
 
   async openDialogMoreInfo(lotId) {
     const lot = await this.lotService.getLotById(lotId);
-    this.matDialog.open(ReserveDetailsDialogComponent, {
+    const dialog = this.matDialog.open(ReserveDetailsDialogComponent, {
       data: lot,
       width: '40rem'
+    });
+
+    dialog.afterClosed().subscribe(async () => {
+      this.fullCalendar.getApi().destroy();
+      this.fullCalendar.getApi().render();
     });
   }
 

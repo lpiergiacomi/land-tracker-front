@@ -17,7 +17,14 @@
       </div>
       <div class="detail-row-text">
         <label>Fecha vto: </label>
-        {{lot?.reserve?.dueDate | date: 'dd/MM/yyyy'}}
+        <mat-form-field>
+          <input matInput [matDatepicker]="dueDatePicker"
+                 [(ngModel)]="lotReserveDueDate" name="dueDate" (dateChange)="changeDueDate()">
+          <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #dueDatePicker>
+          </mat-datepicker>
+        </mat-form-field>
+
       </div>
     </div>
     <div class="detail-row">

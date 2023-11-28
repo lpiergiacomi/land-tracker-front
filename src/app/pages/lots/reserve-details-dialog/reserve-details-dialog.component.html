@@ -1,7 +1,8 @@
 <div mat-dialog-content>
   <h1 mat-dialog-title>Información adicional de reserva de {{lot?.name}}</h1>
-  <app-reserve-details [lot]="lot"></app-reserve-details>
+  <app-reserve-details (changeDueDateEvent)="changeDueDate($event)" [lot]="lot"></app-reserve-details>
 </div>
-<div mat-dialog-actions align="end">
-  <button mat-button (click)="closeDialog()">Cerrar</button>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button data-testid="btnReserveInDialog" mat-button color="primary" (click)="save()">Guardar</button>
 </div>
