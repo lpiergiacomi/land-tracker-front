@@ -23,13 +23,14 @@ export class DashboardCard {
     }
   }
 
-  constructor(guid: string, title: number) {
+  constructor(guid: string, title: number, timeScale: string) {
     const { content, icon, color } = this.cardsMappingInfo[guid];
     this.guid = guid;
     this.title = title;
     this.content = content;
     this.icon = icon;
     this.color = color;
+    this.timeScale = timeScale;
     this.initializeContent();
   }
 
@@ -38,6 +39,7 @@ export class DashboardCard {
   content: string;
   color: string;
   icon: string;
+  timeScale: string;
 
   private initializeContent() {
     const defaultContent = this.cardsMappingInfo[this.guid].content;
@@ -49,15 +51,16 @@ export class DashboardCard {
     }[this.guid] || 'hoy';
 
     this.content = temporalScaleText ? `${defaultContent} ${temporalScaleText}` : defaultContent;
+    return this.content;
   }
-  updateContentByTimeScale(timeScale: string) {
+  updateContentByTimeScale() {
     const defaultContent = this.cardsMappingInfo[this.guid].content;
     const scaleText = {
       day: 'hoy',
       week: 'esta semana',
       month: 'este mes',
       year: 'este año',
-    }[timeScale] || '';
+    }[this.timeScale] || '';
 
     this.content = scaleText ? `${defaultContent} ${scaleText}` : defaultContent;
   }

@@ -1,25 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {DashboardCard} from "../../../backend/model/dashboard-card";
 import {DashboardService} from "../../../backend/services/dashboard.service";
-import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('1000ms ease-out', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('1000ms ease-in', style({ opacity: 0 })),
-      ]),
-    ]),
-
-  ],
-
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit{
   cards: DashboardCard[] = [];
@@ -38,30 +24,38 @@ export class DashboardComponent implements OnInit{
 
   async setDate(timeScale: string) {
     this.timeScale = timeScale;
-    await this.updateDashboardCardsInfo();
+    await this.getDashboardCardsInfo();
   }
 
   private async getDashboardCardsInfo() {
-    const response = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
-    response.forEach(x => {
-      this.cards.push(new DashboardCard(x.guid, x.title))
-    })
-  }
+    const cardsInfo = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
 
-  private async updateDashboardCardsInfo() {
-    const response = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
+    cardsInfo.forEach((cardInfo, index) => {
+      const { guid, title } = cardInfo;
 
-    response.forEach((x, index) => {
-      const { guid, title } = x;
       const card = this.cards[index];
 
       if (card) {
         card.title = title;
-        card.updateContentByTimeScale(this.timeScale);
+        card.timeScale = this.timeScale;
+        card.updateContentByTimeScale();
       } else {
-        this.cards[index] = new DashboardCard(guid, title);
-        this.cards[index].updateContentByTimeScale(this.timeScale);
+        this.cards[index] = new DashboardCard(guid, title, this.timeScale);
+        this.cards[index].updateContentByTimeScale();
       }
     });
   }
+
+  private async updateDashboardCardsInfo() {
+    const cardsInfo = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
+
+    cardsInfo.forEach((cardInfo, index) => {
+      const card = this.cards[index];
+
+      card.title = cardInfo.title;
+      card.updateContentByTimeScale();
+
+    });
+  }
+
 }
