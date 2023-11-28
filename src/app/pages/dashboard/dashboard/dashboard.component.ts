@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit{
   private async getDashboardCardsInfo() {
     const cardsInfo = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
 
-    cardsInfo.forEach((cardInfo, index) => {
+    cardsInfo.map((cardInfo, index) => {
       const { guid, title } = cardInfo;
 
       const card = this.cards[index];
@@ -45,17 +45,4 @@ export class DashboardComponent implements OnInit{
       }
     });
   }
-
-  private async updateDashboardCardsInfo() {
-    const cardsInfo = await this.dashboardService.getDashboardCardsInfo(this.timeScale);
-
-    cardsInfo.forEach((cardInfo, index) => {
-      const card = this.cards[index];
-
-      card.title = cardInfo.title;
-      card.updateContentByTimeScale();
-
-    });
-  }
-
 }
