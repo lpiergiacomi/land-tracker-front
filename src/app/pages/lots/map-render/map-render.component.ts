@@ -298,7 +298,6 @@ export class MapRenderComponent implements OnInit, AfterViewInit {
   }
 
   changeStateLot(lot: Lot) {
-    console.log(lot)
     this.selectedLot = lot;
     this.lots.find(l => l.id == lot.id).state = lot.state;
     this.originalLots.find(l => l.id == lot.id).state = lot.state;

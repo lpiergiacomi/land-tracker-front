@@ -1,8 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Lot} from "../../../backend/model/lot";
-import {Payment} from "../../../backend/model/payment";
-import {PaymentService} from "../../../backend/services/payment.service";
 
 @Component({
   selector: 'app-additional-info-lot-dialog',
@@ -14,6 +12,10 @@ export class AdditionalInfoLotDialogComponent {
   constructor(
     public dialog: MatDialogRef<AdditionalInfoLotDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public lot: Lot) {  }
+
+  closeDialogWithLot(lot: Lot) {
+    this.dialog.close(lot);
+  }
 
   closeDialog() {
     this.dialog.close();
