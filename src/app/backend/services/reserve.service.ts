@@ -22,4 +22,8 @@ export class ReserveService {
   async updateDueDate(reserveId: any, dueDate: Date, lotId: number, userId: number) {
     return await lastValueFrom(this.api.updateDueDate(reserveId, dueDate, lotId, userId));
   }
+
+  async cancelReserve(reserveId: number, lotId: number, userId: number) {
+    return await lastValueFrom(this.api.cancelReserve(reserveId, lotId, userId));
+  }
 }

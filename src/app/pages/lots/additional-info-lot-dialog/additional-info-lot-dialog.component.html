@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>Información adicional de {{lot?.name}}</h1>
   <mat-tab-group>
     <mat-tab *ngIf="!lot.isAvailable()" label="Detalles reserva">
-      <app-reserve-details [lot]="lot"></app-reserve-details>
+      <app-reserve-details (closeDialogEvent)="closeDialog()" [lot]="lot"></app-reserve-details>
     </mat-tab>
     <mat-tab *ngIf="!lot.isAvailable()" label="Detalles pagos">
       <app-payment-details-lot style="padding-top:1rem;" [lot]="lot"></app-payment-details-lot>

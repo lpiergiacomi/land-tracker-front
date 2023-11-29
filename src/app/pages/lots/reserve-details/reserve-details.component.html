@@ -19,7 +19,7 @@
         <label>Fecha vto: </label>
         <mat-form-field>
           <input matInput [matDatepicker]="dueDatePicker"
-                 [(ngModel)]="lotReserveDueDate" name="dueDate" (dateChange)="changeDueDate()">
+                 [(ngModel)]="lotReserveDueDate" name="dueDate">
           <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #dueDatePicker>
           </mat-datepicker>
@@ -33,5 +33,8 @@
         {{lot?.reserve?.state | reserveState}}
       </div>
     </div>
+
+    <button mat-raised-button color="primary" (click)="saveReserve()">Guardar</button>
+    <button mat-raised-button color="primary" (click)="cancelReserve()">Cancelar reserva</button>
   </mat-card-content>
 </mat-card>

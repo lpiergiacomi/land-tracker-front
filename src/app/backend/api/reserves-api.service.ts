@@ -25,4 +25,11 @@ export class ReservesApi {
       .set('userId', userId.toString());
     return this.api.put(`${this.apiController}/update-due-date/${reserveId}`, null, {params});
   }
+
+  cancelReserve(reserveId: number, lotId: number, userId: number) {
+    const params = new HttpParams()
+      .set('lotId', lotId.toString())
+      .set('userId', userId.toString());
+    return this.api.put(`${this.apiController}/cancel/${reserveId}`, null, {params});
+  }
 }
