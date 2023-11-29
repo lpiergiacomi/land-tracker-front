@@ -18,9 +18,11 @@ export class ReservesApi {
     return this.api.post(`${this.apiController}`, reserve);
   }
 
-  updateDueDate(reserveId: any, dueDate: Date) {
+  updateDueDate(reserveId: any, dueDate: Date, lotId: number, userId: number) {
     const params = new HttpParams()
-      .set('dueDate', dueDate.toString());
+      .set('dueDate', dueDate.toString())
+      .set('lotId', lotId.toString())
+      .set('userId', userId.toString());
     return this.api.put(`${this.apiController}/update-due-date/${reserveId}`, null, {params});
   }
 }

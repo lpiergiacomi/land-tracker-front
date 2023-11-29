@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Lot} from "../../../backend/model/lot";
 import {ReserveService} from "../../../backend/services/reserve.service";
 import {ToastrService} from "ngx-toastr";
+import {AuthService} from "../../../backend/services/auth.service";
 
 @Component({
   selector: 'app-reserve-details-dialog',
@@ -17,6 +18,7 @@ export class ReserveDetailsDialogComponent {
     private reserveService: ReserveService,
     private toastr: ToastrService,
     public dialog: MatDialogRef<ReserveDetailsDialogComponent>,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public lot: Lot) {
   }
 
@@ -28,7 +30,7 @@ export class ReserveDetailsDialogComponent {
   async save() {
     this.isLoading = true;
     try {
-      await this.reserveService.updateDueDate(this.lot.reserve.id, new Date(this.lotReserveDueDate));
+      await this.reserveService.updateDueDate(this.lot.reserve.id, new Date(this.lotReserveDueDate), this.lot.id, this.authService.getLoggedUser().id);
       this.toastr.success(`Se modificó la fecha de vencimiento correctamente`);
       this.isLoading = false;
       this.dialog.close();

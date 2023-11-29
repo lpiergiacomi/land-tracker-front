@@ -19,7 +19,7 @@ export class ReserveService {
     return await lastValueFrom(this.api.createReserve(reserve));
   }
 
-  async updateDueDate(reserveId: any, dueDate: Date) {
-    return await lastValueFrom(this.api.updateDueDate(reserveId, dueDate));
+  async updateDueDate(reserveId: any, dueDate: Date, lotId: number, userId: number) {
+    return await lastValueFrom(this.api.updateDueDate(reserveId, dueDate, lotId, userId));
   }
 }

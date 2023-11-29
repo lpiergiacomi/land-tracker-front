@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CalendarOptions, EventApi} from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -11,14 +11,16 @@ import {MatDialog} from "@angular/material/dialog";
 import {LotService} from "../../backend/services/lot.service";
 import {ReserveDetailsDialogComponent} from "../lots/reserve-details-dialog/reserve-details-dialog.component";
 import {AuthService} from "../../backend/services/auth.service";
+import {User} from "../../backend/model/user";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   @ViewChild('fullCalendar') fullCalendar!: FullCalendarComponent;
+  loggedUser: User;
 
   constructor(private dashboardService: DashboardService,
               private reserveService: ReserveService,
@@ -27,12 +29,16 @@ export class CalendarComponent {
               private toastr: ToastrService,
               public matDialog: MatDialog) {}
 
+  ngOnInit() {
+    this.loggedUser = this.authService.getLoggedUser();
+  }
+
   handleDatesSet(arg: { start: Date; end: Date; }) {
     this.loadEvents(arg.start, arg.end);
   }
 
   async loadEvents(startDate: Date, endDate: Date) {
-    this.calendarOptions.events = await this.dashboardService.getEventsForCalendar(startDate, endDate, this.authService.getLoggedUser().id);
+    this.calendarOptions.events = await this.dashboardService.getEventsForCalendar(startDate, endDate, this.loggedUser.id);
   }
 
   calendarOptions: CalendarOptions = {
@@ -54,7 +60,8 @@ export class CalendarComponent {
 
   async handleEventDrop(eventDropInfo: { event: EventApi }) {
     try {
-      await this.reserveService.updateDueDate(eventDropInfo.event.extendedProps['reserveId'], eventDropInfo.event.start);
+      const props = eventDropInfo.event.extendedProps;
+      await this.reserveService.updateDueDate(props['reserveId'], eventDropInfo.event.start, props['lotId'], this.loggedUser.id);
       this.toastr.success(`Fecha de reserva actualizada correctamente`);
     } catch (error) {
       this.fullCalendar.getApi().destroy();
