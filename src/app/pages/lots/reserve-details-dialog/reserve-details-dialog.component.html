@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <h1 mat-dialog-title>Información adicional de reserva de {{lot?.name}}</h1>
+  <app-reserve-details (closeDialogEvent)="closeDialog($event)" [lot]="lot"></app-reserve-details>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+</div>

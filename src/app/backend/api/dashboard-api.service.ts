@@ -20,16 +20,17 @@ export class DashboardApi {
   }
 
 
-  getEventsForCalendar(startDate: Date, endDate: Date) {
+  getEventsForCalendar(startDate: Date, endDate: Date, userId: number) {
     const params = new HttpParams()
       .set('startDate', startDate.toString())
-      .set('endDate', endDate.toString());
+      .set('endDate', endDate.toString())
+      .set('userId', userId.toString());
     return this.api.get(`${this.apiController}/reserves-for-calendar`, {params}).pipe(
       map(data => data.map(item => this.convertCalendarEvent(item)))
     );
   }
 
   private convertCalendarEvent(data: any): CalendarEvent {
-    return new CalendarEvent(data.title, data.date, data.reserveId);
+    return new CalendarEvent(data.title, data.date, data.reserveId, data.lotId);
   }
 }

@@ -62,9 +62,15 @@ export class LotDetailComponent implements OnInit{
   }
 
   openDialogMoreInfo() {
-    this.matDialog.open(AdditionalInfoLotDialogComponent, {
+    const dialogAdditionalInfoLot = this.matDialog.open(AdditionalInfoLotDialogComponent, {
       data: this.selectedLot,
       width: '60rem'
+    });
+
+    dialogAdditionalInfoLot.afterClosed().subscribe(async lot => {
+      if (lot) {
+        this.reservedLotEvent.emit(lot);
+      }
     });
   }
 

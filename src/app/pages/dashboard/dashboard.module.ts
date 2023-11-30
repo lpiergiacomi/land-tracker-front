@@ -13,6 +13,8 @@ import { DashboardCardComponent } from './dashboard-card/dashboard-card.componen
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatTabsModule} from "@angular/material/tabs";
 import {PagesModule} from "../pages.module";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -32,6 +34,11 @@ import {PagesModule} from "../pages.module";
     MatToolbarModule,
     MatTabsModule,
     PagesModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-AR'},
   ]
 })
 export class DashboardModule { }

@@ -1,0 +1,40 @@
+<mat-card *ngIf="lot?.reserve">
+  <mat-card-content class="container">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cliente</mat-label>
+      <input matInput [disabled]="true" [value]="lot?.reserve?.clientName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario</mat-label>
+      <input matInput [disabled]="true" [value]="lot?.reserve?.user?.username">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha creación</mat-label>
+      <input matInput [disabled]="true" [value]="lot?.reserve?.createdDate | date: 'dd/MM/yyyy'">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha vto</mat-label>
+      <input matInput [matDatepicker]="dueDatePicker" [(ngModel)]="lotReserveDueDate" name="dueDate">
+      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <input matInput [disabled]="true" [value]="lot?.reserve?.state | reserveState">
+    </mat-form-field>
+
+    <div class="btn-container">
+      <button mat-raised-button color="warn" class="btn-cancel-reserve" (click)="cancelReserve()">Cancelar reserva</button>
+      <button mat-raised-button color="primary" class="btn-save" (click)="saveReserve()">Guardar</button>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+<div *ngIf="isLoading" class="loading-spinner">
+  <mat-spinner diameter="32"></mat-spinner>
+</div>

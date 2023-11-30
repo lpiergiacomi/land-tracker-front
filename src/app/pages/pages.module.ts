@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { PagesRoutingModule } from './pages-routing.module';
+import {PagesRoutingModule} from './pages-routing.module';
 import {PagesComponent} from "./pages.component";
 import {BodyComponent} from "./body/body.component";
 import {HeaderComponent} from "./header/header.component";
@@ -10,11 +10,12 @@ import {SublevelMenuComponent} from "./menu/sublevel-menu.component";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {OverlayModule} from "@angular/cdk/overlay";
 import {CdkMenuModule} from "@angular/cdk/menu";
-import { CalendarComponent } from './calendar/calendar.component';
+import {CalendarComponent} from './calendar/calendar.component';
 import {FullCalendarModule} from "@fullcalendar/angular";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -29,15 +30,17 @@ import {FullCalendarModule} from "@fullcalendar/angular";
   exports: [
     CalendarComponent
   ],
-    imports: [
-        CommonModule,
-        PagesRoutingModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        CdkMenuModule,
-        OverlayModule,
-        FullCalendarModule
-    ]
+  imports: [
+    CommonModule,
+    PagesRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    CdkMenuModule,
+    OverlayModule,
+    FullCalendarModule,
+    MatDialogModule
+  ]
 })
-export class PagesModule { }
+export class PagesModule {
+}
