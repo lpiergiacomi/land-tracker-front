@@ -1,22 +1,66 @@
-.detail {
+.container {
   display: flex;
-  flex-direction: column;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-  font-size: 1.1rem;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
-.detail-row-text {
+mat-form-field {
+  flex: 0 0 calc(49% - 0.2rem);
+  margin: 0.2rem;
+}
+
+.btn-container {
+  flex: 0 0 calc(100% - 0.2rem);
+  margin: 0.2rem;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
 }
 
-label {
-  margin-right: 0.5rem;
-  color: white;
+.btn-save {
+  flex: 0 0 calc(20% - 0.2rem);
+  margin: 0.2rem;
+}
+
+.btn-cancel-reserve {
+  flex: 0 0 calc(30% - 0.2rem);
+  margin: 0.2rem;
+}
+
+mat-label {
+  color: #388e3c;
+  font-size: 1.1rem;
+}
+
+input {
+  color: white !important;
+}
+
+@media all and (max-width: 856px) {
+  .container {
+    flex-direction: column;
+  }
+
+  mat-form-field {
+    flex: 0 0 100%;
+  }
+
+  .btn-cancel-reserve {
+    flex: 0 0 calc(45% - 0.2rem);
+    margin: 0.2rem;
+  }
+
+
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
