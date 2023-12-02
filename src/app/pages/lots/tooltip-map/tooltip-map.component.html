@@ -1,9 +1,9 @@
 <div *ngIf="this.mostrarTooltip()" class="tooltip-map">
   <b>{{tooltipLot.name}}</b>
   <br>
-  <b>Superficie: </b>{{tooltipLot.area}}
+  <b>Superficie: </b>{{tooltipLot.area | squareMeters}}
   <br>
-  <b>Precio: </b>{{tooltipLot.price}}
+  <b>Precio: </b>{{tooltipLot.price | currency}}
   <br>
   <b>Estado: </b>{{tooltipLot.state}}
 </div>
